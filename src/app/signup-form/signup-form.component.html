@@ -1,41 +1,42 @@
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <label>
-        First Name:
-        <input type="text" formControlName="firstName" required>
-    </label>
+    <div class="form-group"><label>
+            First Name:
+            <input type="text" formControlName="firstName" required>
+        </label></div>
 
-    <label>
-        Last Name:
-        <input type="text" formControlName="lastName">
-    </label>
+    <div class="form-group"><label>
+            Last Name:
+            <input type="text" formControlName="lastName">
+        </label></div>
 
-    <label>
-        Email:
-        <input type="text" formControlName="email">
-    </label>
+    <div class="form-group"><label>
+            Email:
+            <input type="text" formControlName="email">
+        </label></div>
 
+    <br>
     <div formGroupName="address">
         <h3>Address</h3>
 
-        <label>
-            Street:
-            <input type="text" formControlName="street">
-        </label>
+        <div class="form-group"><label>
+                Street:
+                <input type="text" formControlName="street">
+            </label></div>
 
-        <label>
-            City:
-            <input type="text" formControlName="city">
-        </label>
+        <div class="form-group"><label>
+                City:
+                <input type="text" formControlName="city">
+            </label></div>
 
-        <label>
-            State:
-            <input type="text" formControlName="state">
-        </label>
+        <div class="form-group"><label>
+                State:
+                <input type="text" formControlName="state">
+            </label></div>
 
-        <label>
-            Zip Code:
-            <input type="text" formControlName="zip">
-        </label>
+        <div class="form-group"><label>
+                Zip Code:
+                <input type="text" formControlName="zip">
+            </label></div>
     </div>
 
     <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
