@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-signup-form',
@@ -28,9 +29,10 @@ export class SignupFormComponent {
     });
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private userService: UserService) { }
 
   onSubmit() {
+    // this.userService.create(user)
     console.warn(this.signupForm.value);
   }
 
