@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {User} from './models/user.model';
+// import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { User } from './models/user.model';
 
 const usersUrl = 'http://localhost:4200/api'
 
@@ -10,9 +10,9 @@ const usersUrl = 'http://localhost:4200/api'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  // constructor(private http: HttpClient) { }
 
-  create(user: User): Observable<any> {
-    return this.http.post(usersUrl, user);
-  }
+  // create(user: User): Observable<any> {
+    // return this.http.post(usersUrl, user);
+  // }
 }
