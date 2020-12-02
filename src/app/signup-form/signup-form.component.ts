@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { User } from '../models/user.model';
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./signup-form.component.scss']
 })
 export class SignupFormComponent {
+  currentUser: User;
   signupForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: [''],
@@ -32,7 +34,7 @@ export class SignupFormComponent {
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
   onSubmit() {
-    // this.userService.create(user)
+    this.userService.create(new User());
     console.warn(this.signupForm.value);
   }
 
