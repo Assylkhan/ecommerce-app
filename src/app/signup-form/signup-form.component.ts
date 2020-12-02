@@ -34,7 +34,7 @@ export class SignupFormComponent {
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
   onSubmit() {
-    this.userService.create(new User());
+    // this.userService.create(new User());
     console.warn(this.signupForm.value);
   }
 
