@@ -1,6 +1,26 @@
+$error-color: #721c24;
+
 .form-group {
     margin-bottom: 1rem;
 }
 label, input {
     display: block;
+}
+.validation-error-box {
+    color: $error-color;
+}
+.text-danger {
+    color: $error-color;
+}
+.signup-form-child {
+    display: flex;
+}
+.signup-form-child label strong {
+    margin-left: 2px;
+}
+.form-group-wrapper {
+    flex: 1;
+}
+.form-group-wrapper:first-of-type {
+    margin-right: 20px;
 }

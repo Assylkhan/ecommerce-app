@@ -13,14 +13,25 @@ export class SignupFormComponent {
   signupForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: [''],
-    email: ['', Validators.required],
+    email: ['', [
+      Validators.required,
+      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+    ]],
+    password: ['', [Validators.required,
+    Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+    retypePassword: ['', Validators.required],
     address: this.fb.group({
-      street: [''],
-      city: [''],
+      country: [''],
       state: [''],
+      city: [''],
+      street: [''],
       zip: ['']
     }),
   });
+
+  get password() {
+    return this.signupForm.get('password');
+  }
 
   updateForm() {
     this.signupForm.patchValue({
