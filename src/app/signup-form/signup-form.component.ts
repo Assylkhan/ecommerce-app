@@ -14,12 +14,14 @@ export class SignupFormComponent {
     firstName: ['', Validators.required],
     lastName: [''],
     email: ['', [
-      Validators.required,
-      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+      // Validators.required,
+      // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
     ]],
-    password: ['', [Validators.required,
-    Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
-    retypePassword: ['', Validators.required],
+    password: [''],
+    retypePassword: [''],
+    // password: ['', [Validators.required,
+    // Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+    // retypePassword: ['', Validators.required],
     address: this.fb.group({
       country: [''],
       state: [''],
@@ -45,8 +47,8 @@ export class SignupFormComponent {
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
   onSubmit() {
-    // this.userService.create(new User());
-    console.warn(this.signupForm.value);
+    this.userService.create(new User(this.signupForm.getRawValue()));
+    // console.warn(this.signupForm.getRawValue());
   }
 
 }
