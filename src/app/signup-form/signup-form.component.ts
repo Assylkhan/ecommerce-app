@@ -47,6 +47,7 @@ export class SignupFormComponent {
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
   onSubmit() {
+    if (this.signupForm.invalid) return;
     this.userService.create(new User(this.signupForm.getRawValue()));
     // console.warn(this.signupForm.getRawValue());
   }
