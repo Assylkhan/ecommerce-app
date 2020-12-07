@@ -48,7 +48,7 @@ export class SignupFormComponent {
 
   onSubmit() {
     if (this.signupForm.invalid) return;
-    this.userService.create(new User(this.signupForm.getRawValue()));
+    this.userService.create(this.signupForm.getRawValue()).subscribe();
     // console.warn(this.signupForm.getRawValue());
   }
 
