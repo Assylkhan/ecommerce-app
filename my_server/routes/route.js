@@ -19,8 +19,7 @@ router.post('/users', (req, res) => {
     state: req.body.state,
     city: req.body.city,
     street: req.body.street,
-    zip: req.body.zip,
-    username: req.body.username
+    zip: req.body.zip
   });
   newUser.save((err, user) => {
     if (err) {

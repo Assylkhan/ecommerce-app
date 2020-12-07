@@ -30,12 +30,7 @@ const userSchema = new mongoose.Schema({
   },
   zip: {
     type: String
-  },
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
+  }
 }, {
   timestamps: true
 }, );
