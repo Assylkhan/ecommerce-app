@@ -3,22 +3,20 @@ const app = express(),
   bodyParser = require("body-parser");
 const cors = require('cors');
 const port = 3080;
-const mongoose = require('mongoose');
-const route = require('./routes/route');
 const config = require('./config');
+const mongoose = require('mongoose');
 
-mongoose.connect(config.mongoConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
+const usersController = require('./controllers/usersController');
 
-mongoose.connection.on('connected', () => {
-  console.log('Connected to Database');
-});
-
-mongoose.connection.on('error', (err) => {
-  if (err) {
-    console.log('Error in Database connection: ' + err);
-  }
-});
-
+// Connecting to DB
+mongoose.connect(config.mongoConnectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log('connected to db')
+}).catch((err) => {
+  console.log(JSON.stringify(err, undefined, 2))
+})
 // var corsOptions = {
 //   origin: "http://localhost:4200"
 // };
@@ -40,7 +38,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(process.cwd() + "/../dist/ecommerce-app/"));
 
-app.use('/api', route);
+app.use('/api/users', usersController);
 
 app.get('/', (req, res) => {
   res.sendFile(process.cwd() + "/../dist/ecommerce-app/index.html")
