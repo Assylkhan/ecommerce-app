@@ -2,19 +2,34 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   firstName: {
-    type: String
+    type: String,
+    trim: true
   },
   lastName: {
-    type: String
+    type: String,
+    trim: true
   },
   email: {
     type: String,
-    unique: true,
-    required: true
+    unique: [true],
+    index: true,
+    trim: true,
+    required: [true, 'The email is required'],
+    validate: {
+      validator: async function(email) {
+        const user = await this.constructor.findOne({email});
+        if (user) {
+          return this.id === user.id;
+        }
+        return true;
+      },
+      message: props => 'The specified email address is already in use'
+    }
   },
   password: {
     type: String,
-    required: true
+    required: [true, 'The password is required'],
+    trim: true
   },
   country: {
     type: String
@@ -29,7 +44,8 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   zip: {
-    type: String
+    type: String,
+    trim: true
   }
 }, {
   timestamps: true

@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
   }).catch((err) => {
     res.json({
       msg: 'Failed to add the user',
-      err: err
+      err: err.message
     })
     console.log('Failed to add the user: ' + JSON.stringify(err, undefined, 2))
   })
@@ -84,11 +84,11 @@ function getModelFromRequest(reqBody) {
     lastName: reqBody.lastName,
     email: reqBody.email,
     password: reqBody.password,
-    country: reqBody.country,
-    state: reqBody.state,
-    city: reqBody.city,
-    street: reqBody.street,
-    zip: reqBody.zip
+    country: reqBody.address.country,
+    state: reqBody.address.state,
+    city: reqBody.address.city,
+    street: reqBody.address.street,
+    zip: reqBody.address.zip
   });
   return user;
 }
