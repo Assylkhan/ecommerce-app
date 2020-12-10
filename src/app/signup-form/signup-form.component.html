@@ -1,70 +1,89 @@
 <h2>Sign Up</h2>
 
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <div class="signup-form-child">
-        <div class="form-group-wrapper">
-            <div class="form-group"><label>
-                    <strong>First Name*</strong>
-                    <input type="text" formControlName="firstName" required>
-                </label></div>
+  <div class="signup-form-child">
+    <div class="form-group-wrapper">
+      <div class="form-group">
+        <label>
+          <strong>First Name*</strong>
+          <input type="text" formControlName="firstName" required />
+        </label>
+      </div>
 
-            <div class="form-group"><label>
-                    <strong>Last Name*</strong>
-                    <input type="text" formControlName="lastName">
-                </label></div>
+      <div class="form-group">
+        <label>
+          <strong>Last Name*</strong>
+          <input type="text" formControlName="lastName" />
+        </label>
+      </div>
 
-            <div class="form-group"><label>
-                    <strong>Email*</strong>
-                    <input type="text" formControlName="email">
-                </label></div>
+      <div class="form-group">
+        <label>
+          <strong>Email*</strong>
+          <input type="text" formControlName="email" />
+        </label>
+      </div>
 
-            <div class="form-group"><label>
-                    <strong>Password*</strong>
-                    <input type="password" formControlName="password">
-                </label>
-                <div *ngIf="password.errors?.pattern" class="validation-error-box">
-                    <ul>
-                        <li>At least one upper case English letter</li>
-                        <li>At least one lower case English letter</li>
-                        <li>At least one digit</li>
-                        <li>At least one special character</li>
-                        <li>Minimum of eight characters</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="form-group"><label>
-                    <strong>Retype Password*</strong>
-                    <input type="password" formControlName="password">
-                </label></div>
+      <div class="form-group">
+        <label>
+          <strong>Password*</strong>
+          <input type="password" formControlName="password" />
+        </label>
+        <div *ngIf="password.errors?.pattern" class="validation-error-box">
+          <ul>
+            <li>At least one upper case English letter</li>
+            <li>At least one lower case English letter</li>
+            <li>At least one digit</li>
+            <li>At least one special character</li>
+            <li>Minimum of eight characters</li>
+          </ul>
         </div>
+      </div>
 
-        <div class="form-group-wrapper" formGroupName="address">
-            <div class="form-group"><label>
-                    <strong>Country</strong>
-                    <input type="text" formControlName="country">
-                </label></div>
-
-            <div class="form-group"><label>
-                    <strong>State</strong>
-                    <input type="text" formControlName="state">
-                </label></div>
-
-            <div class="form-group"><label>
-                    <strong>City</strong>
-                    <input type="text" formControlName="city">
-                </label></div>
-
-            <div class="form-group"><label>
-                    <strong>Street</strong>
-                    <input type="text" formControlName="street">
-                </label></div>
-
-            <div class="form-group"><label>
-                    <strong>Zip Code</strong>
-                    <input type="text" formControlName="zip">
-                </label></div>
-        </div>
+      <div class="form-group">
+        <label>
+          <strong>Retype Password*</strong>
+          <input type="password" formControlName="password" />
+        </label>
+      </div>
     </div>
-    <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+
+    <div class="form-group-wrapper" formGroupName="address">
+      <div class="form-group">
+        <label>
+          <strong>Country</strong>
+          <input type="text" formControlName="country" />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <strong>State</strong>
+          <input type="text" formControlName="state" />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <strong>City</strong>
+          <input type="text" formControlName="city" />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <strong>Street</strong>
+          <input type="text" formControlName="street" />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <strong>Zip Code</strong>
+          <input type="text" formControlName="zip" />
+        </label>
+      </div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
 </form>

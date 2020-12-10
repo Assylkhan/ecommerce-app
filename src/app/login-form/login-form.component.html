@@ -1,2 +1,11 @@
-<p>Login Form</p>
-<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+<form [formGroup]="loginForm" class="example-form">
+  <mat-form-field class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Email" formControlName="email" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Password</mat-label>
+    <input matInput placeholder="Password" formControlName="password" required>
+  </mat-form-field>
+</form>
