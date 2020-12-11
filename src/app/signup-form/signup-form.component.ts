@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from '../user.service';
 
@@ -8,7 +9,8 @@ import { UserService } from '../user.service';
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.scss']
 })
-export class SignupFormComponent {
+export class SignupFormComponent implements OnDestroy {
+  subscription: Subscription;
   currentUser: User;
   signupForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -46,9 +48,21 @@ export class SignupFormComponent {
 
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   onSubmit() {
     if (this.signupForm.invalid) return;
-    this.userService.create(this.signupForm.getRawValue()).subscribe();
+    this.subscription = this.userService.create(this.signupForm.getRawValue()).subscribe({
+      next: () => {
+        console.log('signed up successfully')
+      },
+      error: error => {
+        console.log(error)
+      }
+    }
+    );
     // console.warn(this.signupForm.getRawValue());
   }
 
