@@ -23,7 +23,7 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return this.http.post<any>(`${this.rootURL}/users/authenticate`, { username, password })
       .pipe(map(user => {
-        // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
+        // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
         user.authData = window.btoa(username + ':' + password);
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);

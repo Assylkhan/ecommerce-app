@@ -9,6 +9,7 @@ export class User {
     city?: string;
     street?: string;
     zip?: string;
+    authData?: string;
 
     public constructor(init?: Partial<User>) {
         Object.assign(this, init);

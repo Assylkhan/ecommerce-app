@@ -48,6 +48,19 @@ router.post('/', (req, res) => {
   })
 });
 
+// => localhost:3080/api/users/authenticate
+router.post('/authenticate', (req, res) => {
+  User.findOne({email: req.params.email, password: req.params.password}).then(user => {
+    res.json(user)
+  }).catch(err => {
+    res.json({
+      msg: 'Failed to find the user',
+      err: err
+    });
+    console.log('Failed to find the user: ' + JSON.stringify(err, undefined, 2))
+  })
+});
+
 router.put('/:id', (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);

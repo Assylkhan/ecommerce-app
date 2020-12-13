@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-
-import { AuthenticationService } from '../authentication.service';
 import { Observable } from 'rxjs';
 
-@Injectable
+import { AuthenticationService } from '../authentication.service';
+
+@Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) { }
 
@@ -14,7 +14,7 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     if (currentUser && currentUser.authData) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Basic ${currentUser.authdata}`
+          Authorization: `Basic ${currentUser.authData}`
         }
       })
     }
