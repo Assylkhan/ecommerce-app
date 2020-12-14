@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -50,6 +51,10 @@ const userSchema = new mongoose.Schema({
 }, {
   timestamps: true
 }, );
+
+userSchema.statics.hashPassword = function hashPassword(password) {
+  return bcrypt.hashSync(password, 10);
+}
 
 var User = mongoose.model('User', userSchema);
 module.exports = { User };

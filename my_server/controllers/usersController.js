@@ -96,7 +96,7 @@ function getModelFromRequest(reqBody) {
     firstName: reqBody.firstName,
     lastName: reqBody.lastName,
     email: reqBody.email,
-    password: reqBody.password,
+    password: User.hashPassword(reqBody.password),
     country: reqBody.address.country,
     state: reqBody.address.state,
     city: reqBody.address.city,

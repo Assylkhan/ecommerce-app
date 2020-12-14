@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { User } from './models/user.model';
 
@@ -11,9 +12,15 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
   rootURL = '/api'
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
   public get currentUserValue(): User {
