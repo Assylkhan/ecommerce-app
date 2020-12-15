@@ -88,8 +88,7 @@ router.post('/login', (req, res) => {
 var decodedToken = '';
 
 function verifyToken(req, res, next) {
-  req.header()
-  let token = req.query.token;
+  let token = req.header('Authorization');
 
   jwt.verify(token, TOKEN_KEY, (err, tokendata) => {
     if (err) {
