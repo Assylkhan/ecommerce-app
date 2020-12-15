@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 const TOKEN_KEY = 'secretKeyNeedsStrongerOne';
 
 // => localhost:3080/api/users/
-router.get('/', (req, res) => {
+router.get('/', verifyToken, (req, res) => {
   User.find().then(users => {
     res.json(users);
   }).catch(err => {
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 })
 
 // => localhost:3080/api/users/:id
-router.get('/:id', (req, res) => {
+router.get('/:id', verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   User.findById(req.params.id).then(user => {
@@ -34,7 +34,7 @@ router.get('/:id', (req, res) => {
 });
 
 // => localhost:3080/api/users/
-router.post('/', (req, res) => {
+router.post('/', verifyToken, (req, res) => {
   let newUser = getModelFromRequest(req.body);
   newUser.save().then((user) => {
     res.status(201).json(user)
@@ -80,14 +80,15 @@ router.post('/login', (req, res) => {
   })
 });
 
-// verifyToken is a middleware function
-router.get('/email', verifyToken, (req, res, next) => {
-  res.status(200).json(decodedToken.email);
-});
+// // verifyToken is a middleware function
+// router.get('/email', verifyToken, (req, res, next) => {
+//   res.status(200).json(decodedToken.email);
+// });
 
 var decodedToken = '';
 
 function verifyToken(req, res, next) {
+  req.header()
   let token = req.query.token;
 
   jwt.verify(token, TOKEN_KEY, (err, tokendata) => {
@@ -103,7 +104,7 @@ function verifyToken(req, res, next) {
   })
 }
 
-router.put('/:id', (req, res) => {
+router.put('/:id', verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   let user = getModelFromRequest(req.body);
@@ -123,7 +124,7 @@ router.put('/:id', (req, res) => {
 });
 
 // => localhost:3080/api/users/:id
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', verifyToken, (req, res, next) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   User.deleteOne({
