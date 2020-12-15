@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { User } from './models/user.model';
 
@@ -12,8 +11,8 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
   rootURL = '/api'
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
-    this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -23,18 +22,25 @@ export class AuthenticationService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  private getEmail() {
+    return this.http.get(`${this.rootURL}/users/email`, {
+      observe: 'body',
+      params: new HttpParams().append('token', localStorage.getItem('token'))
+    })
+  }
+
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`${this.rootURL}/users/authenticate`, { username, password })
-      .pipe(map(user => {
+    return this.http.post<any>(`${this.rootURL}/users/login`, { username, password })
+      .pipe(map(token => {
         // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
-        user.authData = window.btoa(username + ':' + password);
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
+        // user.authData = window.btoa(username + ':' + password);
+        localStorage.setItem('currentUser', JSON.stringify(token));
+        this.currentUserSubject.next(token);
+        return token;
       }))
   }
 

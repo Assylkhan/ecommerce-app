@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from '../user.service';
@@ -37,6 +38,23 @@ export class SignupFormComponent implements OnDestroy {
     return this.signupForm.get('password');
   }
 
+  retypePassValidator(control: AbstractControl) {
+    if (control && (control.value != null)) {
+      const retypePassValue = control.value;
+
+      const passControl = control.root.get('password');
+      if (passControl) {
+        const passValue = passControl.value;
+        if (passValue !== retypePassValue || passValue === '') {
+          return {
+            isError: true
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   updateForm() {
     this.signupForm.patchValue({
       firstName: 'John',
@@ -46,7 +64,19 @@ export class SignupFormComponent implements OnDestroy {
     });
   }
 
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
+    // validate retypePassword when password changes
+    this.signupForm.controls.password.valueChanges
+      .subscribe(x => this.signupForm.controls.retypePassword.updateValueAndValidity);
+  }
+
+  moveToLogin() {
+    this.router.navigate(['../login'], {relativeTo: this.activatedRoute})
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -57,6 +87,7 @@ export class SignupFormComponent implements OnDestroy {
     this.subscription = this.userService.create(this.signupForm.getRawValue()).subscribe({
       next: () => {
         console.log('signed up successfully')
+        this.moveToLogin()
       },
       error: error => {
         console.log(error)

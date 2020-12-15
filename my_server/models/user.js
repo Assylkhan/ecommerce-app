@@ -17,8 +17,10 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: [true, 'The email is required'],
     validate: {
-      validator: async function(email) {
-        const user = await this.constructor.findOne({email});
+      validator: async function (email) {
+        const user = await this.constructor.findOne({
+          email
+        });
         if (user) {
           return this.id === user.id;
         }
@@ -56,5 +58,11 @@ userSchema.statics.hashPassword = function hashPassword(password) {
   return bcrypt.hashSync(password, 10);
 }
 
+userSchema.methods.isValid = function (hashedPassword) {
+  return bcrypt.compareSync(hashedPassword, this.password);
+}
+
 var User = mongoose.model('User', userSchema);
-module.exports = { User };
+module.exports = {
+  User
+};

@@ -1,10 +1,9 @@
 const express = require('express');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
-
-var {
-  User
-} = require('../models/user');
+var User = require('../models/user');
+var jwt = require('jsonwebtoken');
+const TOKEN_KEY = 'secretKeyNeedsStrongerOne';
 
 // => localhost:3080/api/users/
 router.get('/', (req, res) => {
@@ -38,9 +37,9 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   let newUser = getModelFromRequest(req.body);
   newUser.save().then((user) => {
-    res.json(user)
+    res.status(201).json(user)
   }).catch((err) => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to add the user',
       err: err.message
     })
@@ -48,10 +47,30 @@ router.post('/', (req, res) => {
   })
 });
 
-// => localhost:3080/api/users/authenticate
-router.post('/authenticate', (req, res) => {
-  User.findOne({email: req.params.email, password: req.params.password}).then(user => {
-    res.json(user)
+// => localhost:3080/api/users/login
+router.post('/login', (req, res) => {
+  User.findOne({
+    email: req.params.email
+  }).then(user => {
+    if (user) {
+      if (user.isValid(req.params.password)) {
+        // generate token
+        let token = jwt.sign({
+          email: req.params.email
+        }, TOKEN_KEY, {
+          expiresIn: '3h'
+        })
+        return res.status(200).json(token);
+      } else {
+        return res.status(501).json({
+          message: 'Invalid credentials'
+        })
+      }
+    } else {
+      return res.status(501).json({
+        message: 'User email is not registered'
+      })
+    }
   }).catch(err => {
     res.json({
       msg: 'Failed to find the user',
@@ -61,11 +80,37 @@ router.post('/authenticate', (req, res) => {
   })
 });
 
+// verifyToken is a middleware function
+router.get('/email', verifyToken, (req, res, next) => {
+  res.status(200).json(decodedToken.email);
+});
+
+var decodedToken = '';
+
+function verifyToken(req, res, next) {
+  let token = req.query.token;
+
+  jwt.verify(token, TOKEN_KEY, (err, tokendata) => {
+    if (err) {
+      return res.status(400).json({
+        message: 'Unauthorized request'
+      })
+    }
+    if (tokendata) {
+      decodedToken = tokendata;
+      next();
+    }
+  })
+}
+
 router.put('/:id', (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   let user = getModelFromRequest(req.body);
-  User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true
+  User.findByIdAndUpdate(req.params.id, {
+    $set: user
+  }, {
+    new: true
   }).then(user => {
     res.json(user);
   }).catch(err => {
