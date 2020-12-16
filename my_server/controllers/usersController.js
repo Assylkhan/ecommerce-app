@@ -92,7 +92,7 @@ function verifyToken(req, res, next) {
 
   jwt.verify(token, TOKEN_KEY, (err, tokendata) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(401).json({
         message: 'Unauthorized request'
       })
     }
