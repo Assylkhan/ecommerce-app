@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSidenavModule, MatDrawerContainer } from '@angular/material/sidenav';
 
 import { AppComponent } from './app.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
@@ -15,13 +16,15 @@ import { HomeComponent } from './home/home.component';
 
 import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupFormComponent,
     LoginFormComponent,
-    HomeComponent
+    HomeComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,9 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     BrowserAnimationsModule,
     MatSliderModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule,
+    MatDrawerContainer
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
