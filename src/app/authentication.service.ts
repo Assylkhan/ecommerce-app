@@ -7,8 +7,8 @@ import { User } from './models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private currentTokenSubject: BehaviorSubject<User>;
-  public currentToken: Observable<User>;
+  private currentTokenSubject: BehaviorSubject<any>;
+  public currentToken: Observable<any>;
   rootURL = '/api'
 
   constructor(private http: HttpClient) {
@@ -23,7 +23,7 @@ export class AuthenticationService {
     })
   }
 
-  public get currentTokenValue(): User {
+  public get currentTokenValue(): any {
     return this.currentTokenSubject.value;
   }
 
