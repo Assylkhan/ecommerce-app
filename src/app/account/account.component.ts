@@ -7,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
   showFiller = false;
-
+  menuItems = ['Basic Information', 'Billing Information', 'Change Password']
+  selectedItem = ''
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  changeMenuItem(event) {
+    this.selectedItem = event.value
+  }
 }

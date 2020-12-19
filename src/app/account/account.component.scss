@@ -1,0 +1,16 @@
+:host, mat-sidenav-container {
+  min-height: 200px;
+  width: 100%;
+}
+
+mat-sidenav-container {
+  border: 1px solid;
+}
+
+mat-sidenav-content, mat-sidenav {
+  padding: 1rem;
+}
+
+mat-sidenav-content {
+  height: 100%;
+}
