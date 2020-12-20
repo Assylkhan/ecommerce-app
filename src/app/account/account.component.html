@@ -1,13 +1,13 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav mode="side" opened>
-    <mat-selection-list #selectionItems [multiple]="false" (selectionChange)="changeMenuItem($event)">
+    <mat-selection-list #selectionItems [multiple]="false" [(ngModel)]="selectedItems">
       <mat-list-option *ngFor="let item of menuItems" [value]="item">
         {{item}}
       </mat-list-option>
     </mat-selection-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <ng-container [ngSwitch]="selectedItem">
+    <ng-container [ngSwitch]="selectedItems[0]">
       <app-basic-info *ngSwitchCase="menuItems[0]"></app-basic-info>
       <app-billing-info *ngSwitchCase="menuItems[1]"></app-billing-info>
       <app-change-password *ngSwitchCase="menuItems[2]"></app-change-password>

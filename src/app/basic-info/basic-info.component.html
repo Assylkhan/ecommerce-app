@@ -1,1 +1,14 @@
-<p>basic-info works!</p>
+<form [formGroup]="basicInfoForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="full-width">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="First Name" formControlName="firstName" required>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Last Name" formControlName="lastName" required>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Email" formControlName="email" required>
+  </mat-form-field>
+</form>
