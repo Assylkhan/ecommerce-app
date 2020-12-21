@@ -38,6 +38,8 @@ p {
 }
 
 .header_nav {
+  display: flex;
+  align-items: center;
   * {
     color: white;
   }

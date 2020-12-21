@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-billing-info',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BillingInfoComponent implements OnInit {
 
-  constructor() { }
+  billingInfoForm = this.fb.group({
+    country: [''],
+    firstName: [''],
+    lastName: [''],
+    companyName: [''],
+    address: [''],
+    city: [''],
+    state: [''],
+    zipCode: [''],
+    phone: ['']
+  })
+
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
 
+  onSubmit() {
+
+  }
 }

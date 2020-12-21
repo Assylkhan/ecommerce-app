@@ -1,4 +1,4 @@
-label, input {
+label, input, button {
   display: block;
 }
 .full-width {
@@ -7,4 +7,7 @@ label, input {
 form {
   margin: 0 auto;
   width: 70%;
+}
+mat-form-field, button {
+  margin: 0 10px;
 }
