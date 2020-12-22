@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-basic-info',
@@ -16,7 +17,7 @@ export class BasicInfoComponent implements OnInit {
     ]]
   })
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
   }

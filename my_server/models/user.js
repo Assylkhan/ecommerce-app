@@ -34,21 +34,35 @@ const userSchema = new mongoose.Schema({
     required: [true, 'The password is required'],
     trim: true
   },
-  country: {
-    type: String
-  },
-  state: {
-    type: String
-  },
-  city: {
-    type: String
-  },
-  street: {
-    type: String
-  },
-  zip: {
-    type: String,
-    trim: true
+  billingInfo : {
+    firstName: {
+      type: String,
+      trim: true
+    },
+    lastName: {
+      type: String,
+      trim: true
+    },
+    country: {
+      type: String
+    },
+    state: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    street: {
+      type: String
+    },
+    zip: {
+      type: String,
+      trim: true
+    },
+    phone: {
+      type: String,
+      trim: true
+    }
   }
 }, {
   timestamps: true
