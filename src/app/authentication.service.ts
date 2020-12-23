@@ -7,13 +7,13 @@ import { User } from './models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private currentTokenSubject: BehaviorSubject<any>;
-  public currentToken: Observable<any>;
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<any>;
   rootURL = '/api'
 
   constructor(private http: HttpClient) {
-    this.currentTokenSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
-    this.currentToken = this.currentTokenSubject.asObservable();
+    this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
+    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   private getEmail() {
@@ -23,23 +23,23 @@ export class AuthenticationService {
     })
   }
 
-  public get currentTokenValue(): any {
-    return this.currentTokenSubject.value;
+  public get currentUserValue(): any {
+    return this.currentUserSubject.value;
   }
 
   login(username: string, password: string) {
     return this.http.post<any>(`${this.rootURL}/users/login`, { username, password })
-      .pipe(map(token => {
+      .pipe(map(user => {
         // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
         // user.authData = window.btoa(username + ':' + password);
-        localStorage.setItem('currentToken', JSON.stringify(token));
-        this.currentTokenSubject.next(token);
-        return token;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        return user;
       }))
   }
 
   logout() {
-    localStorage.removeItem('currentToken');
-    this.currentTokenSubject.next(null);
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 }

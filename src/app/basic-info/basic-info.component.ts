@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { UserService } from '../user.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-basic-info',
@@ -17,9 +17,16 @@ export class BasicInfoComponent implements OnInit {
     ]]
   })
 
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+  constructor(private fb: FormBuilder, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
+    if (this.authService.currentUserValue) {
+      this.basicInfoForm.setValue({
+        firstName: this.authService.currentUserValue.firstName,
+        lastName: this.authService.currentUserValue.lastName,
+        email: this.authService.currentUserValue.email,
+      })
+    }
   }
 
   onSubmit() {

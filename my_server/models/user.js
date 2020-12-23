@@ -34,6 +34,9 @@ const userSchema = new mongoose.Schema({
     required: [true, 'The password is required'],
     trim: true
   },
+  token: {
+    type: String
+  },
   billingInfo : {
     firstName: {
       type: String,

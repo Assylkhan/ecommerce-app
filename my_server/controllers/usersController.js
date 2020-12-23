@@ -60,7 +60,8 @@ router.post('/login', (req, res) => {
         }, TOKEN_KEY, {
           expiresIn: '3h'
         })
-        return res.status(200).json(token);
+        user.token = token
+        return res.status(200).json(user);
       } else {
         return res.status(501).json({
           message: 'Invalid credentials'
