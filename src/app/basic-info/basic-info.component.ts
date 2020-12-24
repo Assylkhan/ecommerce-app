@@ -16,8 +16,8 @@ import { User } from '../models/user.model';
   styleUrls: ['./basic-info.component.scss']
 })
 export class BasicInfoComponent implements OnInit {
-  horizontalPosition: MatSnackBarHorizontalPosition = 'start';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   basicInfoForm = this.fb.group({
     firstName: [''],
     lastName: [''],
