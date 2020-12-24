@@ -4,11 +4,18 @@ export class User {
     lastName?: string;
     email?: string;
     password?: string;
-    country?: string;
-    state?: string;
-    city?: string;
-    street?: string;
-    zip?: string;
+
+    billingInfo: {
+      firstName?: string;
+      lastName?: string;
+      companyName?: string;
+      country?: string;
+      state?: string;
+      city?: string;
+      address?: string;
+      zip?: string;
+      phone?: string;
+    }
     token?: string;
 
     public constructor(init?: Partial<User>) {

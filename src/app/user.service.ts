@@ -16,8 +16,8 @@ export class UserService {
     return this.http.post(this.rootURL+'/users', user);
   }
 
-  update(id: number, user: any): Observable<any> {
-    return this.http.put(`${this.rootURL}/users/${id}`, user);
+  update(user: any): Observable<any> {
+    return this.http.put(`${this.rootURL}/users/${user.id}`, user);
   }
 
   findByEmail(email: any): Observable<any> {

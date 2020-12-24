@@ -33,7 +33,7 @@ export class BillingInfoComponent implements OnInit {
         address: this.authService.currentUserValue.billingInfo.address,
         city: this.authService.currentUserValue.billingInfo.city,
         state: this.authService.currentUserValue.billingInfo.state,
-        zipCode: this.authService.currentUserValue.billingInfo.zipCode,
+        zip: this.authService.currentUserValue.billingInfo.zip,
         phone: this.authService.currentUserValue.billingInfo.phone
       })
     }

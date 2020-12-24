@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
     city: {
       type: String
     },
-    street: {
+    address: {
       type: String
     },
     zip: {

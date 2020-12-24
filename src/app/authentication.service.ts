@@ -8,7 +8,7 @@ import { User } from './models/user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<any>;
+  public currentUser: Observable<User>;
   rootURL = '/api'
 
   constructor(private http: HttpClient) {
@@ -23,12 +23,12 @@ export class AuthenticationService {
     })
   }
 
-  public get currentUserValue(): any {
+  public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`${this.rootURL}/users/login`, { username, password })
+    return this.http.post<User>(`${this.rootURL}/users/login`, { username, password })
       .pipe(map(user => {
         // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
         // user.authData = window.btoa(username + ':' + password);
