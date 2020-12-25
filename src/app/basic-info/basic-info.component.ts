@@ -35,7 +35,7 @@ export class BasicInfoComponent implements OnInit {
     private userService: UserService,
     private snackBar: MatSnackBar) { }
 
-  // convenience getter for easy access to form fields
+  // convenient getter for easy access to form fields
   get f() { return this.basicInfoForm.controls; }
 
   ngOnInit(): void {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../authentication.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-billing-info',
@@ -8,6 +10,8 @@ import { AuthenticationService } from '../authentication.service';
   styleUrls: ['./billing-info.component.scss']
 })
 export class BillingInfoComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   billingInfoForm = this.fb.group({
     country: [''],
@@ -17,11 +21,17 @@ export class BillingInfoComponent implements OnInit {
     address: [''],
     city: [''],
     state: [''],
-    zipCode: [''],
+    zip: [''],
     phone: ['']
   })
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService) { }
+  loading = false;
+  error = '';
+
+  constructor(private fb: FormBuilder,
+              private authService: AuthenticationService,
+              private userService: UserService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     if (this.authService.currentUserValue) {
@@ -39,7 +49,37 @@ export class BillingInfoComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  showSnackBar(msg, status) {
+    this.snackBar.open(msg, status, {
+      duration: 3000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition
+    })
+  }
 
+  // convenient getter for easy access to form fields
+  get f() { return this.billingInfoForm.controls; }
+
+  onSubmit() {
+    var currentUser = this.authService.currentUserValue
+    currentUser.billingInfo.country = this.f.country.value
+    currentUser.billingInfo.firstName = this.f.firstName.value
+    currentUser.billingInfo.lastName = this.f.lastName.value
+    currentUser.billingInfo.companyName = this.f.companyName.value
+    currentUser.billingInfo.address = this.f.address.value
+    currentUser.billingInfo.state = this.f.state.value
+    currentUser.billingInfo.city = this.f.city.value
+    currentUser.billingInfo.zip = this.f.zip.value
+    currentUser.billingInfo.phone = this.f.phone.value
+    this.userService.update(currentUser).subscribe({
+      next: () => {
+        this.showSnackBar('Basic Information Updated', 'Success')
+      },
+      error: error => {
+        console.log(error)
+        this.error = error
+        this.loading = false
+      }
+    })
   }
 }

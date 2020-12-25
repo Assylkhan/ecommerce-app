@@ -47,6 +47,39 @@ router.post('/', verifyToken, (req, res) => {
   })
 });
 
+// => localhost:3080/api/users/password
+router.post('/password', verifyToken, (req, res) => {
+  User.findOne({
+    email: decodedToken.email
+  }).then(user => {
+    if (user) {
+      if (user.isValid(req.params.password)) {
+        user.password = req.body.newPassword
+        user.save((err, doc) => {
+          if (err) return res.status(500).json({
+            message: 'Unable to save the new password'
+          })
+          return res.status(200).json(user);
+        })
+      } else {
+        return res.status(501).json({
+          message: 'Invalid credentials'
+        })
+      }
+    } else {
+      return res.status(501).json({
+        message: 'User email is not registered'
+      })
+    }
+  }).catch(err => {
+    res.json({
+      msg: 'Failed to find the user',
+      err: err
+    });
+    console.log('Failed to find the user: ' + JSON.stringify(err, undefined, 2))
+  })
+});
+
 // => localhost:3080/api/users/login
 router.post('/login', (req, res) => {
   User.findOne({
