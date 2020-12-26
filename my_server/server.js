@@ -7,6 +7,7 @@ const config = require('./config');
 const mongoose = require('mongoose');
 
 const usersController = require('./controllers/usersController');
+const itemsController = require('./controllers/itemsController');
 
 // Connecting to DB
 mongoose.connect(config.mongoConnectionString, {
@@ -39,6 +40,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(process.cwd() + "/../dist/ecommerce-app/"));
 
 app.use('/api/users', usersController);
+app.use('/api/items', itemsController);
 
 app.get('/', (req, res) => {
   res.sendFile(process.cwd() + "/../dist/ecommerce-app/index.html")
