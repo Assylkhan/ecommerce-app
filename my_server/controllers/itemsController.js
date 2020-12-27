@@ -1,9 +1,6 @@
 const express = require('express');
 var router = express.Router();
-var ObjectId = require('mongoose').Types.ObjectId;
 var Item = require('../models/item');
-var jwt = require('jsonwebtoken');
-const TOKEN_KEY = 'secretKeyNeedsStrongerOne';
 const usersController = require('./controllers/usersController');
 
 // => localhost:3080/api/items/
@@ -18,3 +15,5 @@ router.get('/', usersController.verifyToken, (req, res) => {
     console.log('Failed to find items: ' + JSON.stringify(err, undefined, 2));
   })
 })
+
+module.exports = router;
