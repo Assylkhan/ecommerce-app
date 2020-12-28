@@ -16,4 +16,17 @@ router.get('/', usersController.verifyToken, (req, res) => {
   })
 })
 
+// => localhost:3080/api/items/:id
+router.get('/:id', usersController.verifyToken, (req, res) => {
+  Item.findById(req.params.id).then(item => {
+    res.json(item)
+  }).catch(err => {
+    res.json({
+      msg: 'Failed to find the item',
+      err: err
+    });
+    console.log('Failed to find the item: ' + JSON.stringify(err, undefined, 2))
+  })
+});
+
 module.exports = router;
