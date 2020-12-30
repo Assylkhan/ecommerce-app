@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatCardModule } from '@angular/material/card';
 // MatDrawerContainer
 
 import { AppComponent } from './app.component';
@@ -56,7 +57,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
