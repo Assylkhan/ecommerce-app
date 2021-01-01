@@ -28,6 +28,7 @@ import { AccountComponent } from './account/account.component';
 import { BasicInfoComponent } from './basic-info/basic-info.component';
 import { BillingInfoComponent } from './billing-info/billing-info.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AddItemFormComponent } from './add-item-form/add-item-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     AccountComponent,
     BasicInfoComponent,
     BillingInfoComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AddItemFormComponent
   ],
   imports: [
     BrowserModule,

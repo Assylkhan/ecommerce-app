@@ -1,0 +1,36 @@
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name" formControlName="name" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Real Price</mat-label>
+    <input matInput placeholder="Real Price" formControlName="realPrice">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Price</mat-label>
+    <input matInput placeholder="Price" formControlName="description">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Description</mat-label>
+    <input matInput placeholder="Description" formControlName="description">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Count</mat-label>
+    <input matInput placeholder="Count" formControlName="count" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Image URL</mat-label>
+    <input matInput placeholder="Image URL" formControlName="imageUrl">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Image File Name</mat-label>
+    <input matInput placeholder="Image File Name" formControlName="imageFileName">
+  </mat-form-field>
+</form>
