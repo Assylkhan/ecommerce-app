@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 var Order = require('../models/item');
-const usersController = require('./controllers/usersController');
+const usersController = require('./usersController');
 
 // => localhost:3080/api/orders
 router.get('/', usersController.verifyToken, (req, res) => {

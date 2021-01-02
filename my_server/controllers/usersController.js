@@ -3,10 +3,11 @@ var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 var User = require('../models/user');
 var jwt = require('jsonwebtoken');
+var helper = require('../helpers/helper');
 const TOKEN_KEY = 'secretKeyNeedsStrongerOne';
 
 // => localhost:3080/api/users/
-router.get('/', verifyToken, (req, res) => {
+router.get('/', helper.verifyToken, (req, res) => {
   User.find().then(users => {
     res.json(users);
   }).catch(err => {
@@ -19,7 +20,7 @@ router.get('/', verifyToken, (req, res) => {
 })
 
 // => localhost:3080/api/users/:id
-router.get('/:id', verifyToken, (req, res) => {
+router.get('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   User.findById(req.params.id).then(user => {
@@ -34,7 +35,7 @@ router.get('/:id', verifyToken, (req, res) => {
 });
 
 // => localhost:3080/api/users/
-router.post('/', verifyToken, (req, res) => {
+router.post('/', helper.verifyToken, (req, res) => {
   let newUser = getModelFromRequest(req.body);
   newUser.save().then((user) => {
     res.status(201).json(user)
@@ -48,9 +49,9 @@ router.post('/', verifyToken, (req, res) => {
 });
 
 // => localhost:3080/api/users/password
-router.post('/password', verifyToken, (req, res) => {
+router.post('/password', helper.verifyToken, (req, res) => {
   User.findOne({
-    email: decodedToken.email
+    email: helper.decodedToken.email
   }).then(user => {
     if (user) {
       if (user.isValid(req.params.password)) {
@@ -119,25 +120,7 @@ router.post('/login', (req, res) => {
 //   res.status(200).json(decodedToken.email);
 // });
 
-var decodedToken = '';
-
-function verifyToken(req, res, next) {
-  let token = req.header('Authorization');
-
-  jwt.verify(token, TOKEN_KEY, (err, tokendata) => {
-    if (err) {
-      return res.status(401).json({
-        message: 'Unauthorized request'
-      })
-    }
-    if (tokendata) {
-      decodedToken = tokendata;
-      next();
-    }
-  })
-}
-
-router.put('/:id', verifyToken, (req, res) => {
+router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   let user = getModelFromRequest(req.body);
@@ -157,7 +140,7 @@ router.put('/:id', verifyToken, (req, res) => {
 });
 
 // => localhost:3080/api/users/:id
-router.delete('/:id', verifyToken, (req, res, next) => {
+router.delete('/:id', helper.verifyToken, (req, res, next) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   User.deleteOne({

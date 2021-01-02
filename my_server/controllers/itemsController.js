@@ -1,10 +1,11 @@
 const express = require('express');
 var router = express.Router();
 var Item = require('../models/item');
-const usersController = require('./controllers/usersController');
+const usersController = require('./usersController');
+var helper = require('../helpers/helper');
 
 // => localhost:3080/api/items/
-router.get('/', usersController.verifyToken, (req, res) => {
+router.get('/', helper.verifyToken, (req, res) => {
   Item.find().then(items => {
     res.json(items);
   }).catch(err => {
@@ -17,7 +18,7 @@ router.get('/', usersController.verifyToken, (req, res) => {
 })
 
 // => localhost:3080/api/items/:id
-router.get('/:id', usersController.verifyToken, (req, res) => {
+router.get('/:id', helper.verifyToken, (req, res) => {
   Item.findById(req.params.id).then(item => {
     res.json(item)
   }).catch(err => {

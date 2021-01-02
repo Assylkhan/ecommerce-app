@@ -24,11 +24,12 @@ import { HomeComponent } from './home/home.component';
 
 import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
-import { AccountComponent } from './account/account.component';
-import { BasicInfoComponent } from './basic-info/basic-info.component';
-import { BillingInfoComponent } from './billing-info/billing-info.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AccountComponent } from './account-settings/account/account.component';
+import { BasicInfoComponent } from './account-settings/basic-info/basic-info.component';
+import { BillingInfoComponent } from './account-settings/billing-info/billing-info.component';
+import { ChangePasswordComponent } from './account-settings/change-password/change-password.component';
 import { AddItemFormComponent } from './add-item-form/add-item-form.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AddItemFormComponent } from './add-item-form/add-item-form.component';
     BasicInfoComponent,
     BillingInfoComponent,
     ChangePasswordComponent,
-    AddItemFormComponent
+    AddItemFormComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,

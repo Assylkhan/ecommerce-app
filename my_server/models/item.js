@@ -6,11 +6,11 @@ const itemSchema = new mongoose.Schema({
     trim: true
   },
   realPrice: {
-    type: NumberDecimal,
+    type: Number,
     trim: true
   },
   price: {
-    type: NumberDecimal,
+    type: Number,
     trim: true
   },
   description: {
