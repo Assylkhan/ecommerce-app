@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { AuthenticationService } from '../authentication.service';
-import { UserService } from '../user.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '@app/services';
 
 @Component({
   selector: 'app-billing-info',

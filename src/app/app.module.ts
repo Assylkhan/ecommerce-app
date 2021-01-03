@@ -28,7 +28,7 @@ import { AccountComponent } from './account-settings/account/account.component';
 import { BasicInfoComponent } from './account-settings/basic-info/basic-info.component';
 import { BillingInfoComponent } from './account-settings/billing-info/billing-info.component';
 import { ChangePasswordComponent } from './account-settings/change-password/change-password.component';
-import { AddItemFormComponent } from './add-item-form/add-item-form.component';
+import { AddItemFormComponent } from './admin/add-item-form/add-item-form.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({

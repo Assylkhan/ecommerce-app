@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ItemService } from '../item.service';
+import { ItemService } from '@app/services';
 
 @Component({
   selector: 'app-add-item-form',
