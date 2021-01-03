@@ -15,10 +15,10 @@
     "lib": [
       "es2018",
       "dom"
-    ]
-  },
-  "paths": {
-    "@app/*": ["src/app/*"],
-    "@environments/*": ["src/environments/*"]
+    ],
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"]
+    }
   }
 }
