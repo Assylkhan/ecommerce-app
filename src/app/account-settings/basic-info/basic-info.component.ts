@@ -6,9 +6,9 @@ import {
   MatSnackBarVerticalPosition
 } from '@angular/material/snack-bar'
 
-import { AuthenticationService } from '../authentication.service';
-import { UserService } from '../user.service';
-import { User } from '../models/user.model';
+import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '../../services/user.service';
+import { User } from '@app/models';
 
 @Component({
   selector: 'app-basic-info',

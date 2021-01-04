@@ -2,8 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from '../models/user.model';
-import { UserService } from '../user.service';
+import { User } from '@app/models';
+import { UserService } from '@app/services';
 
 @Component({
   selector: 'app-signup-form',
