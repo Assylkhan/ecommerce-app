@@ -1,0 +1,5 @@
+<mat-selection-list #selectionItems [multiple]="false">
+  <mat-list-option *ngFor="let item of items" [value]="item">
+    {{item}}
+  </mat-list-option>
+</mat-selection-list>

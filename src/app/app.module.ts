@@ -30,6 +30,8 @@ import { BillingInfoComponent } from './account-settings/billing-info/billing-in
 import { ChangePasswordComponent } from './account-settings/change-password/change-password.component';
 import { AddItemFormComponent } from './admin/add-item-form/add-item-form.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { ItemsDashboardComponent } from './admin/items-dashboard/items-dashboard.component';
+import { ItemsListComponent } from './admin/items-list/items-list.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
     BillingInfoComponent,
     ChangePasswordComponent,
     AddItemFormComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ItemsDashboardComponent,
+    ItemsListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,10 @@
 <mat-sidenav-container class="example-container">
+  <mat-sidenav-content>
+    <ng-container [ngSwitch]="selectedItems[0]">
+      <app-add-item-form *ngSwitchCase="menuItems[0]"></app-add-item-form>
+      <div *ngSwitchDefault>Default</div>
+    </ng-container>
+  </mat-sidenav-content>
   <mat-sidenav mode="side" opened>
     <mat-selection-list #selectionItems [multiple]="false" [(ngModel)]="selectedItems">
       <mat-list-option *ngFor="let item of menuItems" [value]="item">
@@ -6,10 +12,4 @@
       </mat-list-option>
     </mat-selection-list>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <ng-container [ngSwitch]="selectedItems[0]">
-      <app-items-dashboard *ngSwitchCase="menuItems[0]"></app-items-dashboard>
-      <div *ngSwitchDefault>Default</div>
-    </ng-container>
-  </mat-sidenav-content>
 </mat-sidenav-container>
