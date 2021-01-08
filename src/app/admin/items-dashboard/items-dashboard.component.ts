@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./items-dashboard.component.scss']
 })
 export class ItemsDashboardComponent implements OnInit {
-  menuItems = ['Items', 'Add a New Item']
+  menuItems = ['Items List', 'Add a New Item']
   selectedItems = ['Items']
 
   constructor() { }
