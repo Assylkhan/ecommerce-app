@@ -4,7 +4,6 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 var helper = require('../helpers/helper');
-const TOKEN_KEY = 'secretKeyNeedsStrongerOne';
 
 // => localhost:3080/api/users/
 router.get('/', helper.verifyToken, (req, res) => {
@@ -35,7 +34,7 @@ router.get('/:id', helper.verifyToken, (req, res) => {
 });
 
 // => localhost:3080/api/users/
-router.post('/', helper.verifyToken, (req, res) => {
+router.post('/', (req, res) => {
   let newUser = getModelFromRequest(req.body);
   newUser.save().then((user) => {
     res.status(201).json(user)
@@ -83,15 +82,16 @@ router.post('/password', helper.verifyToken, (req, res) => {
 
 // => localhost:3080/api/users/login
 router.post('/login', (req, res) => {
+  console.log(req.body);
   User.findOne({
-    email: req.params.email
+    email: req.body.email
   }).then(user => {
     if (user) {
-      if (user.isValid(req.params.password)) {
+      if (user.isValid(req.body.password)) {
         // generate token
         let token = jwt.sign({
-          email: req.params.email
-        }, TOKEN_KEY, {
+          email: req.body.email
+        }, helper.TOKEN_KEY, {
           expiresIn: '3h'
         })
         user.token = token

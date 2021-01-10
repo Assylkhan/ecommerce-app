@@ -30,4 +30,31 @@ router.get('/:id', helper.verifyToken, (req, res) => {
   })
 });
 
+// => localhost:3080/api/items/
+router.post('/', helper.verifyToken, (req, res) => {
+  let newItem = getModelFromRequest(req.body);
+  newItem.save().then((item) => {
+    res.status(201).json(item)
+  }).catch((err) => {
+    res.status(501).json({
+      msg: 'Failed to add the item',
+      err: err.message
+    })
+    console.log('Failed to add the item: ' + JSON.stringify(err, undefined, 2))
+  })
+});
+
+function getModelFromRequest(reqBody) {
+  let item = new Item({
+    name: reqBody.name,
+    realPrice: reqBody.realPrice,
+    price: reqBody.price,
+    description: reqBody.address.description,
+    count: reqBody.address.count,
+    imageUrl: reqBody.address.imageUrl,
+    imageFileName: reqBody.address.imageFileName
+  });
+  return item;
+}
+
 module.exports = router;

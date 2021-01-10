@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     trim: true
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
   token: {
     type: String
   },
-  billingInfo : {
+  billingInfo: {
     firstName: {
       type: String,
       trim: true
@@ -71,15 +71,13 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 }, );
 
-userSchema.statics.hashPassword = function hashPassword(password) {
+userSchema.statics.hashPassword = function (password) {
   return bcrypt.hashSync(password, 10);
-}
+};
 
 userSchema.methods.isValid = function (hashedPassword) {
   return bcrypt.compareSync(hashedPassword, this.password);
-}
-
-var User = mongoose.model('User', userSchema);
-module.exports = {
-  User
 };
+
+// var User = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);
