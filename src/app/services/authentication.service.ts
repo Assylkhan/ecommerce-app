@@ -29,13 +29,13 @@ export class AuthenticationService {
 
   login(email: string, password: string) {
     return this.http.post<User>(`${this.rootURL}/users/login`, { email, password })
-      .pipe(map(user => {
-        // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
-        // user.authData = window.btoa(username + ':' + password);
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }))
+      // .pipe(map(user => {
+      //   // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
+      //   // user.authData = window.btoa(username + ':' + password);
+      //   localStorage.setItem('currentUser', JSON.stringify(user));
+      //   this.currentUserSubject.next(user);
+      //   return user;
+      // }))
   }
 
   logout() {

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { User } from '@app/models';
 import { AuthenticationService } from '@app/services';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login-form',
@@ -44,7 +45,9 @@ export class LoginFormComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.invalid) return;
     this.loading = true;
-    this.authService.login(this.f.email.value, this.f.password.value).subscribe({
+    this.authService.login(this.f.email.value, this.f.password.value)
+    .pipe(first())
+    .subscribe({
       next: () => {
         this.router.navigate([this.returnUrl])
       },
