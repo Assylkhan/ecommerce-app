@@ -13,10 +13,10 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     const currentUser = this.authenticationService.currentUserValue;
     console.log('currentUser')
     console.log(currentUser)
-    if (currentUser) {
+    if (currentUser && currentUser.token) {
       request = request.clone({
         setHeaders: {
-          Authorization: currentUser.token?.toString()
+          Authorization: currentUser.token!.toString()
         }
       })
     }

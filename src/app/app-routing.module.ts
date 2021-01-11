@@ -8,8 +8,8 @@ import { AuthGuard } from '@app/helpers';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  // { path: '', component: HomeComponent },
   { path: 'account', component: AccountComponent },
   { path: 'signup', component: SignupFormComponent },
   { path: 'login', component: LoginFormComponent },

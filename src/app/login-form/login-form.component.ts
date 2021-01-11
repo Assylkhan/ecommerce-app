@@ -49,6 +49,7 @@ export class LoginFormComponent implements OnInit {
         this.router.navigate([this.returnUrl])
       },
       error: error => {
+        console.log('error')
         console.log(error)
         this.error = error
         this.loading = false
