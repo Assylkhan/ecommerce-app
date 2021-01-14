@@ -47,17 +47,17 @@ export class LoginFormComponent implements OnInit {
     this.loading = true;
     this.authService.login(this.f.email.value, this.f.password.value)
     // .pipe(first())
-    .subscribe({
-      next: () => {
+    .subscribe(
+      () => {
         this.router.navigate([this.returnUrl])
       },
-      error: error => {
+      error => {
         console.log('error')
         console.log(error)
         this.error = error
         this.loading = false
       }
-    });
+    );
   }
 
 }
