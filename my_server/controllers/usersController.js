@@ -107,7 +107,7 @@ router.post('/login', (req, res) => {
       })
     }
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to find the user',
       err: err
     });
