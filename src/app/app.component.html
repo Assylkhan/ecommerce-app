@@ -8,7 +8,7 @@
   </nav>
   <div class="spacer"></div>
   <nav class="header_nav right-nav">
-    <ng-container *ngIf="authService.currentUserValue">
+    <ng-container *ngIf="!authService.currentUserValue">
       <a routerLink="/login">Log in</a>
       <a routerLink="/signup">Sign Up</a>
     </ng-container>

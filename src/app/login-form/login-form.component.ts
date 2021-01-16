@@ -46,7 +46,7 @@ export class LoginFormComponent implements OnInit {
     if (this.loginForm.invalid) return;
     this.loading = true;
     this.authService.login(this.f.email.value, this.f.password.value)
-    // .pipe(first())
+    .pipe(first())
     .subscribe(
       () => {
         this.router.navigate([this.returnUrl])

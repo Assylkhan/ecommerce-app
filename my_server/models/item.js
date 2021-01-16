@@ -34,7 +34,4 @@ const itemSchema = new mongoose.Schema({
   timestamps: true
 }, );
 
-var Item = mongoose.model('Item', itemSchema);
-module.exports = {
-  Item
-};
+module.exports = mongoose.model('Item', itemSchema);
