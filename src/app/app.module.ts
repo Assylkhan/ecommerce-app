@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatCardModule } from '@angular/material/card';
+import { MatSortModule } from '@angular/material/sort';
 // MatDrawerContainer
 
 import { AppComponent } from './app.component';
@@ -66,7 +67,8 @@ import { ItemsListComponent } from './admin/items-list/items-list.component';
     MatIconModule,
     MatListModule,
     MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
+    MatSortModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

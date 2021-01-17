@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
     this.authService.login(this.f.email.value, this.f.password.value)
     .pipe(first())
     .subscribe(
-      () => {
+      (user) => {
         this.router.navigate([this.returnUrl])
       },
       error => {

@@ -36,11 +36,11 @@ router.post('/', helper.verifyToken, (req, res) => {
   newItem.save().then((item) => {
     res.status(201).json(item)
   }).catch((err) => {
+    console.log('Failed to add the item: ' + JSON.stringify(err, undefined, 2))
     res.status(501).json({
       msg: 'Failed to add the item',
       err: err.message
     })
-    console.log('Failed to add the item: ' + JSON.stringify(err, undefined, 2))
   })
 });
 
@@ -49,10 +49,10 @@ function getModelFromRequest(reqBody) {
     name: reqBody.name,
     realPrice: reqBody.realPrice,
     price: reqBody.price,
-    description: reqBody.address.description,
-    count: reqBody.address.count,
-    imageUrl: reqBody.address.imageUrl,
-    imageFileName: reqBody.address.imageFileName
+    description: reqBody.description,
+    count: reqBody.count,
+    imageUrl: reqBody.imageUrl,
+    imageFileName: reqBody.imageFileName
   });
   return item;
 }

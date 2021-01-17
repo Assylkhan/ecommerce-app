@@ -12,14 +12,15 @@ export class AuthenticationService {
   rootURL = '/api'
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
+    console.log('auth service: ' + localStorage.getItem('currentUser'))
+    this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   private getEmail() {
     return this.http.get(`${this.rootURL}/users/email`, {
       observe: 'body',
-      params: new HttpParams().append('token', localStorage.getItem('token'))
+      params: new HttpParams().append('currentUser', localStorage.getItem('currentUser'))
     })
   }
 

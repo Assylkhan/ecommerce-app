@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ItemService } from '@app/services';
 
 @Component({
@@ -9,8 +10,10 @@ import { ItemService } from '@app/services';
 })
 
 export class AddItemFormComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   itemForm = this.fb.group({
-    name: [''],
+    name: ['', [Validators.required]],
     realPrice: [''],
     price: [''],
     description: [''],
@@ -21,16 +24,27 @@ export class AddItemFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private itemService: ItemService) { }
+    private itemService: ItemService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-
   }
 
-  onSubmit() {
+  showSnackBar(msg, status) {
+    this.snackBar.open(msg, status, {
+      duration: 3000,
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition
+    })
+  }
+
+  onSubmit(formDirective: FormGroupDirective) {
+    if (this.itemForm.invalid) return;
     this.itemService.create(this.itemForm.getRawValue()).subscribe({
       next: () => {
-        console.log('item added successfully')
+        this.itemForm.reset()
+        formDirective.resetForm()
+        this.showSnackBar('Item added successfully', 'Success')
       },
       error: error => {
         console.log(error)

@@ -1,24 +1,25 @@
 export class User {
-    id?: any;
+  id?: any;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  role?: string;
+
+  billingInfo: {
     firstName?: string;
     lastName?: string;
-    email?: string;
-    password?: string;
+    companyName?: string;
+    country?: string;
+    state?: string;
+    city?: string;
+    address?: string;
+    zip?: string;
+    phone?: string;
+  }
+  token?: string;
 
-    billingInfo: {
-      firstName?: string;
-      lastName?: string;
-      companyName?: string;
-      country?: string;
-      state?: string;
-      city?: string;
-      address?: string;
-      zip?: string;
-      phone?: string;
-    }
-    token?: string;
-
-    public constructor(init?: Partial<User>) {
-        Object.assign(this, init);
-    }
+  public constructor(init?: Partial<User>) {
+    Object.assign(this, init);
+  }
 }

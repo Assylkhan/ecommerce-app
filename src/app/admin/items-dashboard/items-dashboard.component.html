@@ -3,12 +3,12 @@
     <ng-container [ngSwitch]="selectedItems[0]">
       <app-items-list *ngSwitchCase="menuItems[0]"></app-items-list>
       <app-add-item-form *ngSwitchCase="menuItems[1]"></app-add-item-form>
-      <div *ngSwitchDefault>Default</div>
+      <app-items-list *ngSwitchDefault>Default</app-items-list>
     </ng-container>
   </mat-sidenav-content>
   <mat-sidenav mode="side" position="end" opened>
     <mat-selection-list #selectionItems [multiple]="false" [(ngModel)]="selectedItems">
-      <mat-list-option *ngFor="let item of menuItems" [value]="item">
+      <mat-list-option *ngFor="let item of menuItems" [value]="item" [selected]="item === 'Items List'">
         {{item}}
       </mat-list-option>
     </mat-selection-list>

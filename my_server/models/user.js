@@ -34,6 +34,10 @@ var userSchema = new mongoose.Schema({
     required: [true, 'The password is required'],
     trim: true
   },
+  role: {
+    type: String,
+    default: 'regular'
+  },
   token: {
     type: String
   },
