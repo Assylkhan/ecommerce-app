@@ -12,7 +12,6 @@ export class AuthenticationService {
   rootURL = '/api'
 
   constructor(private http: HttpClient) {
-    console.log('auth service: ' + localStorage.getItem('currentUser'))
     this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }

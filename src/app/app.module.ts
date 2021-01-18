@@ -33,6 +33,7 @@ import { AddItemFormComponent } from './admin/add-item-form/add-item-form.compon
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { ItemsDashboardComponent } from './admin/items-dashboard/items-dashboard.component';
 import { ItemsListComponent } from './admin/items-list/items-list.component';
+import { ItemComponent } from './item/item.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ItemsListComponent } from './admin/items-list/items-list.component';
     AddItemFormComponent,
     AdminDashboardComponent,
     ItemsDashboardComponent,
-    ItemsListComponent
+    ItemsListComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule,

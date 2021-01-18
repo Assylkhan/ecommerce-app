@@ -23,4 +23,8 @@ export class ItemService {
   fetchAll(): Observable<Item[]> {
     return this.http.get<Item[]>(`${this.rootURL}/items`);
   }
+
+  getItem(id: any): Observable<Item> {
+    return this.http.get<Item>(`${this.rootURL}/items/${id}`)
+  }
 }

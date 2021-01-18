@@ -1,7 +1,6 @@
 const express = require('express');
 var router = express.Router();
 var Item = require('../models/item');
-const usersController = require('./usersController');
 var helper = require('../helpers/helper');
 
 // => localhost:3080/api/items/
@@ -20,13 +19,13 @@ router.get('/', helper.verifyToken, (req, res) => {
 // => localhost:3080/api/items/:id
 router.get('/:id', helper.verifyToken, (req, res) => {
   Item.findById(req.params.id).then(item => {
-    res.json(item)
+    res.status(201).json(item)
   }).catch(err => {
-    res.json({
+    console.log('Failed to find the item: ' + JSON.stringify(err, undefined, 2))
+    res.status(501).json({
       msg: 'Failed to find the item',
       err: err
     });
-    console.log('Failed to find the item: ' + JSON.stringify(err, undefined, 2))
   })
 });
 

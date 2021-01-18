@@ -1,10 +1,10 @@
 const express = require('express');
 var router = express.Router();
 var Order = require('../models/item');
-const usersController = require('./usersController');
+var helper = require('../helpers/helper');
 
 // => localhost:3080/api/orders
-router.get('/', usersController.verifyToken, (req, res) => {
+router.get('/', helper.verifyToken, (req, res) => {
   Order.find().then(orders => {
     res.json(orders);
   }).catch(err => {
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
 });
 
 // => localhost:3080/api/orders/users/:id
-router.get('users/:id', usersController.verifyToken, (req, res) => {
+router.get('users/:id', helper.verifyToken, (req, res) => {
   Order.find({
     userId: req.params.id
   }).then(orders => {
