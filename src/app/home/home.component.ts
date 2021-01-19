@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from '@app/services';
 import { Item } from '@app/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +10,10 @@ import { Item } from '@app/models';
 })
 export class HomeComponent implements OnInit {
   items: Item[];
-  constructor(private itemService: ItemService) { }
-
-  onClick(item: Item) {
-    console.log(`{item.name} clicked`)
-  }
+  constructor(
+    private itemService: ItemService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.itemService.fetchAll().subscribe({

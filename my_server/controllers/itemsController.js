@@ -6,6 +6,7 @@ var helper = require('../helpers/helper');
 // => localhost:3080/api/items/
 router.get('/', helper.verifyToken, (req, res) => {
   Item.find().then(items => {
+    console.log(items)
     res.json(items);
   }).catch(err => {
     res.json({
