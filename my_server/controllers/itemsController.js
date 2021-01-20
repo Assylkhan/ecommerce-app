@@ -19,6 +19,8 @@ router.get('/', helper.verifyToken, (req, res) => {
 
 // => localhost:3080/api/items/:id
 router.get('/:id', helper.verifyToken, (req, res) => {
+  console.log('req.params.id')
+  console.log(req.params)
   Item.findById(req.params.id).then(item => {
     res.status(201).json(item)
   }).catch(err => {
