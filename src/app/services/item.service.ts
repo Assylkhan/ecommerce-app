@@ -25,8 +25,6 @@ export class ItemService {
   }
 
   getItem(id: any): Observable<Item> {
-    console.log('id:')
-    console.log(id)
     return this.http.get<Item>(`${this.rootURL}/items/${id}`)
   }
 }

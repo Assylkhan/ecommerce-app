@@ -1,19 +1,30 @@
-<ng-template *ngIf="currentItem$ | async; let item">
-  <mat-card class="example-card">
-    <img mat-card-image [src]="item.imageUrl" alt="{{item.imageFileName}}">
-    <mat-card-content>
-      <p>
-        {{item.description}}
-      </p>
-    </mat-card-content>
-    <mat-card-footer>
-      <div mat-card-avatar class="example-footer-image"></div>
-      <mat-card-title><a routerLink="/items/{{item._id}}">{{item.name}}</a></mat-card-title>
-      <mat-card-subtitle>{{item.price}}</mat-card-subtitle>
-    </mat-card-footer>
-    <mat-card-actions>
-      <button mat-button>Add to Cart</button>
-      <button mat-button>Share</button>
-    </mat-card-actions>
-  </mat-card>
-</ng-template>
+<mat-grid-list cols="4" rowHeight="100px">
+  <mat-grid-tile
+      *ngFor="let tile of tiles"
+      [colspan]="tile.cols"
+      [rowspan]="tile.rows"
+      [style.background]="tile.color">
+
+      <mat-card *ngIf="item && tile.name === 'Details'">
+        <img mat-card-image [src]="item.imageUrl" alt="{{item.imageFileName}}">
+        <mat-card-content>
+          <p>
+            {{item.description}}
+          </p>
+        </mat-card-content>
+        <mat-card-footer>
+          <div mat-card-avatar class="example-footer-image"></div>
+          <mat-card-title>{{item.name}}</mat-card-title>
+          <mat-card-subtitle>{{item.price}}</mat-card-subtitle>
+        </mat-card-footer>
+        <mat-card-actions>
+          <button mat-button>Add to Cart</button>
+          <button mat-button>Share</button>
+        </mat-card-actions>
+      </mat-card>
+
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+

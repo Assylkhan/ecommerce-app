@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatCardModule } from '@angular/material/card';
 import { MatSortModule } from '@angular/material/sort';
+import { MatGridListModule } from '@angular/material/grid-list';
 // MatDrawerContainer
 
 import { AppComponent } from './app.component';
@@ -70,7 +71,8 @@ import { ItemComponent } from './item/item.component';
     MatListModule,
     MatSnackBarModule,
     MatCardModule,
-    MatSortModule
+    MatSortModule,
+    MatGridListModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

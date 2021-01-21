@@ -6,23 +6,30 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+export interface Tile {
+  color: string;
+  cols: number;
+  rows: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit {
-  // item: Item;
-  private currentItemSubject: BehaviorSubject<Item>;
-  public currentItem$: Observable<Item>;
+  item: Item;
+  tiles: Tile[] = [
+    {name: 'Details', cols: 3, rows: 1, color: 'lightblue'},
+    {name: 'Info', cols: 1, rows: 2, color: 'lightgreen'},
+    {name: 'Recommended', cols: 3, rows: 1, color: '#DDBDF1'},
+  ];
 
   constructor(
     private route: ActivatedRoute,
     private itemService: ItemService
-  ) {
-    this.currentItemSubject = new BehaviorSubject(new Item());
-    this.currentItem$ = this.currentItemSubject.asObservable();
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getItem()
@@ -31,9 +38,7 @@ export class ItemComponent implements OnInit {
   getItem(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.itemService.getItem(id).subscribe(item => {
-      // this.item = item
-      this.currentItemSubject.next(item);
-      console.log(item)
+      this.item = item
     });
   }
 
