@@ -22,8 +22,8 @@ export class ItemComponent implements OnInit {
   item: Item;
   tiles: Tile[] = [
     {name: 'Details', cols: 3, rows: 1, color: 'lightblue'},
-    {name: 'Info', cols: 1, rows: 2, color: 'lightgreen'},
-    {name: 'Recommended', cols: 3, rows: 1, color: '#DDBDF1'},
+    {name: 'Recommended', cols: 1, rows: 2, color: 'lightgreen'},
+    {name: 'Info', cols: 3, rows: 1, color: '#DDBDF1'},
   ];
 
   constructor(

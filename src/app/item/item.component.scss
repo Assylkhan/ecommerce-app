@@ -1,3 +1,11 @@
 :host {
   width: 80rem;
 }
+.item_details_container {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.item_details_container > * {
+  padding: 1rem;
+}

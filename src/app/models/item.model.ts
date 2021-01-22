@@ -4,6 +4,7 @@ export class Item {
   realPrice: number;
   price: number;
   description: string;
+  longDescription: string;
   count: string;
   imageUrl: string;
   imageFileName: string;

@@ -17,6 +17,10 @@ const itemSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  longDescription: {
+    type: String,
+    trim: true
+  },
   count: {
     type: Number,
     required: [true, 'The count is required'],
