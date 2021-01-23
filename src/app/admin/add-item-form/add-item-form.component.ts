@@ -12,6 +12,7 @@ import { ItemService } from '@app/services';
 export class AddItemFormComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  imageToUpload: File;
   itemForm = this.fb.group({
     name: ['', [Validators.required]],
     realPrice: [''],
@@ -36,6 +37,10 @@ export class AddItemFormComponent implements OnInit {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition
     })
+  }
+
+  handleImageInput(images: FileList) {
+    this.imageToUpload = images.item(0)
   }
 
   onSubmit(formDirective: FormGroupDirective) {

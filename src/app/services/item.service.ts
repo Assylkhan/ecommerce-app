@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Item } from '../models/item.model';
 
 @Injectable({
@@ -14,6 +15,13 @@ export class ItemService {
 
   create(item: any): Observable<any> {
     return this.http.post(this.rootURL+'/items', item);
+  }
+
+  postImage(image: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', image, image.name);
+    return this.http.post(`${this.rootURL}/dbx`, image)
+    .map(() => {return true})
   }
 
   update(item: any): Observable<any> {

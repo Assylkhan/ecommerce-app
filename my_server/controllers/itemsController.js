@@ -2,6 +2,46 @@ const express = require('express');
 var router = express.Router();
 var Item = require('../models/item');
 var helper = require('../helpers/helper');
+const config = require('../config');
+const Dropbox = require("dropbox").Dropbox;
+fs = require('fs')
+
+const fetch = require("isomorphic-fetch");
+
+const dbx = new Dropbox({
+  accessToken: config.dropboxAccessToken,
+  fetch: fetch
+});
+
+router.post("/dbx", (req, res) => {
+
+  let imageArray;
+
+  //Receive either a single image or an array of images from the front end and
+  //its placed in req.files by express-fileupload
+
+  if (req.files.itemImage.length) {
+    imageArray = [...req.files.itemImage];
+  } else {
+    imageArray = [req.files.itemImage];
+  }
+
+  imageArray.forEach(image => {
+    console.log("Image==>>", image)
+
+    dbx
+      .filesUpload({
+        path: `/${image.name}`,
+        contents: image.data
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+});
 
 // => localhost:3080/api/items/
 router.get('/', helper.verifyToken, (req, res) => {
@@ -35,6 +75,7 @@ router.get('/:id', helper.verifyToken, (req, res) => {
 // => localhost:3080/api/items/
 router.post('/', helper.verifyToken, (req, res) => {
   let newItem = getModelFromRequest(req.body);
+
   newItem.save().then((item) => {
     res.status(201).json(item)
   }).catch((err) => {
