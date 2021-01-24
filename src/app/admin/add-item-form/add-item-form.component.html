@@ -24,11 +24,12 @@
     <input matInput placeholder="Count" formControlName="count" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <mat-label>Upload Image</mat-label>
-    <input matInput type="file" placeholder="Image" formControlName="imageUrl"
-    (change)="handleImageInput($event.target.files)">
-  </mat-form-field>
+  <button type="button" (click)="fileInput.click()">
+    <mat-icon aria-hidden="false" aria-label="Example home icon">library_add</mat-icon>
+    <span>Select</span>
+    <input #fileInput type="file" (change)="handleImageInput($event.target.files)" style="display:none;" />
+  </button>
+  <div>{{imageToUpload?.name}}</div>
 
   <mat-form-field class="full-width">
     <mat-label>Image File Name</mat-label>

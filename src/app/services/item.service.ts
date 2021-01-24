@@ -17,12 +17,12 @@ export class ItemService {
     return this.http.post(this.rootURL+'/items', item);
   }
 
-  postImage(image: File): Observable<boolean> {
-    const formData: FormData = new FormData();
-    formData.append('fileKey', image, image.name);
-    return this.http.post(`${this.rootURL}/dbx`, image)
-    .map(() => {return true})
-  }
+  // postImage(image: File): Observable<boolean> {
+    // const formData: FormData = new FormData();
+    // formData.append('fileKey', image, image.name);
+    // return this.http.post(`${this.rootURL}/dbx`, image)
+    // .map(() => {return true})
+  // }
 
   update(item: any): Observable<any> {
     return this.http.put(`${this.rootURL}/items/${item.id}`, item);

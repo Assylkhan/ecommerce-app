@@ -10,8 +10,24 @@ const fetch = require("isomorphic-fetch");
 
 const dbx = new Dropbox({
   accessToken: config.dropboxAccessToken,
-  fetch: fetch
+  // fetch: fetch
 });
+
+// dbx.usersGetCurrentAccount()
+//   .then(function (response) {
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     console.error(error);
+//   });
+
+dbx.filesListFolder({path: ''})
+    .then(function(response) {
+      console.log(response.result.entries);
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
 
 router.post("/dbx", (req, res) => {
 

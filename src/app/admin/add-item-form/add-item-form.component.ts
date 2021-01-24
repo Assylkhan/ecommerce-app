@@ -41,10 +41,12 @@ export class AddItemFormComponent implements OnInit {
 
   handleImageInput(images: FileList) {
     this.imageToUpload = images.item(0)
+    console.log(images.item(0))
   }
 
   onSubmit(formDirective: FormGroupDirective) {
     if (this.itemForm.invalid) return;
+    console.log(this.itemForm.getRawValue());
     this.itemService.create(this.itemForm.getRawValue()).subscribe({
       next: () => {
         this.itemForm.reset()
