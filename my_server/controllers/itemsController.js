@@ -103,6 +103,30 @@ router.post('/', helper.verifyToken, (req, res) => {
   })
 });
 
+function saveImage(image) {
+  if (req.files.itemImage.length) {
+    imageArray = [...req.files.itemImage];
+  } else {
+    imageArray = [req.files.itemImage];
+  }
+
+  imageArray.forEach(image => {
+    console.log("Image==>>", image)
+
+    dbx
+      .filesUpload({
+        path: `/${image.name}`,
+        contents: image.data
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+}
+
 function getModelFromRequest(reqBody) {
   let item = new Item({
     name: reqBody.name,

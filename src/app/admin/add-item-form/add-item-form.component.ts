@@ -12,7 +12,7 @@ import { ItemService } from '@app/services';
 export class AddItemFormComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  imageToUpload: File;
+  imagesToUpload: File[];
   itemForm = this.fb.group({
     name: ['', [Validators.required]],
     realPrice: [''],
@@ -40,14 +40,14 @@ export class AddItemFormComponent implements OnInit {
   }
 
   handleImageInput(images: FileList) {
-    this.imageToUpload = images.item(0)
-    console.log(images.item(0))
+    this.imagesToUpload = Array.from(images)
   }
 
   onSubmit(formDirective: FormGroupDirective) {
     if (this.itemForm.invalid) return;
-    console.log(this.itemForm.getRawValue());
-    this.itemService.create(this.itemForm.getRawValue()).subscribe({
+    var dataToSend = this.itemForm.getRawValue()
+    dataToSend['image'] = this.imagesToUpload
+    this.itemService.create(dataToSend).subscribe({
       next: () => {
         this.itemForm.reset()
         formDirective.resetForm()
