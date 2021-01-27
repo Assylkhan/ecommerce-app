@@ -93,7 +93,7 @@ router.post('/', helper.verifyToken, (req, res) => {
   let newItem = getModelFromRequest(req.body);
 
   newItem.save().then((item) => {
-    saveImage(req.body.images)
+    saveImages(req.body.images)
     res.status(201).json(item)
   }).catch((err) => {
     console.log('Failed to add the item: ' + JSON.stringify(err, undefined, 2))
@@ -104,7 +104,7 @@ router.post('/', helper.verifyToken, (req, res) => {
   })
 });
 
-function saveImage(images) {
+function saveImages(images) {
   console.log('images')
   console.log(images)
   if (images.itemImage.length) {

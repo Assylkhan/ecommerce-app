@@ -46,7 +46,7 @@ export class AddItemFormComponent implements OnInit {
   onSubmit(formDirective: FormGroupDirective) {
     if (this.itemForm.invalid) return;
     var dataToSend = this.itemForm.getRawValue()
-    dataToSend['image'] = this.imagesToUpload
+    dataToSend['images'] = this.imagesToUpload
     this.itemService.create(dataToSend).subscribe({
       next: () => {
         this.itemForm.reset()

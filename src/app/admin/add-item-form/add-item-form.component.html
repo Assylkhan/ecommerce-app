@@ -27,9 +27,9 @@
   <button type="button" (click)="fileInput.click()">
     <mat-icon aria-hidden="false" aria-label="Example home icon">library_add</mat-icon>
     <span>Select</span>
-    <input #fileInput type="file" (change)="handleImageInput($event.target.files)" style="display:none;" />
+    <input #fileInput type="file" multiple (change)="handleImageInput($event.target.files)" style="display:none;" />
   </button>
-  <div>{{imageToUpload?.name}}</div>
+  <div *ngFor="let image of imagesToUpload">{{image.name}}</div>
 
   <mat-form-field class="full-width">
     <mat-label>Image File Name</mat-label>
