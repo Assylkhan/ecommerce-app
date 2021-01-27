@@ -115,19 +115,26 @@ function saveImages(images) {
 
   imageArray.forEach(image => {
     console.log("Image==>>", image)
-
-    dbx
-      .filesUpload({
-        path: `/${image.name}`,
-        contents: image.data
-      })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    dbx.filesUploadSessionStart({contents: image, close: true})
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    // dbx
+    //   .filesUpload({
+    //     path: `/${image.name}`,
+    //     contents: image.data
+    //   })
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   });
+  dbx.filesUploadSessionFinishBatch({entries: {cursor: {session_id: file1Start.session_id, offset: testFile1Data.length}, commit: {path: "/testFile1.txt"}}})
 }
 
 function getModelFromRequest(reqBody) {
