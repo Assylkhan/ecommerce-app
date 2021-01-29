@@ -5,7 +5,13 @@
   height: 100%;
   width: 100%;
   text-align: center;
+  margin-bottom: 10px;
 }
 .item_details_container > * {
   padding: 1rem;
+}
+.item_card_actions {
+  &>* {
+    margin-right: 10px;
+  }
 }
