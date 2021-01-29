@@ -2,8 +2,7 @@
   <mat-grid-tile
       *ngFor="let tile of tiles"
       [colspan]="tile.cols"
-      [rowspan]="tile.rows"
-      [style.background]="tile.color">
+      [rowspan]="tile.rows">
 
       <ng-container [ngSwitch]="tile.name">
         <div class="item_details_container" *ngSwitchCase="'Details'">
@@ -39,9 +38,5 @@
         </div>
       </ng-container>
 
-
   </mat-grid-tile>
 </mat-grid-list>
-
-
-
