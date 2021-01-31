@@ -1,17 +1,26 @@
 :host {
   width: 80rem;
 }
+.mat-grid-tile {
+  border: 1px solid;
+}
+
 .item_details_container {
   height: 100%;
   width: 100%;
   text-align: center;
-  margin: 20px;
+  // margin: 20px;
 }
 .item_details_container > * {
   padding: 1rem;
+
 }
 .item_card_actions {
-  &>* {
-    margin-right: 10px;
-  }
+  // * {
+  //   border: 1px solid;
+  // }
+  // &>* {
+    // margin-right: 10px;
+  //   border: 1px solid;
+  // }
 }
