@@ -20,6 +20,7 @@ export interface Tile {
 })
 export class ItemComponent implements OnInit {
   item: Item;
+  featuredItems: Item[];
   tiles: Tile[] = [
     {name: 'Details', cols: 3, rows: 1, color: 'lightblue'},
     {name: 'Recommended', cols: 1, rows: 2, color: 'lightgreen'},

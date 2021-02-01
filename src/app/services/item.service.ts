@@ -32,6 +32,10 @@ export class ItemService {
     return this.http.get<Item[]>(`${this.rootURL}/items`);
   }
 
+  fetchFeatured(): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.rootURL}/items?featured=1`);
+  }
+
   getItem(id: any): Observable<Item> {
     return this.http.get<Item>(`${this.rootURL}/items/${id}`)
   }

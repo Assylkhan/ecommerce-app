@@ -21,6 +21,9 @@ const itemSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  featured: {
+    type: Boolean
+  },
   count: {
     type: Number,
     required: [true, 'The count is required'],

@@ -21,13 +21,15 @@ const dbx = new Dropbox({
 //     console.error(error);
 //   });
 
-dbx.filesListFolder({path: ''})
-    .then(function(response) {
-      console.log(response.result.entries);
-    })
-    .catch(function(error) {
-      console.error(error);
-    });
+dbx.filesListFolder({
+    path: ''
+  })
+  .then(function (response) {
+    console.log(response.result.entries);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
 
 router.post("/dbx", (req, res) => {
 
@@ -61,16 +63,30 @@ router.post("/dbx", (req, res) => {
 
 // => localhost:3080/api/items/
 router.get('/', helper.verifyToken, (req, res) => {
-  Item.find().then(items => {
-    console.log(items)
-    res.json(items);
-  }).catch(err => {
-    res.json({
-      msg: 'Failed to find items',
-      err: err
-    });
-    console.log('Failed to find items: ' + JSON.stringify(err, undefined, 2));
-  })
+  console.log('req.params.featured: ' + req.params.featured)
+  if (req.params.featured != null) {
+    Item.find({featured: true}).then(items => {
+      console.log(items)
+      res.json(items);
+    }).catch(err => {
+      res.json({
+        msg: 'Failed to find items',
+        err: err
+      });
+      console.log('Failed to find items: ' + JSON.stringify(err, undefined, 2));
+    })
+  } else {
+    Item.find().then(items => {
+      console.log(items)
+      res.json(items);
+    }).catch(err => {
+      res.json({
+        msg: 'Failed to find items',
+        err: err
+      });
+      console.log('Failed to find items: ' + JSON.stringify(err, undefined, 2));
+    })
+  }
 })
 
 // => localhost:3080/api/items/:id
@@ -115,13 +131,16 @@ function saveImages(images) {
 
   imageArray.forEach(image => {
     console.log("Image==>>", image)
-    dbx.filesUploadSessionStart({contents: image, close: true})
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    dbx.filesUploadSessionStart({
+        contents: image,
+        close: true
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
     // dbx
     //   .filesUpload({
     //     path: `/${image.name}`,
@@ -134,7 +153,17 @@ function saveImages(images) {
     //     console.log(err);
     //   });
   });
-  dbx.filesUploadSessionFinishBatch({entries: {cursor: {session_id: file1Start.session_id, offset: testFile1Data.length}, commit: {path: "/testFile1.txt"}}})
+  dbx.filesUploadSessionFinishBatch({
+    entries: {
+      cursor: {
+        session_id: file1Start.session_id,
+        offset: testFile1Data.length
+      },
+      commit: {
+        path: "/testFile1.txt"
+      }
+    }
+  })
 }
 
 function getModelFromRequest(reqBody) {

@@ -5,6 +5,7 @@ export class Item {
   price: number;
   description: string;
   longDescription: string;
+  featured: boolean;
   count: string;
   imageUrl: string;
   imageFileName: string;
