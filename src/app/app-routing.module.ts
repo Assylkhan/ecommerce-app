@@ -7,6 +7,8 @@ import { AccountComponent } from './account-settings/account/account.component';
 import { AuthGuard } from '@app/helpers';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { ItemComponent } from './item/item.component';
+import { ItemsDashboardComponent } from './admin/items-dashboard/items-dashboard.component';
+import { AddItemFormComponent } from './admin/add-item-form';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -14,7 +16,12 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'signup', component: SignupFormComponent },
   { path: 'login', component: LoginFormComponent },
-  { path: 'admin', component: AdminDashboardComponent },
+  { path: 'admin', component: AdminDashboardComponent,
+    children: [
+      { path: '', component: ItemsDashboardComponent },
+      { path: 'add-item', component: AddItemFormComponent }
+    ]
+  },
   { path: 'items/:id', component: ItemComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
