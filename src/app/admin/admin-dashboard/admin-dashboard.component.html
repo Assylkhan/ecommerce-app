@@ -9,6 +9,8 @@
   <mat-sidenav-content>
     <ng-container [ngSwitch]="selectedItems[0]">
       <app-items-dashboard *ngSwitchCase="menuItems[0]"></app-items-dashboard>
+      <app-admin-users *ngSwitchCase="menuItems[1]"></app-admin-users>
+      <app-admin-settings *ngSwitchCase="menuItems[2]"></app-admin-settings>
       <div *ngSwitchDefault>Default</div>
     </ng-container>
   </mat-sidenav-content>

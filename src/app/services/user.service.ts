@@ -23,4 +23,8 @@ export class UserService {
   findByEmail(email: any): Observable<any> {
     return this.http.get<User>(`${this.rootURL}/users?email=${email}`);
   }
+
+  fetchAll(): Observable<any[]> {
+    return this.http.get<User[]>(`${this.rootURL}/users`);
+  }
 }
