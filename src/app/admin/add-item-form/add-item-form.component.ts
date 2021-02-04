@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { ItemService } from '@app/services';
 
 @Component({
@@ -13,6 +14,8 @@ export class AddItemFormComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   imagesToUpload: File[];
+  isAddMode: boolean;
+  id: String;
   itemForm = this.fb.group({
     name: ['', [Validators.required]],
     realPrice: [''],
@@ -26,9 +29,12 @@ export class AddItemFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private itemService: ItemService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params['id']
+    this.isAddMode = !this.id
   }
 
   showSnackBar(msg, status) {
@@ -45,12 +51,32 @@ export class AddItemFormComponent implements OnInit {
 
   onSubmit(formDirective: FormGroupDirective) {
     if (this.itemForm.invalid) return;
-    var dataToSend = this.itemForm.getRawValue()
-    dataToSend['images'] = this.imagesToUpload
-    this.itemService.create(dataToSend).subscribe({
+    var dataToSave = this.itemForm.getRawValue()
+    dataToSave['images'] = this.imagesToUpload
+    if (this.isAddMode) {
+      this.createItem(dataToSave, formDirective);
+    } else {
+      this.updateItem(dataToSave);
+    }
+  }
+
+  private createItem(dataToSave, formDirective: FormGroupDirective) {
+    this.itemService.create(dataToSave).subscribe({
       next: () => {
         this.itemForm.reset()
         formDirective.resetForm()
+        this.showSnackBar('Item added successfully', 'Success')
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
+  }
+
+  private updateItem(dataToSave) {
+    this.itemService.update(dataToSave).subscribe({
+      next: () => {
+        this.itemForm.reset()
         this.showSnackBar('Item added successfully', 'Success')
       },
       error: error => {
