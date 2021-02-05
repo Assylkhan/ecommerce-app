@@ -3,6 +3,7 @@ var router = express.Router();
 var Item = require('../models/item');
 var helper = require('../helpers/helper');
 const config = require('../config');
+var ObjectId = require('mongoose').Types.ObjectId;
 const Dropbox = require("dropbox").Dropbox;
 fs = require('fs')
 
@@ -117,6 +118,26 @@ router.post('/', helper.verifyToken, (req, res) => {
       msg: 'Failed to add the item',
       err: err.message
     })
+  })
+});
+
+// => localhost:3080/api/items/:id
+router.put('/:id', helper.verifyToken, (req, res) => {
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(400).send(`No record with given id: ${req.params.id}`);
+  let item = getModelFromRequest(req.body);
+  Item.findByIdAndUpdate(req.params.id, {
+    $set: item
+  }, {
+    new: true
+  }).then(item => {
+    res.json(item);
+  }).catch(err => {
+    res.json({
+      msg: 'Failed to update the item',
+      err: err
+    });
+    console.log('Failed to update the item: ' + JSON.stringify(err, undefined, 2));
   })
 });
 

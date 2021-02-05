@@ -53,6 +53,7 @@ export class AddItemFormComponent implements OnInit {
     if (this.itemForm.invalid) return;
     var dataToSave = this.itemForm.getRawValue()
     dataToSave['images'] = this.imagesToUpload
+    if (this.id) dataToSave['_id'] = this.id
     if (this.isAddMode) {
       this.createItem(dataToSave, formDirective);
     } else {
@@ -76,8 +77,7 @@ export class AddItemFormComponent implements OnInit {
   private updateItem(dataToSave) {
     this.itemService.update(dataToSave).subscribe({
       next: () => {
-        this.itemForm.reset()
-        this.showSnackBar('Item added successfully', 'Success')
+        this.showSnackBar('Item updated successfully', 'Success')
       },
       error: error => {
         console.log(error)

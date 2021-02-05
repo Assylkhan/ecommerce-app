@@ -25,7 +25,7 @@ export class ItemService {
   // }
 
   update(item: any): Observable<any> {
-    return this.http.put(`${this.rootURL}/items/${item.id}`, item);
+    return this.http.put(`${this.rootURL}/items/${item._id}`, item);
   }
 
   fetchAll(): Observable<Item[]> {
