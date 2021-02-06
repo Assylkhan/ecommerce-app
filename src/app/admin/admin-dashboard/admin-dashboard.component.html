@@ -7,11 +7,12 @@
     </mat-selection-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <ng-container [ngSwitch]="selectedItems[0]">
-      <app-items-dashboard *ngSwitchCase="menuItems[0]"></app-items-dashboard>
+    <router-outlet name="sub"></router-outlet>
+    <!-- <ng-container [ngSwitch]="selectedItems[0]"> -->
+      <!-- <app-items-dashboard *ngSwitchCase="menuItems[0]"></app-items-dashboard>
       <app-admin-users *ngSwitchCase="menuItems[1]"></app-admin-users>
-      <app-admin-settings *ngSwitchCase="menuItems[2]"></app-admin-settings>
-      <div *ngSwitchDefault>Default</div>
-    </ng-container>
+      <app-admin-settings *ngSwitchCase="menuItems[2]"></app-admin-settings> -->
+      <!-- <div *ngSwitchDefault>Default</div> -->
+    <!-- </ng-container> -->
   </mat-sidenav-content>
 </mat-sidenav-container>
