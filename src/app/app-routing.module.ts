@@ -23,8 +23,8 @@ const routes: Routes = [
       { path: '', component: ItemsDashboardComponent },
       { path: 'add-item', component: AddItemFormComponent },
       { path: 'edit-item/:id', component: AddItemFormComponent },
-      { path: 'admin-settings', component: AdminSettingsComponent },
-      { path: 'admin-users', component: AdminUsersComponent }
+      { path: 'settings', component: AdminSettingsComponent },
+      { path: 'users', component: AdminUsersComponent }
     ]
   },
   { path: 'items/:id', component: ItemComponent},
