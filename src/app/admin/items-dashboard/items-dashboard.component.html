@@ -7,10 +7,10 @@
     </ng-container>
   </mat-sidenav-content>
   <mat-sidenav mode="side" position="end" opened>
-    <mat-selection-list #selectionItems [multiple]="false" [(ngModel)]="selectedItems">
-      <mat-list-option *ngFor="let item of menuItems" [value]="item" [selected]="item === 'Items List'">
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let item of menuItems" [routerLink]="['/admin/' + (item === 'Items' ? '' : item) | lowercase]" ngDefaultControl>
         {{item}}
-      </mat-list-option>
-    </mat-selection-list>
+      </a>
+    </mat-nav-list>
   </mat-sidenav>
 </mat-sidenav-container>
