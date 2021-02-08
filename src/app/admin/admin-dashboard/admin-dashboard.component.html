@@ -4,9 +4,6 @@
       <a mat-list-item *ngFor="let item of menuItems" [routerLink]="['/admin/' + (item === 'Items' ? '' : item) | lowercase]" ngDefaultControl>
         {{item}}
       </a>
-      <!-- <mat-list-option *ngFor="let item of menuItems" [value]="item">
-        {{item}}
-      </mat-list-option> -->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
