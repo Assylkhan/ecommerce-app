@@ -1,15 +1,11 @@
 <mat-sidenav-container>
   <mat-sidenav-content>
-    <ng-container [ngSwitch]="selectedItems[0]">
-      <app-items-list *ngSwitchCase="menuItems[0]"></app-items-list>
-      <app-add-item-form *ngSwitchCase="menuItems[1]"></app-add-item-form>
-      <app-items-list *ngSwitchDefault>Default</app-items-list>
-    </ng-container>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
   <mat-sidenav mode="side" position="end" opened>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let item of menuItems" [routerLink]="['/admin/' + (item === 'Items' ? '' : item) | lowercase]" ngDefaultControl>
-        {{item}}
+      <a mat-list-item *ngFor="let item of menuItems" [routerLink]="['/admin/' + (item.name === 'itemsList' ? '' : item.name)]" ngDefaultControl>
+        {{item.showName}}
       </a>
     </mat-nav-list>
   </mat-sidenav>

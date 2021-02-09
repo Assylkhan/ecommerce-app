@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./items-dashboard.component.scss']
 })
 export class ItemsDashboardComponent implements OnInit {
-  menuItems = ['Items List', 'Add a New Item']
+  menuItems:MenuItem[] = [
+    {name: 'itemsList', showName: 'Items List'},
+    {name: 'add-item', showName: 'Add a New Item'}]
   selectedItems = ['Items']
 
   constructor() { }
@@ -17,4 +19,9 @@ export class ItemsDashboardComponent implements OnInit {
   changeMenuItem(e) {
     this.selectedItems = [e.value]
   }
+}
+
+interface MenuItem {
+  name: string;
+  showName: string;
 }
