@@ -141,6 +141,24 @@ router.put('/:id', helper.verifyToken, (req, res) => {
   })
 });
 
+// => localhost:3080/api/items/:id
+router.delete('/:id', helper.verifyToken, (req, res) => {
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(400).send(`No record with given id: ${req.params.id}`);
+
+  Item.findByIdAndDelete(req.params.id).then(resp => {
+    console.log('resp')
+    console.log(resp)
+    resp.status(201)
+  }).catch(err => {
+    res.json({
+      msg: 'Failed to delete the item',
+      err: err
+    });
+    console.log('Failed to delete the item: ' + JSON.stringify(err, undefined, 2));
+  })
+});
+
 function saveImages(images) {
   console.log('images')
   console.log(images)

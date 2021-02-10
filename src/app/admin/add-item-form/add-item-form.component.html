@@ -36,5 +36,8 @@
     <input matInput placeholder="Image File Name" formControlName="imageFileName">
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Create</button>
+  <button mat-raised-button color="primary" type="submit">Save</button>
+  <button *ngIf="!isAddMode" mat-raised-button color="warn"
+  (click)="onDelete()"
+  type="button" class="delete_btn">Delete</button>
 </form>

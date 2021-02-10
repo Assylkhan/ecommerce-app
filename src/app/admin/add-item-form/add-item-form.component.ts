@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ItemService } from '@app/services';
 
 @Component({
@@ -30,11 +30,25 @@ export class AddItemFormComponent implements OnInit {
     private fb: FormBuilder,
     private itemService: ItemService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
     this.isAddMode = !this.id
+    if (!this.isAddMode) {
+      this.itemService.getItem(this.id)
+        .subscribe({
+          next: item => {
+            if (!item) this.router.navigate(['/admin'])
+            this.itemForm.patchValue(item)
+          },
+          error: error => {
+            this.router.navigate(['/'])
+            console.log(error)
+          }
+        });
+    }
   }
 
   showSnackBar(msg, status) {
@@ -47,6 +61,19 @@ export class AddItemFormComponent implements OnInit {
 
   handleImageInput(images: FileList) {
     this.imagesToUpload = Array.from(images)
+  }
+
+  onDelete() {
+    this.itemService.delete(this.id)
+    .subscribe({
+      next: () => {
+        this.router.navigate(['/admin'])
+        console.log('deleted successfully')
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
   }
 
   onSubmit(formDirective: FormGroupDirective) {

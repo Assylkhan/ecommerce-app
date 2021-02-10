@@ -24,6 +24,10 @@ export class ItemService {
     // .map(() => {return true})
   // }
 
+  delete(id: any): Observable<any> {
+    return this.http.delete(`${this.rootURL}/items/${id}`);
+  }
+
   update(item: any): Observable<any> {
     return this.http.put(`${this.rootURL}/items/${item._id}`, item);
   }
