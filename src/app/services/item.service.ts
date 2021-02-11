@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Item } from '../models/item.model';
 
 @Injectable({
@@ -10,18 +10,19 @@ import { Item } from '../models/item.model';
 export class ItemService {
 
   rootURL = '/api'
+  items: Observable<Item[]>
 
   constructor(private http: HttpClient) { }
 
   create(item: any): Observable<any> {
-    return this.http.post(this.rootURL+'/items', item);
+    return this.http.post(this.rootURL + '/items', item);
   }
 
   // postImage(image: File): Observable<boolean> {
-    // const formData: FormData = new FormData();
-    // formData.append('fileKey', image, image.name);
-    // return this.http.post(`${this.rootURL}/dbx`, image)
-    // .map(() => {return true})
+  // const formData: FormData = new FormData();
+  // formData.append('fileKey', image, image.name);
+  // return this.http.post(`${this.rootURL}/dbx`, image)
+  // .map(() => {return true})
   // }
 
   delete(id: any): Observable<any> {
@@ -33,7 +34,12 @@ export class ItemService {
   }
 
   fetchAll(): Observable<Item[]> {
-    return this.http.get<Item[]>(`${this.rootURL}/items`);
+    if (this.items) {
+      return this.items
+    } else {
+      this.items = this.http.get<Item[]>(`${this.rootURL}/items`)
+      return this.items
+    }
   }
 
   fetchFeatured(): Observable<Item[]> {
