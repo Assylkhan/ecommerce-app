@@ -9,8 +9,8 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { ItemComponent } from './item/item.component';
 import { ItemsDashboardComponent } from './admin/items-dashboard/items-dashboard.component';
 import { AddItemFormComponent } from './admin/add-item-form';
-import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
-import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { ItemsListComponent } from './admin/items-list/items-list.component';
 
 const routes: Routes = [

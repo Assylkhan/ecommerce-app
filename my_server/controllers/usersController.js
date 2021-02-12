@@ -8,7 +8,7 @@ var helper = require('../helpers/helper');
 // => localhost:3080/api/users/
 router.get('/', helper.verifyToken, (req, res) => {
   User.find().then(users => {
-    res.json(users);
+    res.json(users)
   }).catch(err => {
     res.json({
       msg: 'Failed to find users',

@@ -35,8 +35,8 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { ItemsDashboardComponent } from './admin/items-dashboard/items-dashboard.component';
 import { ItemsListComponent } from './admin/items-list/items-list.component';
 import { ItemComponent } from './item/item.component';
-import { AdminUsersComponent } from './admin-users/admin-users.component';
-import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
 
 @NgModule({
   declarations: [

@@ -19,9 +19,10 @@ export class AdminUsersComponent implements OnInit {
     this.userService.fetchAll()
     .subscribe((users) => {
       this.users = users
+      this.sortedUsers = this.users.slice()
     },
     error => {
-
+      console.log(error)
     })
   }
 
