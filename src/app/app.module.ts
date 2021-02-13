@@ -37,6 +37,11 @@ import { ItemsListComponent } from './admin/items-list/items-list.component';
 import { ItemComponent } from './item/item.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
+import { DropzoneDirective } from './dropzone.directive';
+
+import { AngularFireModule } from '@angular/fire';
+
+
 
 @NgModule({
   declarations: [
@@ -54,7 +59,8 @@ import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.co
     ItemsListComponent,
     ItemComponent,
     AdminUsersComponent,
-    AdminSettingsComponent
+    AdminSettingsComponent,
+    DropzoneDirective
   ],
   imports: [
     BrowserModule,

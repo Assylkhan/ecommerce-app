@@ -11,6 +11,7 @@
 /node_modules
 /my_server/node_modules
 /my_server/config.js
+/src/client-config.js
 
 # profiling files
 chrome-profiler-events*.json
