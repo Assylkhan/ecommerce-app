@@ -38,10 +38,25 @@ import { ItemComponent } from './item/item.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
 import { DropzoneDirective } from './dropzone.directive';
+import { ClientConfig } from '../client-config';
 
 import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
+import { UploaderComponent } from './uploader/uploader.component';
+import { UploadTaskComponent } from './upload-task/upload-task.component';
 
+var firebaseConfig = {
+  apiKey: ClientConfig.config.apiKey,
+  authDomain: ClientConfig.config.authDomain,
+  projectId: ClientConfig.config.projectId,
+  storageBucket: ClientConfig.config.storageBucket,
+  messagingSenderId: ClientConfig.config.messagingSenderId,
+  appId: ClientConfig.config.appId,
+  measurementId: ClientConfig.config.measurementId
+};
 
 @NgModule({
   declarations: [
@@ -60,7 +75,9 @@ import { AngularFireModule } from '@angular/fire';
     ItemComponent,
     AdminUsersComponent,
     AdminSettingsComponent,
-    DropzoneDirective
+    DropzoneDirective,
+    UploaderComponent,
+    UploadTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +99,11 @@ import { AngularFireModule } from '@angular/fire';
     MatSnackBarModule,
     MatCardModule,
     MatSortModule,
-    MatGridListModule
+    MatGridListModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
