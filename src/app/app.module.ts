@@ -48,6 +48,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { UploaderComponent } from './uploader/uploader.component';
 import { UploadTaskComponent } from './upload-task/upload-task.component';
 
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 var firebaseConfig = {
   apiKey: ClientConfig.config.apiKey,
   authDomain: ClientConfig.config.authDomain,
@@ -100,6 +102,7 @@ var firebaseConfig = {
     MatCardModule,
     MatSortModule,
     MatGridListModule,
+    MatCheckboxModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,

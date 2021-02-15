@@ -65,15 +65,15 @@ export class AddItemFormComponent implements OnInit {
 
   onDelete() {
     this.itemService.delete(this.id)
-    .subscribe({
-      next: () => {
-        this.router.navigate(['/admin'])
-        console.log('deleted successfully')
-      },
-      error: error => {
-        console.log(error)
-      }
-    })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/admin'])
+          console.log('deleted successfully')
+        },
+        error: error => {
+          console.log(error)
+        }
+      })
   }
 
   onSubmit(formDirective: FormGroupDirective) {
