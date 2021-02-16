@@ -34,6 +34,14 @@ export class ItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.getItem()
+    this.getFeaturedItems()
+  }
+
+  getFeaturedItems(): void {
+    this.itemService.fetchFeatured()
+    .subscribe(items => {
+      this.featuredItems = items
+    })
   }
 
   getItem(): void {
