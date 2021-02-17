@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Item } from '@app/models';
 import { ItemService } from '@app/services';
 import { BrowserModule } from '@angular/platform-browser';
@@ -33,8 +33,10 @@ export class ItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getItem()
-    this.getFeaturedItems()
+    this.route.params.subscribe((params: Params) => {
+      this.getItem()
+      this.getFeaturedItems()
+    })
   }
 
   getFeaturedItems(): void {
