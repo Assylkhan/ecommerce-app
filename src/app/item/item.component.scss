@@ -8,6 +8,12 @@
   border: 1px solid;
 }
 
+.featured-list {
+  flex-grow: 1;
+  overflow: auto;
+  max-height: 210px;
+}
+
 .item_details_container {
   height: 100%;
   width: 100%;
