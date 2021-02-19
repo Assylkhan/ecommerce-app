@@ -33,7 +33,7 @@
           <mat-list class="featured-list" role="list">
             <mat-list-item *ngFor="let item of featuredItems" role="listitem"
             class="featured-li">
-              <a routerLink="/items/{{item._id}}">
+              <a class="featured-item-wrapper" routerLink="/items/{{item._id}}">
                 <div>
                   <img src="{{item.imageUrl}}" alt="">
                 </div>
