@@ -8,16 +8,29 @@
 
 }
 
+.featured-item-link {
+  // border: 1px solid;
+  // width: fit-content;
+  // min-height: 50px;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
 .featured-item-wrapper {
   border: 1px solid #f2f2f2;
-  margin: 0 auto;
+  margin: 10px auto;
   width: 80%;
+  padding: 15px;
 }
 
 .featured-list {
   flex-grow: 1;
   overflow: auto;
+  height: auto;
+  // box-sizing: border-box;
   max-height: 210px;
+  // display: block;
 }
 
 #recommended-div {
