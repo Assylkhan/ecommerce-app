@@ -4,63 +4,8 @@ var Item = require('../models/item');
 var helper = require('../helpers/helper');
 const config = require('../config');
 var ObjectId = require('mongoose').Types.ObjectId;
-const Dropbox = require("dropbox").Dropbox;
+
 fs = require('fs')
-
-const fetch = require("isomorphic-fetch");
-
-const dbx = new Dropbox({
-  accessToken: config.dropboxAccessToken,
-  // fetch: fetch
-});
-
-// dbx.usersGetCurrentAccount()
-//   .then(function (response) {
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     console.error(error);
-//   });
-
-dbx.filesListFolder({
-    path: ''
-  })
-  .then(function (response) {
-    console.log(response.result.entries);
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-
-router.post("/dbx", (req, res) => {
-
-  let imageArray;
-
-  //Receive either a single image or an array of images from the front end and
-  //its placed in req.files by express-fileupload
-
-  if (req.files.itemImage.length) {
-    imageArray = [...req.files.itemImage];
-  } else {
-    imageArray = [req.files.itemImage];
-  }
-
-  imageArray.forEach(image => {
-    console.log("Image==>>", image)
-
-    dbx
-      .filesUpload({
-        path: `/${image.name}`,
-        contents: image.data
-      })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
-});
 
 // => localhost:3080/api/items/
 router.get('/', helper.verifyToken, (req, res) => {
@@ -158,52 +103,6 @@ router.delete('/:id', helper.verifyToken, (req, res) => {
     console.log('Failed to delete the item: ' + JSON.stringify(err, undefined, 2));
   })
 });
-
-function saveImages(images) {
-  console.log('images')
-  console.log(images)
-  if (images.itemImage.length) {
-    imageArray = [...images.itemImage];
-  } else {
-    imageArray = [images.itemImage];
-  }
-
-  imageArray.forEach(image => {
-    console.log("Image==>>", image)
-    dbx.filesUploadSessionStart({
-        contents: image,
-        close: true
-      })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    // dbx
-    //   .filesUpload({
-    //     path: `/${image.name}`,
-    //     contents: image.data
-    //   })
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-  });
-  dbx.filesUploadSessionFinishBatch({
-    entries: {
-      cursor: {
-        session_id: file1Start.session_id,
-        offset: testFile1Data.length
-      },
-      commit: {
-        path: "/testFile1.txt"
-      }
-    }
-  })
-}
 
 function getModelFromRequest(reqBody) {
   let item = new Item({

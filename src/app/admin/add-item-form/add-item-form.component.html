@@ -38,6 +38,8 @@
     <input matInput placeholder="Image File Name" formControlName="imageFileName">
   </mat-form-field>
 
+  <app-uploader></app-uploader>
+
   <button mat-raised-button color="primary" type="submit">Save</button>
   <button *ngIf="!isAddMode" mat-raised-button color="warn"
   (click)="onDelete()"

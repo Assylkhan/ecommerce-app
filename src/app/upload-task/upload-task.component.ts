@@ -48,6 +48,7 @@ export class UploadTaskComponent implements OnInit {
         this.db.collection('files').add({ downloadURL: this.downloadURL, path})
       })
     )
+    this.snapshot.subscribe()
   }
 
   isActive(snapshot) {
