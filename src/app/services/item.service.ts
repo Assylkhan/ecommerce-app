@@ -33,11 +33,20 @@ export class ItemService {
     return this.http.put(`${this.rootURL}/items/${item._id}`, item);
   }
 
-  fetchAll(): Observable<Item[]> {
+  fetchAll(options: ViewOptions): Observable<Item[]> {
     if (this.items) {
       return this.items
     } else {
-      this.items = this.http.get<Item[]>(`${this.rootURL}/items`)
+      this.items = this.http.get<Item[]>(`${this.rootURL}/items`).pipe(
+        tap(items => {
+          items = items.sort((a, b) => {
+            const sortOrder = options.sortDirection === 'asc' ? -1 : 1;
+            const valueA = a[options.sortField];
+            const valueB = b[options.sortField];
+            var result = (valueA < valueB) ? -1 : (valueA > valueB) ? 1 : 0;
+            return result * sortOrder;
+          })
+        }))
       return this.items
     }
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
-import { BooksService } from '../books.service';
-import { Observable, merge, of } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+// import { Observable, merge, of } from 'rxjs';
+// import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 
 // import from the folder!!
@@ -22,16 +21,21 @@ export class ItemsListTestComponent implements OnInit {
   resultsLength = 0;
   pagesize = 10;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private service: ItemService) {
   }
 
   refresh() {
-    this.service.fetchAll().subscribe((result) => {
-      this.resultsLength = result.total;
-      this.data = result;
+    this.service.fetchAll().subscribe({
+      next: (items) => {
+        this.resultsLength = items.length;
+        this.data = items;
+      },
+      error: error => {
+        console.log(error)
+      }
     });
   }
 
@@ -74,11 +78,4 @@ export class ItemsListTestComponent implements OnInit {
 
     return options;
   }
-}
-
-interface ViewOptions {
-  sortField: string;
-  sortDirection: string;
-  page: number;
-  pageSize: number;
 }
