@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ViewOptions } from '@app/helpers/view-options';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Item } from '../models/item.model';
@@ -33,7 +34,7 @@ export class ItemService {
     return this.http.put(`${this.rootURL}/items/${item._id}`, item);
   }
 
-  fetchAll(options: ViewOptions): Observable<Item[]> {
+  fetchAllWithOptions(options: ViewOptions): Observable<Item[]> {
     if (this.items) {
       return this.items
     } else {
@@ -46,7 +47,21 @@ export class ItemService {
             var result = (valueA < valueB) ? -1 : (valueA > valueB) ? 1 : 0;
             return result * sortOrder;
           })
+        }),
+        tap(items => {
+          const start = options.page * options.pageSize;
+          const end = start + options.pageSize;
+          items = items.slice(start, end)
         }))
+      return this.items
+    }
+  }
+
+  fetchAll(): Observable<Item[]> {
+    if (this.items) {
+      return this.items
+    } else {
+      this.items = this.http.get<Item[]>(`${this.rootURL}/items`)
       return this.items
     }
   }

@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatCardModule } from '@angular/material/card';
 import { MatSortModule } from '@angular/material/sort';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator'
 // MatDrawerContainer
 
 import { AppComponent } from './app.component';
@@ -105,6 +106,7 @@ var firebaseConfig = {
     MatSortModule,
     MatGridListModule,
     MatCheckboxModule,
+    MatPaginatorModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,

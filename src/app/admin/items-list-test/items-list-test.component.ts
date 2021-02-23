@@ -8,6 +8,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Item } from '@app/models';
 import { ItemService } from '@app/services';
+import { ViewOptions } from '@app/helpers/view-options';
 
 @Component({
   selector: 'app-items-list-test',
@@ -16,22 +17,22 @@ import { ItemService } from '@app/services';
 })
 export class ItemsListTestComponent implements OnInit {
 
-  data: Item[] = [];
+  items: Item[] = [];
   tableColumns: string[] = ['name', 'author', 'year'];
   resultsLength = 0;
   pagesize = 10;
 
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private service: ItemService) {
   }
 
-  refresh() {
-    this.service.fetchAll().subscribe({
+  refresh(options: ViewOptions) {
+    this.service.fetchAllWithOptions(options).subscribe({
       next: (items) => {
         this.resultsLength = items.length;
-        this.data = items;
+        this.items = items;
       },
       error: error => {
         console.log(error)
