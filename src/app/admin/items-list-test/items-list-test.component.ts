@@ -18,7 +18,7 @@ import { ViewOptions } from '@app/helpers/view-options';
 export class ItemsListTestComponent implements OnInit {
 
   items: Item[] = [];
-  tableColumns: string[] = ['name', 'author', 'year'];
+  tableColumns: string[] = ['index', 'name', 'price', 'realPrice', 'count'];
   resultsLength = 0;
   pagesize = 10;
 

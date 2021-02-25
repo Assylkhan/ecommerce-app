@@ -36,7 +36,21 @@ export class ItemService {
 
   fetchAllWithOptions(options: ViewOptions): Observable<Item[]> {
     if (this.items) {
-      return this.items
+      return this.items.pipe(
+        tap(items => {
+          items = items.sort((a, b) => {
+            const sortOrder = options.sortDirection === 'asc' ? -1 : 1;
+            const valueA = a[options.sortField];
+            const valueB = b[options.sortField];
+            var result = (valueA < valueB) ? -1 : (valueA > valueB) ? 1 : 0;
+            return result * sortOrder;
+          })
+        }),
+        tap(items => {
+          const start = options.page * options.pageSize;
+          const end = start + options.pageSize;
+          items = items.slice(start, end)
+        }))
     } else {
       this.items = this.http.get<Item[]>(`${this.rootURL}/items`).pipe(
         tap(items => {
