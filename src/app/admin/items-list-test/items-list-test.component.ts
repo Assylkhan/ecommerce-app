@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ViewChildren, AfterViewInit, QueryList } 
 // import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 
-// import from the folder!!
+// import from the folder
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Item } from '@app/models';
@@ -22,8 +22,17 @@ export class ItemsListTestComponent implements OnInit {
   resultsLength = 0;
   pagesize = 10;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  // @ViewChild(MatSort) set matSort(ms: MatSort) {
+  //   this.sort = ms;
+  // }
+
+  // @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+  //   this.paginator = mp;
+  // }
+
 
   constructor(private service: ItemService) {
   }
@@ -41,10 +50,11 @@ export class ItemsListTestComponent implements OnInit {
   }
 
   ngOnInit() {
-
     // default data
     this.refresh(this.getDefaultOptions());
+  }
 
+  ngAfterViewInit() {
     this.sort.sortChange.subscribe((sort: Sort) => {
       console.log('sortChange', this.sort.active);
       this.paginator.pageIndex = 0;
@@ -55,7 +65,6 @@ export class ItemsListTestComponent implements OnInit {
       console.log('paginator ', page);
       this.refresh(this.getCurrentOptions());
     });
-
   }
 
   getCurrentOptions() {
