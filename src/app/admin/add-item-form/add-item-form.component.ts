@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Item } from '@app/models';
 import { ItemService } from '@app/services';
 
 @Component({
@@ -16,6 +17,7 @@ export class AddItemFormComponent implements OnInit {
   imagesToUpload: File[];
   isAddMode: boolean;
   id: String;
+  item: Item;
   itemForm = this.fb.group({
     name: ['', [Validators.required]],
     realPrice: [''],
@@ -41,6 +43,7 @@ export class AddItemFormComponent implements OnInit {
         .subscribe({
           next: item => {
             if (!item) this.router.navigate(['/admin'])
+            this.item = item
             this.itemForm.patchValue(item)
           },
           error: error => {
@@ -79,7 +82,7 @@ export class AddItemFormComponent implements OnInit {
   onSubmit(formDirective: FormGroupDirective) {
     if (this.itemForm.invalid) return;
     var dataToSave = this.itemForm.getRawValue()
-    dataToSave['images'] = this.imagesToUpload
+    dataToSave['imageUrls'] = this.item.imageUrls
     if (this.id) dataToSave['_id'] = this.id
     if (this.isAddMode) {
       this.createItem(dataToSave, formDirective);

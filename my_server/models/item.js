@@ -29,13 +29,8 @@ const itemSchema = new mongoose.Schema({
     required: [true, 'The count is required'],
     trim: true
   },
-  imageUrl: {
-    type: String,
-    trim: true
-  },
-  imageFileName: {
-    type: String,
-    trim: true
+  imageUrls: {
+    type: [String]
   }
 }, {
   timestamps: true

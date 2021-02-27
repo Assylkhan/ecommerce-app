@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { Item } from '@app/models';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
@@ -12,6 +13,7 @@ import { finalize, tap } from 'rxjs/operators';
 export class UploadTaskComponent implements OnInit {
 
   @Input() file: File;
+  @Input() item: Item;
 
   task: AngularFireUploadTask;
 

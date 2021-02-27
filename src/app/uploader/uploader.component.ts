@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Item } from '@app/models';
 
 @Component({
   selector: 'app-uploader',
@@ -8,11 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class UploaderComponent implements OnInit {
 
   isHovering: boolean;
-
+  @Input() item: Item;
   files: File[] = [];
 
   toggleHover(event: boolean) {
     this.isHovering = event
+    console.log(event)
   }
 
   onDrop(files: FileList) {

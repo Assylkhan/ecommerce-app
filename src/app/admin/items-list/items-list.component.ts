@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { ViewOptions } from '@app/helpers/view-options';
 
 import { Item } from '@app/models';
 import { ItemService } from '@app/services';
@@ -10,43 +12,64 @@ import { ItemService } from '@app/services';
   styleUrls: ['./items-list.component.scss']
 })
 export class ItemsListComponent implements OnInit {
-  items: Item[];
-  sortedItems: Item[];
+  items: Item[] = [];
+  tableColumns: string[] = ['index', 'name', 'price', 'realPrice', 'count'];
+  resultsLength = 0;
+  pagesize = 10;
+
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
-    this.itemService.fetchAll().subscribe({
+    this.refresh(this.getDefaultOptions());
+  }
+
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe((sort: Sort) => {
+      console.log('sortChange', this.sort.active);
+      this.paginator.pageIndex = 0;
+      this.refresh(this.getCurrentOptions());
+    });
+
+    this.paginator.page.subscribe((page: PageEvent) => {
+      console.log('paginator ', page);
+      this.refresh(this.getCurrentOptions());
+    });
+  }
+
+  refresh(options: ViewOptions) {
+    this.itemService.fetchAllWithOptions(options).subscribe({
       next: (items) => {
-        this.items = items
-        this.sortedItems = this.items.slice()
+        this.resultsLength = items.length;
+        this.items = items;
       },
       error: error => {
         console.log(error)
       }
-    })
-  }
-
-  sortData(sort: Sort) {
-    const data = this.items.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedItems = data;
-      return;
-    }
-
-    this.sortedItems = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'price': return compare(a.price, b.price, isAsc);
-        case 'realPrice': return compare(a.realPrice, b.realPrice, isAsc);
-        case 'count': return compare(a.count, b.count, isAsc);
-        default: return 0;
-      }
     });
   }
-}
 
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  getCurrentOptions() {
+    const options: ViewOptions = {
+      sortField: this.sort.active,
+      sortDirection: this.sort.direction,
+      page: this.paginator.pageIndex,
+      pageSize: this.paginator.pageSize
+    };
+
+    return options;
+  }
+
+  getDefaultOptions() {
+    const options: ViewOptions = {
+      sortField: 'name',
+      sortDirection: 'asc',
+      page: 0,
+      pageSize: this.pagesize
+    };
+
+    return options;
+  }
 }

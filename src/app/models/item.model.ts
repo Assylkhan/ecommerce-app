@@ -7,8 +7,7 @@ export class Item {
   longDescription: string;
   featured: boolean;
   count: string;
-  imageUrl: string;
-  imageFileName: string;
+  imageUrls: string[];
 
   public constructor(init?: Partial<Item>) {
       Object.assign(this, init);

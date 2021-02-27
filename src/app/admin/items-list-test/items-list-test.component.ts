@@ -25,15 +25,6 @@ export class ItemsListTestComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  // @ViewChild(MatSort) set matSort(ms: MatSort) {
-  //   this.sort = ms;
-  // }
-
-  // @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
-  //   this.paginator = mp;
-  // }
-
-
   constructor(private service: ItemService) {
   }
 

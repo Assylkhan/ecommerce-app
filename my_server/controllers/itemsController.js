@@ -111,8 +111,7 @@ function getModelFromRequest(reqBody) {
     price: reqBody.price,
     description: reqBody.description,
     count: reqBody.count,
-    imageUrl: reqBody.imageUrl,
-    imageFileName: reqBody.imageFileName
+    imageUrls: reqBody.imageUrls,
   });
   return item;
 }
