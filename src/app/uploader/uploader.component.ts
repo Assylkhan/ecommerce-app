@@ -24,6 +24,8 @@ export class UploaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('this.item')
+    console.log(this.item)
   }
 
 }

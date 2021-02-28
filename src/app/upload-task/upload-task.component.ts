@@ -35,6 +35,7 @@ export class UploadTaskComponent implements OnInit {
     // Reference to storage bucket
     const ref = this.storage.ref(path)
 
+
     // The main task
     this.task = this.storage.upload(path, this.file)
 
@@ -48,6 +49,9 @@ export class UploadTaskComponent implements OnInit {
         this.downloadURL = await ref.getDownloadURL().toPromise();
 
         this.db.collection('files').add({ downloadURL: this.downloadURL, path})
+        this.item.imageUrls.push(this.downloadURL);
+        console.log('this.item.imageUrls')
+        console.log(this.item.imageUrls)
       })
     )
     this.snapshot.subscribe()
