@@ -14,7 +14,6 @@ import { ItemService } from '@app/services';
 export class AddItemFormComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  imagesToUpload: File[];
   isAddMode: boolean;
   id: String;
   item: Item;
@@ -24,6 +23,7 @@ export class AddItemFormComponent implements OnInit {
     price: [''],
     description: [''],
     count: [''],
+    featured: [false],
     imageUrl: [''],
     imageFileName: ['']
   })
@@ -60,10 +60,6 @@ export class AddItemFormComponent implements OnInit {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition
     })
-  }
-
-  handleImageInput(images: FileList) {
-    this.imagesToUpload = Array.from(images)
   }
 
   onDelete() {
