@@ -55,7 +55,6 @@ router.post('/', helper.verifyToken, (req, res) => {
   let newItem = getModelFromRequest(req.body);
 
   newItem.save().then((item) => {
-    saveImages(req.body.images)
     res.status(201).json(item)
   }).catch((err) => {
     console.log('Failed to add the item: ' + JSON.stringify(err, undefined, 2))

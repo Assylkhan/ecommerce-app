@@ -13,7 +13,7 @@ import { finalize, tap } from 'rxjs/operators';
 export class UploadTaskComponent implements OnInit {
 
   @Input() file: File;
-  @Input() item: Item;
+  @Input() imageUrls: String[];
 
   task: AngularFireUploadTask;
 
@@ -49,9 +49,8 @@ export class UploadTaskComponent implements OnInit {
         this.downloadURL = await ref.getDownloadURL().toPromise();
 
         this.db.collection('files').add({ downloadURL: this.downloadURL, path})
-        this.item.imageUrls.push(this.downloadURL);
-        console.log('this.item.imageUrls')
-        console.log(this.item.imageUrls)
+        if (this.imageUrls.indexOf(this.downloadURL) < 0)
+        this.imageUrls.push(this.downloadURL);
       })
     )
     this.snapshot.subscribe()

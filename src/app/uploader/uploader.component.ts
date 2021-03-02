@@ -9,7 +9,7 @@ import { Item } from '@app/models';
 export class UploaderComponent implements OnInit {
 
   isHovering: boolean;
-  @Input() item: Item;
+  @Input() imageUrls: String[];
   files: File[] = [];
 
   toggleHover(event: boolean) {
@@ -24,8 +24,6 @@ export class UploaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('this.item')
-    console.log(this.item)
   }
 
 
