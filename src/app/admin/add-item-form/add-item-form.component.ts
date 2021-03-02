@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '@app/models';
 import { ItemService } from '@app/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-add-item-form',
@@ -17,6 +18,7 @@ export class AddItemFormComponent implements OnInit {
   isAddMode: boolean;
   id: String;
   item: Item;
+  currentItemSubject: BehaviorSubject<Item>;
   itemForm = this.fb.group({
     name: ['', [Validators.required]],
     realPrice: [''],
@@ -44,6 +46,7 @@ export class AddItemFormComponent implements OnInit {
           next: item => {
             if (!item) this.router.navigate(['/admin'])
             this.item = item
+            this.currentItemSubject = new BehaviorSubject(item);
             this.itemForm.patchValue(item)
           },
           error: error => {

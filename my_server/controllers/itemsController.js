@@ -111,6 +111,7 @@ function getModelFromRequest(reqBody) {
     price: reqBody.price,
     description: reqBody.description,
     count: reqBody.count,
+    featured: reqBody.featured,
     imageUrls: reqBody.imageUrls,
   });
   return item;

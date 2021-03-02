@@ -28,4 +28,5 @@ export class UploaderComponent implements OnInit {
     console.log(this.item)
   }
 
+
 }
