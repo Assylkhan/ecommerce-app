@@ -7,7 +7,7 @@
       <ng-container [ngSwitch]="tile.name">
         <div class="item_details_container" *ngSwitchCase="'Details'">
           <mat-card *ngIf="item">
-            <img mat-card-image [src]="item.imageUrl" alt="{{item.imageFileName}}">
+            <img mat-card-image [src]="item.imageUrls.length > 0 ? item.imageUrls[0] : ''" alt="{{item.imageUrls.length > 0 ? item.imageUrls[0] : ''}}">
             <mat-card-content>
               <p>
                 {{item.description}}
