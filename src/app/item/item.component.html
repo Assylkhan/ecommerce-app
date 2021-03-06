@@ -1,52 +1,43 @@
-<mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile
-      *ngFor="let tile of tiles"
-      [colspan]="tile.cols"
-      [rowspan]="tile.rows">
+<div class="container">
+  <div class="left_container">
+    <div *ngIf="item"class="item_main_info_container">
+      <div class="images_container">
+        <img class="main_img" [src]="item.imageUrls.length > 0 ? item.imageUrls[0] : ''" alt="{{item.imageUrls.length > 0 ? item.imageUrls[0] : ''}}">
+      </div>
+      <div class="short_info_container">
+        <h3>{{item.name}}</h3>
+        <button type="button" class="share">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" alt="" class="ProductButtons-Image"><path opacity="0.481515" fill-rule="evenodd" clip-rule="evenodd" d="M11.3545 11.48C11.8891 10.8499 12.6765 10.4411 13.5672 10.4411C15.1745 10.4411 16.4785 11.744 16.4785 13.3513C16.4785 14.9597 15.1745 16.2626 13.5672 16.2626C11.9599 16.2626 10.657 14.9597 10.657 13.3513C10.657 13.1199 10.6907 12.8975 10.7423 12.6807L5.70364 10.0659C5.17012 10.7354 4.35692 11.1734 3.43477 11.1734C1.82635 11.1734 0.523438 9.86937 0.523438 8.26207C0.523438 6.65477 1.82635 5.35186 3.43477 5.35186C4.3558 5.35186 5.16787 5.78878 5.70139 6.45709L10.7412 3.84115C10.6907 3.6255 10.657 3.40423 10.657 3.17285C10.657 1.56555 11.9599 0.262634 13.5672 0.262634C15.1745 0.262634 16.4785 1.56555 16.4785 3.17285C16.4785 4.78127 15.1745 6.08419 13.5672 6.08419C12.6754 6.08419 11.8869 5.67422 11.3533 5.04298L6.28546 7.67352C6.32477 7.86334 6.34499 8.06102 6.34499 8.26207C6.34499 8.46313 6.32477 8.65969 6.28658 8.84951L11.3545 11.48ZM13.5672 1.60711C14.4332 1.60711 15.134 2.30798 15.134 3.17285C15.134 4.03771 14.4332 4.73971 13.5672 4.73971C12.7023 4.73971 12.0003 4.03771 12.0003 3.17285C12.0003 2.30798 12.7023 1.60711 13.5672 1.60711ZM1.86791 8.26207C1.86791 9.12806 2.56879 9.82894 3.43477 9.82894C4.29964 9.82894 5.00052 9.12806 5.00052 8.26207C5.00052 7.39721 4.29964 6.69633 3.43477 6.69633C2.56879 6.69633 1.86791 7.39721 1.86791 8.26207ZM12.0003 13.3513C12.0003 14.2162 12.7023 14.9182 13.5672 14.9182C14.4332 14.9182 15.134 14.2162 15.134 13.3513C15.134 12.4864 14.4332 11.7856 13.5672 11.7856C12.7023 11.7856 12.0003 12.4864 12.0003 13.3513Z" fill="#202020"></path></svg>
+        </button>
+        <hr>
+        <p>
+          {{item.description}}
+        </p>
+        <h5>$ {{item.price}}</h5>
 
-      <ng-container [ngSwitch]="tile.name">
-        <div class="item_details_container" *ngSwitchCase="'Details'">
-          <mat-card *ngIf="item">
-            <img mat-card-image [src]="item.imageUrls.length > 0 ? item.imageUrls[0] : ''" alt="{{item.imageUrls.length > 0 ? item.imageUrls[0] : ''}}">
-            <mat-card-content>
-              <p>
-                {{item.description}}
-              </p>
-            </mat-card-content>
-            <mat-card-footer>
-              <div mat-card-avatar class="example-footer-image"></div>
-              <mat-card-title>{{item.name}}</mat-card-title>
-              <mat-card-subtitle>{{item.price}}</mat-card-subtitle>
-            </mat-card-footer>
-            <mat-card-actions class="item_card_actions">
-              <button mat-rasied-button>Add to Cart</button>
-              <button mat-rasied-button>Share</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-        <div *ngSwitchCase="'Info'">
-          <p>
-            {{item?.longDescription}}
-          </p>
-        </div>
-        <div id="recommended-div" *ngSwitchCase="'Recommended'">
-          <mat-list class="featured-list" role="list">
-            <mat-list-item *ngFor="let item of featuredItems" role="listitem"
-            class="featured-li">
-              <div class="featured-item-wrapper">
-                <a class="featured-item-link" routerLink="/items/{{item._id}}">
-                  <div>
-                    <img src="{{item.imageUrl}}" alt="">
-                  </div>
-                  <div>
-                    {{item.name}}
-                  </div>
-                </a>
-              </div>
-            </mat-list-item>
-          </mat-list>
-        </div>
-      </ng-container>
+        <button mat-rasied-button>Add to Cart</button>
+      </div>
+    </div>
+    <div class="item_detailed_info_container">
+      <p>
+        {{item?.longDescription}}
+      </p>
+    </div>
+  </div>
 
-  </mat-grid-tile>
-</mat-grid-list>
+  <div id="recommended-div">
+    <div *ngFor="let item of featuredItems"
+    class="featured_li">
+      <div class="featured_img_wrapper">
+        <a class="featured_item_link" routerLink="/items/{{item._id}}">
+          <img src="{{item.imageUrls.length > 0 ? item.imageUrls[0] : ''}}" alt="">
+        </a>
+      </div>
+      <div>
+        <a class="featured_item_link" routerLink="/items/{{item._id}}">
+          {{item.name}}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
