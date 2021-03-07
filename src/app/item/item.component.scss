@@ -4,9 +4,6 @@
 
 .container {
   display: flex;
-  & > * {
-    // border: 1px solid;
-  }
 
   .left_container {
     flex: 4;
@@ -19,18 +16,31 @@
         .main_img {
           width: 100%;
         }
+        .bottom_image_icon_wrapper {
+          display: inline-block;
+          cursor: pointer;
+          border: 1px solid;
+          margin: 5px;
+          &:hover {
+            border: 2px solid red;
+          }
+          & > img {
+            height: 50px;
+            width: auto;
+          }
+        }
       }
 
       .short_info_container {
         flex: 1;
       }
 
-      .share {
-        padding: 0;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-      }
+      // .share {
+      //   padding: 0;
+      //   background: transparent;
+      //   border: none;
+      //   cursor: pointer;
+      // }
 
       & > * {
         padding: 1rem;
@@ -51,7 +61,8 @@
     }
 
     .featured_li {
-      border: 1px dotted;
+      // border: 1px dotted;
+      padding: 0 20px;
     }
   }
 }

@@ -50,6 +50,7 @@ export class AddItemFormComponent implements OnInit {
             // this.currentItem = this.currentItemSubject.asObservable();
             // this.currentItemSubject.next(item);
             this.itemForm.patchValue(item)
+            this.imageUrls = item.imageUrls
           },
           error: error => {
             this.router.navigate(['/'])
@@ -65,6 +66,10 @@ export class AddItemFormComponent implements OnInit {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition
     })
+  }
+
+  onImgDelete(imageUrl) {
+    this.imageUrls = this.imageUrls.filter(item => item!= imageUrl)
   }
 
   onDelete() {

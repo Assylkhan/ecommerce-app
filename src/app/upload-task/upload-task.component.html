@@ -11,8 +11,8 @@
   {{snap.bytesTransferred}} of {{snap.totalBytes}}
 
   <div *ngIf="downloadURL as url">
-    <h3>Results!</h3>
-    <img [src]="url"><br>
+    <h3>Results</h3>
+    <img class="uploaded_img" [src]="url"><br>
     <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
   </div>
   <hr>

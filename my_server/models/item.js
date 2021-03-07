@@ -30,7 +30,8 @@ const itemSchema = new mongoose.Schema({
     trim: true
   },
   imageUrls: {
-    type: [String]
+    type: [String],
+    immutable: false
   }
 }, {
   timestamps: true

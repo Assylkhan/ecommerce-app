@@ -70,10 +70,19 @@ router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   let item = getModelFromRequest(req.body);
-  Item.findByIdAndUpdate(req.params.id, {
-    $set: item
+  Item.updateOne({_id: req.params.id}, {
+    $set: {
+      name: req.body.name,
+      realPrice: req.body.realPrice,
+      price: req.body.price,
+      description: req.body.description,
+      count: req.body.count,
+      featured: req.body.featured,
+      imageUrls: req.body.imageUrls,
+    }
   }, {
-    new: true
+    useFindAndModify: false,
+    new: false
   }).then(item => {
     res.json(item);
   }).catch(err => {

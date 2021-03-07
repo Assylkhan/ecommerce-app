@@ -21,6 +21,7 @@ export interface Tile {
 export class ItemComponent implements OnInit {
   item: Item;
   featuredItems: Item[];
+  additionalImageUrls: String[];
   tiles: Tile[] = [
     {name: 'Details', cols: 3, rows: 1, color: 'lightblue'},
     {name: 'Recommended', cols: 1, rows: 2, color: 'lightgreen'},
@@ -50,6 +51,9 @@ export class ItemComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.itemService.getItem(id).subscribe(item => {
       this.item = item
+      if (item.imageUrls.length > 1)
+      this.additionalImageUrls = item.imageUrls.slice(1, item.imageUrls.length)
+      console.log(this.item.imageUrls)
     });
   }
 

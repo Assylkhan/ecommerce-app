@@ -11,3 +11,22 @@ form {
 .delete_btn {
   float: right;
 }
+.image_wrapper {
+  border: 1px dotted;
+  margin: 10px 0;
+  padding: 5px;
+  display: inline-block;
+  .img_thumbnail {
+    width: 10rem;
+  }
+  .delete_icon {
+    width: 15px;
+  }
+  #delete_btn {
+    vertical-align: top;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}
