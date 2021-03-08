@@ -34,6 +34,7 @@ export class ItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.additionalImageUrls = []
     this.route.params.subscribe((params: Params) => {
       this.getItem()
       this.getFeaturedItems()

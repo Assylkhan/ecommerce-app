@@ -1,0 +1,26 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(formDirective)" #formDirective="ngForm">
+  <mat-form-field class="full-width">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="First Name" formControlName="firstName" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Last Name" formControlName="lastName">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Email" formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Role</mat-label>
+    <input matInput placeholder="Role" formControlName="role">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Save</button>
+  <button *ngIf="!isAddMode" mat-raised-button color="warn"
+  (click)="onDelete()"
+  type="button" class="delete_btn">Delete</button>
+</form>

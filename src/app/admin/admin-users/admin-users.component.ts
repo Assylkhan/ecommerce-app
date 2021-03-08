@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { User } from '@app/models';
 import { UserService } from '@app/services';
+import { ViewOptions } from '@app/helpers/view-options';
 
 @Component({
   selector: 'app-admin-users',
@@ -10,44 +12,67 @@ import { UserService } from '@app/services';
 })
 export class AdminUsersComponent implements OnInit {
   users: User[];
-  sortedUsers: User[];
+
+  tableColumns: string[] = ['index', 'firstName', 'lastName', 'email', 'role'];
+  resultsLength = 0;
+  pagesize = 10;
+
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor(
     private userService: UserService
   ) { }
 
   ngOnInit(): void {
-    this.userService.fetchAll()
-    .subscribe((users) => {
-      this.users = users
-      this.sortedUsers = this.users.slice()
-    },
-    error => {
-      console.log(error)
-    })
+    this.refresh(this.getDefaultOptions());
   }
 
-  sortData(sort: Sort) {
-    const data = this.users.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedUsers = data;
-      return;
-    }
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe((sort: Sort) => {
+      console.log('sortChange', this.sort.active);
+      this.paginator.pageIndex = 0;
+      this.refresh(this.getCurrentOptions());
+    });
 
-    this.sortedUsers = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'id': return compare(a.id, b.id, isAsc);
-        case 'firstName': return compare(a.firstName, b.firstName, isAsc);
-        case 'lastName': return compare(a.lastName, b.lastName, isAsc);
-        case 'email': return compare(a.email, b.email, isAsc);
-        case 'role': return compare(a.role, b.role, isAsc);
-        default: return 0;
+    this.paginator.page.subscribe((page: PageEvent) => {
+      console.log('paginator ', page);
+      this.refresh(this.getCurrentOptions());
+    });
+  }
+
+  refresh(options: ViewOptions) {
+    this.userService.fetchAllWithOptions(options).subscribe({
+      next: (users) => {
+        this.resultsLength = users.length;
+        this.users = users;
+      },
+      error: error => {
+        console.log(error)
       }
     });
   }
 
-}
+  getCurrentOptions() {
+    const options: ViewOptions = {
+      sortField: this.sort.active,
+      sortDirection: this.sort.direction,
+      page: this.paginator.pageIndex,
+      pageSize: this.paginator.pageSize
+    };
 
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    return options;
+  }
+
+  getDefaultOptions() {
+    const options: ViewOptions = {
+      sortField: 'name',
+      sortDirection: 'asc',
+      page: 0,
+      pageSize: this.pagesize
+    };
+
+    return options;
+  }
+
 }
