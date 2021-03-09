@@ -14,6 +14,7 @@ import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { ItemsListComponent } from './admin/items-list/items-list.component';
 import { ItemsListTestComponent } from './admin/items-list-test/items-list-test.component';
 import { AdminUserComponent } from './admin/admin-user/admin-user.component';
+import { UsersDashboardComponent } from './admin/users-dashboard/users-dashboard.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -31,8 +32,12 @@ const routes: Routes = [
           { path: 'edit-item/:id', component: AddItemFormComponent }
         ] },
       { path: 'settings', component: AdminSettingsComponent },
-      { path: 'users', component: AdminUsersComponent },
-      { path: 'users/:id', component: AdminUserComponent }
+      { path: 'users', component: UsersDashboardComponent,
+        children: [
+          { path: '', component: AdminUsersComponent },
+          { path: 'add-user', component: AdminUserComponent},
+          { path: 'edit-user/:id', component: AdminUserComponent },
+        ] }
     ]
   },
   { path: 'items/:id', component: ItemComponent},

@@ -27,6 +27,10 @@ export class UserService {
     return this.http.get<User>(`${this.rootURL}/users?email=${email}`);
   }
 
+  findById(id: any): Observable<any> {
+    return this.http.get<User>(`${this.rootURL}/users/${id}`);
+  }
+
   fetchAllWithOptions(options: ViewOptions): Observable<User[]> {
     if (this.users) {
       return this.users.pipe(

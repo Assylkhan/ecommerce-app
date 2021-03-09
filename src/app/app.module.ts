@@ -53,6 +53,7 @@ import { UploadTaskComponent } from './upload-task/upload-task.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ItemsListTestComponent } from './admin/items-list-test/items-list-test.component';
 import { AdminUserComponent } from './admin/admin-user/admin-user.component';
+import { UsersDashboardComponent } from './admin/users-dashboard/users-dashboard.component';
 
 var firebaseConfig = {
   apiKey: ClientConfig.config.apiKey,
@@ -85,7 +86,8 @@ var firebaseConfig = {
     UploaderComponent,
     UploadTaskComponent,
     ItemsListTestComponent,
-    AdminUserComponent
+    AdminUserComponent,
+    UsersDashboardComponent
   ],
   imports: [
     BrowserModule,
