@@ -20,7 +20,7 @@ export class UserService {
   }
 
   update(user: any): Observable<any> {
-    return this.http.put(`${this.rootURL}/users/${user.id}`, user);
+    return this.http.put(`${this.rootURL}/users/${user._id}`, user);
   }
 
   findByEmail(email: any): Observable<any> {

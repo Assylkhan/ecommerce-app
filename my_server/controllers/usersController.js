@@ -123,11 +123,17 @@ router.post('/login', (req, res) => {
 router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
-  let user = getModelFromRequest(req.body);
-  User.findByIdAndUpdate(req.params.id, {
-    $set: user
+  // let user = getModelFromRequest(req.body);
+  User.updateOne({_id: req.params.id}, {
+    $set: {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      role: req.body.role
+    }
   }, {
-    new: true
+    useFindAndModify: false,
+    new: false
   }).then(user => {
     res.json(user);
   }).catch(err => {
