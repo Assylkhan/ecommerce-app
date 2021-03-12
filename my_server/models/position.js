@@ -5,6 +5,10 @@ const positionSchema = new mongoose.Schema({
     type: Number,
     trim: true
   },
+  cartId: {
+    type: Number,
+    trim: true
+  },
   itemId: {
     type: Number,
     trim: true

@@ -54,6 +54,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ItemsListTestComponent } from './admin/items-list-test/items-list-test.component';
 import { AdminUserComponent } from './admin/admin-user/admin-user.component';
 import { UsersDashboardComponent } from './admin/users-dashboard/users-dashboard.component';
+import { CartComponent } from './cart/cart.component';
+import { CartIconComponent } from './cart-icon/cart-icon.component';
+import { OrderComponent } from './order/order.component';
 
 var firebaseConfig = {
   apiKey: ClientConfig.config.apiKey,
@@ -87,7 +90,10 @@ var firebaseConfig = {
     UploadTaskComponent,
     ItemsListTestComponent,
     AdminUserComponent,
-    UsersDashboardComponent
+    UsersDashboardComponent,
+    CartComponent,
+    CartIconComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
