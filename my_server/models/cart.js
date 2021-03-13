@@ -4,10 +4,6 @@ const cartSchema = new mongoose.Schema({
   userId: {
     type: Number,
     trim: true
-  },
-  sum: {
-    type: Number,
-    trim: true
   }
 }, {
   timestamps: true

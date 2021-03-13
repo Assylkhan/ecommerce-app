@@ -4,6 +4,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 var helper = require('../helpers/helper');
+var Cart = require('../models/cart');
 
 // => localhost:3080/api/users/
 router.get('/', helper.verifyToken, (req, res) => {
@@ -37,7 +38,18 @@ router.get('/:id', helper.verifyToken, (req, res) => {
 router.post('/', (req, res) => {
   let newUser = getModelFromRequest(req.body);
   newUser.save().then((user) => {
-    res.status(201).json(user)
+    let newCart = new Cart({
+      userId: user.id
+    });
+    newCart.save().then(cart => {
+      res.status(201).json(user)
+    }).catch(err => {
+      res.status(501).json({
+        msg: `Failed to add a cart to the user ${user.firstName} ${user.lastName}`,
+        err: err.message
+      })
+      console.log('Failed to add a cart to the user: ' + JSON.stringify(err, undefined, 2))
+    })
   }).catch((err) => {
     res.status(501).json({
       msg: 'Failed to add the user',
@@ -85,7 +97,7 @@ router.post('/login', (req, res) => {
   console.log(req.body);
   User.findOne({
     email: req.body.email
-  }).then(user => {
+  }).populate('cart').then(user => {
     if (user) {
       if (user.isValid(req.body.password)) {
         // generate token
@@ -95,6 +107,7 @@ router.post('/login', (req, res) => {
           expiresIn: '3h'
         })
         user.token = token
+
         return res.status(200).json(user);
       } else {
         return res.status(501).json({

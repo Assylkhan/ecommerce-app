@@ -70,6 +70,10 @@ var userSchema = new mongoose.Schema({
       type: String,
       trim: true
     }
+  },
+  cart: {
+    type: Schema.Types.ObjectId,
+    ref: 'Cart'
   }
 }, {
   timestamps: true
