@@ -72,7 +72,7 @@ var userSchema = new mongoose.Schema({
     }
   },
   cart: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Cart'
   }
 }, {

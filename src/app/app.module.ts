@@ -57,6 +57,7 @@ import { UsersDashboardComponent } from './admin/users-dashboard/users-dashboard
 import { CartComponent } from './cart/cart.component';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { OrderComponent } from './order/order.component';
+import { ProfileDropdownComponent } from './profile-dropdown/profile-dropdown.component';
 
 var firebaseConfig = {
   apiKey: ClientConfig.config.apiKey,
@@ -93,7 +94,8 @@ var firebaseConfig = {
     UsersDashboardComponent,
     CartComponent,
     CartIconComponent,
-    OrderComponent
+    OrderComponent,
+    ProfileDropdownComponent
   ],
   imports: [
     BrowserModule,
