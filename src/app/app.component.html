@@ -9,11 +9,11 @@
   <div class="spacer"></div>
   <nav class="header_nav right-nav">
     <a *ngIf="authService.currentUserValue?.role == 'admin'" routerLink="/admin">Admin</a>
+    <a routerLink="/"><img src="assets/img/Cart.png" alt=""></a>
     <ng-container *ngIf="!authService.currentUserValue else profileDropdown">
       <a routerLink="/login">Log in</a>
       <a routerLink="/signup">Sign Up</a>
     </ng-container>
-    <a routerLink="/"><img src="assets/img/Cart.png" alt=""></a>
     <ng-template #profileDropdown>
       <app-profile-dropdown></app-profile-dropdown>
     </ng-template>
