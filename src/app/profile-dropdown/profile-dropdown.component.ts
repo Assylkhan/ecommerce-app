@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-dropdown.component.scss']
 })
 export class ProfileDropdownComponent implements OnInit {
+  showDropdown: boolean = false;
 
   constructor() { }
 

@@ -1,7 +1,15 @@
-<a href="javascript:;" class="dropdown_link">
+<div (mouseout)="showDropdown=false">
+
+  <a href="javascript:;" class="dropdown_link"
+  (mouseover)="showDropdown=true">
   <img class="avatar_icon" src="assets/img/Icon_Man.svg" alt="avatar">
   <!-- <i class="ng-account-icon ng-icon-size"></i> -->
-</a>
-<div class="dropdown-list">
+  </a>
+  <div *ngIf="showDropdown" class="dropdown-list">
+    <ul>
+      <li>Settings</li>
+      <li>Log out</li>
+    </ul>
+  </div>
 
 </div>
