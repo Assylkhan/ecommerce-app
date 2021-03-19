@@ -13,4 +13,8 @@ export class ProfileDropdownComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  logout() {
+
+  }
+
 }
