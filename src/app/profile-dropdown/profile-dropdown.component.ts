@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '@app/services';
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -8,13 +10,17 @@ import { Component, OnInit } from '@angular/core';
 export class ProfileDropdownComponent implements OnInit {
   showDropdown: boolean = false;
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
   logout() {
-
+    this.authService.logout()
+    this.router.navigate(['/'])
   }
 
 }

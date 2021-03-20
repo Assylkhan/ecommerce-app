@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {
   MatSnackBar,
@@ -9,13 +9,15 @@ import {
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserService } from '../../services/user.service';
 import { User } from '@app/models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-basic-info',
   templateUrl: './basic-info.component.html',
   styleUrls: ['./basic-info.component.scss']
 })
-export class BasicInfoComponent implements OnInit {
+export class BasicInfoComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   basicInfoForm = this.fb.group({
@@ -48,6 +50,10 @@ export class BasicInfoComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe()
+  }
+
   showSnackBar(msg, status) {
     this.snackBar.open(msg, status, {
       duration: 3000,
@@ -61,15 +67,17 @@ export class BasicInfoComponent implements OnInit {
     currentUser.firstName = this.f.firstName.value
     currentUser.lastName = this.f.lastName.value
     currentUser.email = this.f.email.value
-    this.userService.update(currentUser).subscribe({
-      next: () => {
-        this.showSnackBar('Basic Information Updated', 'Success')
-      },
-      error: error => {
-        console.log(error)
-        this.error = error
-        this.loading = false
-      }
-    })
+    this.subscriptions.add(
+      this.userService.update(currentUser).subscribe({
+        next: () => {
+          this.showSnackBar('Basic Information Updated', 'Success')
+        },
+        error: error => {
+          console.log(error)
+          this.error = error
+          this.loading = false
+        }
+      })
+    )
   }
 }

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '@app/models';
 import { ItemService } from '@app/services';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-item-form',
@@ -12,7 +12,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   styleUrls: ['./add-item-form.component.scss']
 })
 
-export class AddItemFormComponent implements OnInit {
+export class AddItemFormComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   isAddMode: boolean;
@@ -41,23 +42,29 @@ export class AddItemFormComponent implements OnInit {
     this.id = this.route.snapshot.params['id']
     this.isAddMode = !this.id
     if (!this.isAddMode) {
-      this.itemService.getItem(this.id)
-        .subscribe({
-          next: item => {
-            if (!item) this.router.navigate(['/admin'])
-            this.item = item
-            // this.currentItemSubject = new BehaviorSubject(item);
-            // this.currentItem = this.currentItemSubject.asObservable();
-            // this.currentItemSubject.next(item);
-            this.itemForm.patchValue(item)
-            this.imageUrls = item.imageUrls
-          },
-          error: error => {
-            this.router.navigate(['/'])
-            console.log(error)
-          }
-        });
+      this.subscriptions.add(
+        this.itemService.getItem(this.id)
+          .subscribe({
+            next: item => {
+              if (!item) this.router.navigate(['/admin'])
+              this.item = item
+              // this.currentItemSubject = new BehaviorSubject(item);
+              // this.currentItem = this.currentItemSubject.asObservable();
+              // this.currentItemSubject.next(item);
+              this.itemForm.patchValue(item)
+              this.imageUrls = item.imageUrls
+            },
+            error: error => {
+              this.router.navigate(['/'])
+              console.log(error)
+            }
+          })
+      );
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe()
   }
 
   showSnackBar(msg, status) {
@@ -69,28 +76,28 @@ export class AddItemFormComponent implements OnInit {
   }
 
   onImgDelete(imageUrl) {
-    this.imageUrls = this.imageUrls.filter(item => item!= imageUrl)
+    this.imageUrls = this.imageUrls.filter(item => item != imageUrl)
   }
 
   onDelete() {
-    this.itemService.delete(this.id)
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/admin'])
-          console.log('deleted successfully')
-        },
-        error: error => {
-          console.log(error)
-        }
-      })
+    this.subscriptions.add(
+      this.itemService.delete(this.id)
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/admin'])
+            console.log('deleted successfully')
+          },
+          error: error => {
+            console.log(error)
+          }
+        })
+    )
   }
 
   onSubmit(formDirective: FormGroupDirective) {
     if (this.itemForm.invalid) return;
     var dataToSave = this.itemForm.getRawValue()
     dataToSave['imageUrls'] = this.imageUrls
-    console.log('dataToSave')
-    console.log(dataToSave)
     if (this.id) dataToSave['_id'] = this.id
     if (this.isAddMode) {
       this.createItem(dataToSave, formDirective);
@@ -100,26 +107,28 @@ export class AddItemFormComponent implements OnInit {
   }
 
   private createItem(dataToSave, formDirective: FormGroupDirective) {
-    this.itemService.create(dataToSave).subscribe({
-      next: () => {
-        // this.itemForm.reset()
-        // formDirective.resetForm()
-        this.showSnackBar('Item added successfully', 'Success')
-      },
-      error: error => {
-        console.log(error)
-      }
-    })
+    this.subscriptions.add(
+      this.itemService.create(dataToSave).subscribe({
+        next: () => {
+          this.showSnackBar('Item added successfully', 'Success')
+        },
+        error: error => {
+          console.log(error)
+        }
+      })
+    )
   }
 
   private updateItem(dataToSave) {
-    this.itemService.update(dataToSave).subscribe({
-      next: () => {
-        this.showSnackBar('Item updated successfully', 'Success')
-      },
-      error: error => {
-        console.log(error)
-      }
-    })
+    this.subscriptions.add(
+      this.itemService.update(dataToSave).subscribe({
+        next: () => {
+          this.showSnackBar('Item updated successfully', 'Success')
+        },
+        error: error => {
+          console.log(error)
+        }
+      })
+    )
   }
 }

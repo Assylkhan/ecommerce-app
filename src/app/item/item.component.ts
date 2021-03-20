@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Item } from '@app/models';
 import { ItemService } from '@app/services';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 export interface Tile {
   color: string;
@@ -18,14 +18,15 @@ export interface Tile {
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
   item: Item;
   featuredItems: Item[];
   additionalImageUrls: String[];
   tiles: Tile[] = [
-    {name: 'Details', cols: 3, rows: 1, color: 'lightblue'},
-    {name: 'Recommended', cols: 1, rows: 2, color: 'lightgreen'},
-    {name: 'Info', cols: 3, rows: 1, color: '#DDBDF1'},
+    { name: 'Details', cols: 3, rows: 1, color: 'lightblue' },
+    { name: 'Recommended', cols: 1, rows: 2, color: 'lightgreen' },
+    { name: 'Info', cols: 3, rows: 1, color: '#DDBDF1' },
   ];
 
   constructor(
@@ -41,21 +42,29 @@ export class ItemComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe()
+  }
+
   getFeaturedItems(): void {
-    this.itemService.fetchFeatured()
-    .subscribe(items => {
-      this.featuredItems = items
-    })
+    this.subscriptions.add(
+      this.itemService.fetchFeatured()
+        .subscribe(items => {
+          this.featuredItems = items
+        })
+    )
   }
 
   getItem(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.itemService.getItem(id).subscribe(item => {
-      this.item = item
-      if (item.imageUrls.length > 1)
-      this.additionalImageUrls = item.imageUrls.slice(1, item.imageUrls.length)
-      console.log(this.item.imageUrls)
-    });
+    this.subscriptions.add(
+      this.itemService.getItem(id).subscribe(item => {
+        this.item = item
+        if (item.imageUrls.length > 1)
+          this.additionalImageUrls = item.imageUrls.slice(1, item.imageUrls.length)
+        console.log(this.item.imageUrls)
+      })
+    );
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Item } from '@app/models';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
 @Component({
@@ -11,7 +11,7 @@ import { finalize, tap } from 'rxjs/operators';
   styleUrls: ['./upload-task.component.scss']
 })
 export class UploadTaskComponent implements OnInit {
-
+  private subscriptions = new Subscription()
   @Input() file: File;
   @Input() imageUrls: String[];
 
@@ -53,7 +53,7 @@ export class UploadTaskComponent implements OnInit {
         this.imageUrls.push(this.downloadURL);
       })
     )
-    this.snapshot.subscribe()
+    this.subscriptions.add(this.snapshot.subscribe())
   }
 
   isActive(snapshot) {

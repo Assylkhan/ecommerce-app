@@ -11,7 +11,7 @@ import { UserService } from '@app/services';
   styleUrls: ['./signup-form.component.scss']
 })
 export class SignupFormComponent implements OnDestroy {
-  subscription: Subscription;
+  subscriptions: Subscription;
   currentUser: User;
   signupForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -79,12 +79,12 @@ export class SignupFormComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   onSubmit() {
     if (this.signupForm.invalid) return;
-    this.subscription = this.userService.create(this.signupForm.getRawValue()).subscribe({
+    this.subscriptions = this.userService.create(this.signupForm.getRawValue()).subscribe({
       next: () => {
         console.log('signed up successfully')
         this.moveToLogin()

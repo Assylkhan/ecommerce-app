@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { User } from '@app/models';
 import { AuthenticationService } from '@app/services';
 import { first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
+
   loginForm = this.fb.group({
     email: ['', [
       // Validators.required,
@@ -42,20 +45,24 @@ export class LoginFormComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe()
+  }
+
   onSubmit() {
     if (this.loginForm.invalid) return;
     this.loading = true;
-    this.authService.login(this.f.email.value, this.f.password.value)
-    .pipe(first())
-    .subscribe(
-      (user) => {
-        this.router.navigate([this.returnUrl])
-      },
-      error => {
-        this.error = error
-        this.loading = false
-      }
-    );
+    this.subscriptions.add(this.authService.login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        (user) => {
+          this.router.navigate([this.returnUrl])
+        },
+        error => {
+          this.error = error
+          this.loading = false
+        }
+      ));
   }
 
 }
