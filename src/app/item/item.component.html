@@ -21,7 +21,10 @@
         </p>
         <h5>$ {{item.price}}</h5>
 
-        <button mat-rasied-button>Add to Cart</button>
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+          <button mat-rasied-button>Add to Cart</button>
+        </form>
       </div>
     </div>
     <div class="item_detailed_info_container">

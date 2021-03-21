@@ -5,6 +5,7 @@ import { ItemService } from '@app/services';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
 
 export interface Tile {
   color: string;
@@ -29,9 +30,17 @@ export class ItemComponent implements OnInit, OnDestroy {
     { name: 'Info', cols: 3, rows: 1, color: '#DDBDF1' },
   ];
 
+  itemForm = this.fb.group({
+    quantity: ['', [
+      // Validators.required,
+      // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+    ]],
+  });
+
   constructor(
     private route: ActivatedRoute,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {

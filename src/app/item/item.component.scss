@@ -2,6 +2,22 @@
   width: 80rem;
 }
 
+.form-group {
+  margin: 15px 0;
+}
+
+.next-icon {
+  display: inline-block;
+  font-family: NextIcon;
+  font-style: normal;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.next-icon-minus::before {
+  content: "";
+}
+
 .container {
   display: flex;
 
@@ -34,13 +50,6 @@
       .short_info_container {
         flex: 1;
       }
-
-      // .share {
-      //   padding: 0;
-      //   background: transparent;
-      //   border: none;
-      //   cursor: pointer;
-      // }
 
       & > * {
         padding: 1rem;
