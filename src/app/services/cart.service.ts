@@ -15,7 +15,9 @@ export class CartService {
     private http: HttpClient,
     private authService: AuthenticationService) { }
 
-  fillCart(position: Position): Observable<any> {
+  fillCart(itemId: string): Observable<any> {
+    let position = new Position()
+    position.itemId = itemId
     return this.http.put(`${this.rootURL}/fillUserCart/${this.authService.currentUserValue.id}`, position);
   }
 }

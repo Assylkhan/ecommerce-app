@@ -1,7 +1,7 @@
 export class Position {
-  cartId: number;
-  orderId: number;
-  itemId: number;
+  cartId: string;
+  orderId: string;
+  itemId: string;
   quantity: number;
 
   public constructor(init?: Partial<Position>) {

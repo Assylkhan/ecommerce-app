@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
+import { CartService } from '@app/services/cart.service';
 
 export interface Tile {
   color: string;
@@ -40,7 +41,8 @@ export class ItemComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private itemService: ItemService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +76,10 @@ export class ItemComponent implements OnInit, OnDestroy {
         console.log(this.item.imageUrls)
       })
     );
+  }
+
+  addToCart() {
+    this.cartService.fillCart(this.item._id)
   }
 
 }
