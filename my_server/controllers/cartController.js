@@ -17,6 +17,34 @@ router.post('/', (req, res) => {
   })
 });
 
+router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(400).send(`No record with given id: ${req.params.id}`);
+
+  let newPosition = new Position({
+    userId: reqBody.userId,
+    sum: reqBody.sum
+  });
+
+  Cart.updateOne({_id: req.params.id}, {
+    $set: {
+      userId: req.body.userId,
+      sum: req.body.sum
+    }
+  }, {
+    useFindAndModify: false,
+    new: false
+  }).then(cart => {
+    res.json(cart);
+  }).catch(err => {
+    res.json({
+      msg: 'Failed to update the cart',
+      err: err
+    });
+    console.log('Failed to update the cart: ' + JSON.stringify(err, undefined, 2));
+  })
+});
+
 // => localhost:3080/api/cart/:id
 router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))

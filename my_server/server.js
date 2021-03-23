@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 
 const usersController = require('./controllers/usersController');
 const itemsController = require('./controllers/itemsController');
+const cartController = require('./controllers/cartController');
 
 // Connecting to DB
 mongoose.connect(config.mongoConnectionString, {
@@ -41,6 +42,7 @@ app.use(express.static(process.cwd() + "/../dist/ecommerce-app/"));
 
 app.use('/api/users', usersController);
 app.use('/api/items', itemsController);
+app.use('/api/cart', cartController);
 
 app.get('/', (req, res) => {
   res.sendFile(process.cwd() + "/../dist/ecommerce-app/index.html")

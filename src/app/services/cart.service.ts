@@ -10,6 +10,7 @@ import { AuthenticationService } from './authentication.service';
 export class CartService {
   rootURL = '/api'
   positions: Observable<Position[]>
+  cartId: string;
 
   constructor(
     private http: HttpClient,

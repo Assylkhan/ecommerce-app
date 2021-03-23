@@ -79,7 +79,11 @@ export class ItemComponent implements OnInit, OnDestroy {
   }
 
   addToCart() {
-    this.cartService.fillCart(this.item._id)
+    this.subscriptions.add(
+      this.cartService.fillCart(this.item._id).subscribe(
+
+      )
+    )
   }
 
 }
