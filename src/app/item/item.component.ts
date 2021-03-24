@@ -81,7 +81,13 @@ export class ItemComponent implements OnInit, OnDestroy {
   addToCart() {
     this.subscriptions.add(
       this.cartService.fillCart(this.item._id).subscribe(
-
+        (user) => {
+          // this.router.navigate([this.returnUrl])
+        },
+        error => {
+          // this.error = error
+          // this.loading = false
+        }
       )
     )
   }

@@ -38,6 +38,8 @@ router.get('/:id', helper.verifyToken, (req, res) => {
 router.post('/', (req, res) => {
   let newUser = getModelFromRequest(req.body);
   newUser.save().then((user) => {
+    console.log('user')
+    console.log(user)
     let newCart = new Cart({
       userId: user.id
     });
@@ -107,7 +109,8 @@ router.post('/login', (req, res) => {
           expiresIn: '3h'
         })
         user.token = token
-
+        console.log('user')
+        console.log(user)
         return res.status(200).json(user);
       } else {
         return res.status(501).json({
