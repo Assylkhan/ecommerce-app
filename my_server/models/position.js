@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const positionSchema = new mongoose.Schema({
   orderId: {
-    type: Number,
+    type: String,
     trim: true
   },
   cartId: {
-    type: Number,
+    type: String,
     trim: true
   },
   itemId: {
-    type: Number,
+    type: String,
     trim: true
   },
   quantity: {
