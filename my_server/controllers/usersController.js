@@ -44,6 +44,7 @@ router.post('/', (req, res) => {
       userId: user.id
     });
     newCart.save().then(cart => {
+      user.cart = cart
       res.status(201).json(user)
     }).catch(err => {
       res.status(501).json({
@@ -109,9 +110,19 @@ router.post('/login', (req, res) => {
           expiresIn: '3h'
         })
         user.token = token
-        console.log('user')
-        console.log(user)
-        return res.status(200).json(user);
+        Cart.findOne({userId: user.id}).then(cart => {
+          user.cart = cart
+          console.log('user')
+          console.log(user)
+          return res.status(200).json(user);
+        }).catch(err => {
+          res.json({
+            msg: 'Failed to find the cart',
+            err: err
+          });
+          console.log('Failed to find the cart: ' + JSON.stringify(err, undefined, 2))
+        })
+
       } else {
         return res.status(501).json({
           message: 'Invalid credentials'

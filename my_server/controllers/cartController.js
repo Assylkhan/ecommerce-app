@@ -1,7 +1,9 @@
 const express = require('express');
 var router = express.Router();
 var Cart = require('../models/cart');
+var Position = require('../models/position');
 var helper = require('../helpers/helper');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 // => localhost:3080/api/cart
 router.post('/', (req, res) => {
@@ -21,28 +23,24 @@ router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
 
-  let newPosition = new Position({
-    userId: reqBody.userId,
-    sum: reqBody.sum
-  });
+  // todo: if there's a position with the same item, update the position instead of creating a new position
 
-  Cart.updateOne({_id: req.params.id}, {
-    $set: {
-      userId: req.body.userId,
-      sum: req.body.sum
-    }
-  }, {
-    useFindAndModify: false,
-    new: false
-  }).then(cart => {
-    res.json(cart);
-  }).catch(err => {
-    res.json({
-      msg: 'Failed to update the cart',
-      err: err
-    });
-    console.log('Failed to update the cart: ' + JSON.stringify(err, undefined, 2));
+  let newPosition = new Position({
+    cartId: req.params.id,
+    itemId: req.body.itemId,
+    quantity: req.body.quantity,
+    sum: req.body.sum
+  });
+  newPosition.save().then((position) => {
+    res.json(position)
+  }).catch((err) => {
+    console.log('Failed to add the position: ' + JSON.stringify(err, undefined, 2))
+    res.status(501).json({
+      msg: 'Failed to add the position',
+      err: err.message
+    })
   })
+
 });
 
 // => localhost:3080/api/cart/:id

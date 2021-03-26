@@ -1,5 +1,7 @@
+import { Cart } from "./cart.model";
+
 export class User {
-  id?: any;
+  _id?: any;
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -18,6 +20,7 @@ export class User {
     phone?: string;
   }
   token?: string;
+  cart?: Cart;
 
   public constructor(init?: Partial<User>) {
     Object.assign(this, init);

@@ -8,17 +8,17 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class CartService {
-  rootURL = '/api'
+  rootURL = '/api/cart'
   positions: Observable<Position[]>
   cartId: string;
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthenticationService) { }
+    private http: HttpClient) { }
 
   fillCart(itemId: string): Observable<any> {
     let position = new Position()
     position.itemId = itemId
-    return this.http.put(`${this.rootURL}/fillUserCart/${this.authService.currentUserValue.id}`, position);
+    position.quantity = 1
+    return this.http.put(`${this.rootURL}/fillUserCart/${this.cartId}`, position);
   }
 }

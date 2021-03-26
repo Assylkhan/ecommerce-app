@@ -1,6 +1,5 @@
 const express = require('express');
-const app = express(),
-  bodyParser = require("body-parser");
+const app = express();
 const cors = require('cors');
 const port = 3080;
 const config = require('./config');
@@ -30,11 +29,11 @@ mongoose.connect(config.mongoConnectionString, {
 app.use(cors());
 
 // parse requests of content-type - application/json
-app.use(bodyParser.json());
+app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 // add data from <form> to the body property of request
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
   extended: true
 }));
 
