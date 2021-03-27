@@ -17,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 // MatDrawerContainer
 
 import { AppComponent } from './app.component';
@@ -58,6 +59,7 @@ import { CartComponent } from './cart/cart.component';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { OrderComponent } from './order/order.component';
 import { ProfileDropdownComponent } from './profile-dropdown/profile-dropdown.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 var firebaseConfig = {
   apiKey: ClientConfig.config.apiKey,
@@ -95,7 +97,8 @@ var firebaseConfig = {
     CartComponent,
     CartIconComponent,
     OrderComponent,
-    ProfileDropdownComponent
+    ProfileDropdownComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,

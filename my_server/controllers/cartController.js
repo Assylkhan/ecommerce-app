@@ -25,20 +25,22 @@ router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
 
   // todo: if there's a position with the same item, update the position instead of creating a new position
 
-  let newPosition = new Position({
+  var newData = {
     cartId: req.params.id,
     itemId: req.body.itemId,
     quantity: req.body.quantity,
     sum: req.body.sum
-  });
-  newPosition.save().then((position) => {
-    res.json(position)
-  }).catch((err) => {
-    console.log('Failed to add the position: ' + JSON.stringify(err, undefined, 2))
-    res.status(501).json({
-      msg: 'Failed to add the position',
-      err: err.message
-    })
+  };
+
+  Position.findOneAndUpdate({'cartId': req.params.id, 'itemId': req.body.itemId}, newData, {upsert: true, useFindAndModify: false}, function(err, position) {
+    if (err) {
+      res.status(501).json({
+        msg: 'Failed to add the position',
+        err: err.message
+      })
+    } else {
+      res.json(position)
+    }
   })
 
 });
