@@ -15,6 +15,7 @@ import { ItemsListComponent } from './admin/items-list/items-list.component';
 import { ItemsListTestComponent } from './admin/items-list-test/items-list-test.component';
 import { AdminUserComponent } from './admin/admin-user/admin-user.component';
 import { UsersDashboardComponent } from './admin/users-dashboard/users-dashboard.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -41,6 +42,7 @@ const routes: Routes = [
     ]
   },
   { path: 'items/:id', component: ItemComponent},
+  { path: 'cart', component: CartComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ]

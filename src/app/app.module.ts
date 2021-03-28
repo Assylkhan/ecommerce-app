@@ -124,6 +124,7 @@ var firebaseConfig = {
     MatCheckboxModule,
     MatPaginatorModule,
     MatTableModule,
+    MatDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,

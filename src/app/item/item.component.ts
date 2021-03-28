@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Item } from '@app/models';
 import { ItemService } from '@app/services';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,6 +8,8 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { CartService } from '@app/services/cart.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '@app/confirmation-dialog/confirmation-dialog.component';
 
 export interface Tile {
   color: string;
@@ -23,8 +25,6 @@ export interface Tile {
 })
 export class ItemComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
   item: Item;
   featuredItems: Item[];
   additionalImageUrls: String[];
@@ -46,7 +46,8 @@ export class ItemComponent implements OnInit, OnDestroy {
     private itemService: ItemService,
     private fb: FormBuilder,
     private cartService: CartService,
-    private snackBar: MatSnackBar,
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -61,12 +62,15 @@ export class ItemComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
-  showSnackBar(msg, status) {
-    this.snackBar.open(msg, status, {
-      duration: 3000,
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition
-    })
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.router.navigate(['/cart'])
+    });
   }
 
   getFeaturedItems(): void {
@@ -95,6 +99,7 @@ export class ItemComponent implements OnInit, OnDestroy {
       this.cartService.fillCart(this.item._id).subscribe(
         (user) => {
           // this.router.navigate([this.returnUrl])
+          this.openDialog()
         },
         error => {
           // this.error = error
