@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { CartService } from '@app/services/cart.service';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@app/confirmation-dialog/confirmation-dialog.component';
 
@@ -33,6 +32,8 @@ export class ItemComponent implements OnInit, OnDestroy {
     { name: 'Recommended', cols: 1, rows: 2, color: 'lightgreen' },
     { name: 'Info', cols: 3, rows: 1, color: '#DDBDF1' },
   ];
+  loading = false;
+  error = '';
 
   itemForm = this.fb.group({
     quantity: ['', [
@@ -64,7 +65,7 @@ export class ItemComponent implements OnInit, OnDestroy {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '250px'
+      width: '370px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -102,8 +103,8 @@ export class ItemComponent implements OnInit, OnDestroy {
           this.openDialog()
         },
         error => {
-          // this.error = error
-          // this.loading = false
+          this.error = error
+          this.loading = false
         }
       )
     )

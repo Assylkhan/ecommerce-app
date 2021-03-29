@@ -17,18 +17,16 @@ export class CartService {
     private http: HttpClient) { }
 
   fillCart(itemId: string): Observable<any> {
-    let position = new Position()
-    position.itemId = itemId
-    position.quantity = 1
-    return this.http.put(`${this.rootURL}/fillUserCart/${this.cartId}`, position).pipe(
+    let newPosition = new Position()
+    newPosition.itemId = itemId
+    newPosition.quantity = 1
+    return this.http.put(`${this.rootURL}/fillUserCart/${this.cartId}`, newPosition).pipe(
       tap(position => {
-        console.log(position)
         var index = this.positions.findIndex(el => el.itemId == position.itemId)
-        console.log(index)
-        if (index < 0) this.positions.push(position)
+        if (this.positions.length == 0 || index < 0) this.positions.push(position)
         else this.positions[index].quantity += 1;
-        console.log('cart')
         console.log(this.positions)
+        console.log('this.positions')
       })
     );
   }

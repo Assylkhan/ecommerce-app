@@ -111,10 +111,22 @@ router.post('/login', (req, res) => {
         })
         user.token = token
         Cart.findOne({userId: user.id}).then(cart => {
-          user.cart = cart
-          console.log('user')
-          console.log(user)
-          return res.status(200).json(user);
+          console.log('cart')
+          console.log(cart)
+          Position.find({cartId: cart.id}).then(positions => {
+            cart.positions = positions
+            user.cart = cart
+            console.log('user')
+            console.log(user)
+            return res.status(200).json(user);
+          }).catch(err => {
+            res.json({
+              msg: 'Failed to find the positions',
+              err: err
+            });
+            console.log('Failed to find the positions: ' + JSON.stringify(err, undefined, 2))
+          })
+
         }).catch(err => {
           res.json({
             msg: 'Failed to find the cart',

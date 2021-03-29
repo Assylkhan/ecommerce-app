@@ -19,6 +19,7 @@
         <p>
           {{item.description}}
         </p>
+        <p><mat-error *ngIf="error">{{error}}</mat-error></p>
         <h5>$ {{item.price}}</h5>
 
         <!-- <form [formGroup]="itemForm" (ngSubmit)="onSubmit()"> -->
