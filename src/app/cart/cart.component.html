@@ -1,1 +1,21 @@
-<p>cart works!</p>
+<div class="item">
+  <div class="image_container">
+    <img
+      class="main_img"
+      [src]="item.imageUrls.length > 0 ? item.imageUrls[0] : ''"
+      alt="{{ item.imageUrls.length > 0 ? item.imageUrls[0] : '' }}"
+    />
+  </div>
+  <div class="short_info_container">
+    <p>
+      {{ item.description }}
+    </p>
+    <p>
+      <mat-error *ngIf="error">{{ error }}</mat-error>
+    </p>
+    <h5>$ {{ item.price }}</h5>
+  </div>
+  <div class="actions_container">
+    <button (click)="removeFromCart()" mat-rasied-button>Add to Cart</button>
+  </div>
+</div>

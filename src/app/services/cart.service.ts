@@ -22,8 +22,8 @@ export class CartService {
     newPosition.quantity = 1
     return this.http.put(`${this.rootURL}/fillUserCart/${this.cartId}`, newPosition).pipe(
       tap(position => {
-        var index = this.positions.findIndex(el => el.itemId == position.itemId)
-        if (this.positions.length == 0 || index < 0) this.positions.push(position)
+        var index = this.positions?.findIndex(el => el.itemId == position.itemId)
+        if (this.positions.length == 0 || index == null || index < 0) this.positions.push(position)
         else this.positions[index].quantity += 1;
         console.log(this.positions)
         console.log('this.positions')

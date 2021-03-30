@@ -9,9 +9,9 @@ const positionSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  itemId: {
-    type: String,
-    trim: true
+  item: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Item'
   },
   quantity: {
     type: Number,

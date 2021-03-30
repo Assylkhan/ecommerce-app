@@ -6,7 +6,7 @@ const cartSchema = new mongoose.Schema({
     trim: true
   },
   positions: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'Position'
   }
 }, {

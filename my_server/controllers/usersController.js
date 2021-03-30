@@ -5,6 +5,7 @@ var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 var helper = require('../helpers/helper');
 var Cart = require('../models/cart');
+var Position = require('../models/position');
 
 // => localhost:3080/api/users/
 router.get('/', helper.verifyToken, (req, res) => {
@@ -110,10 +111,12 @@ router.post('/login', (req, res) => {
           expiresIn: '3h'
         })
         user.token = token
-        Cart.findOne({userId: user.id}).then(cart => {
+        Cart.findOne({userId: user._id}).then(cart => {
           console.log('cart')
           console.log(cart)
-          Position.find({cartId: cart.id}).then(positions => {
+          Position.find({cartId: cart._id}).then(positions => {
+            console.log('positions')
+            console.log(positions)
             cart.positions = positions
             user.cart = cart
             console.log('user')
@@ -126,7 +129,6 @@ router.post('/login', (req, res) => {
             });
             console.log('Failed to find the positions: ' + JSON.stringify(err, undefined, 2))
           })
-
         }).catch(err => {
           res.json({
             msg: 'Failed to find the cart',
