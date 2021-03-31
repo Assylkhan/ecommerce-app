@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 
 const cartSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    trim: true
-  },
+  // userId: {
+  //   type: String,
+  //   trim: true
+  // },
+  // user: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User'
+  // },
   positions: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Position'
@@ -13,4 +17,4 @@ const cartSchema = new mongoose.Schema({
   timestamps: true
 }, );
 
-module.exports = mongoose.model('Cart', cartSchema);
+module.exports = mongoose.model('Cart', cartSchema, 'cart');

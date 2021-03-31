@@ -31,17 +31,39 @@ router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
     quantity: req.body.quantity,
     sum: req.body.sum
   };
-
-  Position.findOneAndUpdate({'cartId': req.params.id, 'itemId': req.body.itemId}, newData, {upsert: true, useFindAndModify: false}, function(err, position) {
-    if (err) {
-      res.status(501).json({
-        msg: 'Failed to add the position',
-        err: err.message
-      })
+  Cart.findOne({
+    _id: req.params.id
+  }).populate('positions').then(cart => {
+    if (cart.positions.length < 1) {
+      cart.positions.push(newData)
     } else {
-      res.json(position)
+      let positionIndex = cart.positions.findIndex(pos => pos.itemId == req.body.itemId)
+      if (positionIndex > -1) {
+        let position = cart.positions[positionIndex]
+        position.quantity += 1
+        cart.positions[positionIndex] = position
+      } else {
+        cart.positions.push(newData)
+      }
     }
+  }).catch(err => {
+    res.json({
+      msg: 'Failed to find the cart',
+      err: err
+    });
+    console.log('Failed to find the cart: ' + JSON.stringify(err, undefined, 2));
   })
+
+  // Position.findOneAndUpdate({'cartId': req.params.id, 'itemId': req.body.itemId}, newData, {upsert: true, useFindAndModify: false}, function(err, position) {
+  //   if (err) {
+  //     res.status(501).json({
+  //       msg: 'Failed to add the position',
+  //       err: err.message
+  //     })
+  //   } else {
+  //     res.json(position)
+  //   }
+  // })
 
 });
 
@@ -50,7 +72,9 @@ router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   let cart = getModelFromRequest(req.body);
-  Cart.updateOne({_id: req.params.id}, {
+  Cart.updateOne({
+    _id: req.params.id
+  }, {
     $set: {
       userId: req.body.userId,
       sum: req.body.sum

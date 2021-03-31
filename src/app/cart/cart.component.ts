@@ -29,12 +29,12 @@ export class CartComponent implements OnInit {
 
     });
     this.subscriptions.add(
-      this.itemService.getItem(id).subscribe(item => {
-        this.item = item
-        if (item.imageUrls.length > 1)
-          this.additionalImageUrls = item.imageUrls.slice(1, item.imageUrls.length)
-        console.log(this.item.imageUrls)
-      })
+      // this.itemService.getItem(id).subscribe(item => {
+      //   this.item = item
+      //   if (item.imageUrls.length > 1)
+      //     this.additionalImageUrls = item.imageUrls.slice(1, item.imageUrls.length)
+      //   console.log(this.item.imageUrls)
+      // })
     );
   }
 

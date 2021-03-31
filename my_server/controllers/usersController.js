@@ -37,16 +37,20 @@ router.get('/:id', helper.verifyToken, (req, res) => {
 
 // => localhost:3080/api/users/
 router.post('/', (req, res) => {
-  let newUser = getModelFromRequest(req.body);
-  newUser.save().then((user) => {
-    console.log('user')
-    console.log(user)
-    let newCart = new Cart({
-      userId: user.id
-    });
-    newCart.save().then(cart => {
-      user.cart = cart
-      res.status(201).json(user)
+  let newCart = new Cart({});
+  newCart.save().then(cart => {
+    let newUser = getModelFromRequest(req.body);
+    newUser.cart = newCart;
+    newUser.save().then((user) => {
+
+      User.populate(newUser, { path: 'cart' }).then(myUser => {
+        console.log('myUser')
+        console.log(myUser)
+        res.status(201).json(myUser)
+      })
+
+      return res.status(201).json(user)
+
     }).catch(err => {
       res.status(501).json({
         msg: `Failed to add a cart to the user ${user.firstName} ${user.lastName}`,
@@ -98,10 +102,14 @@ router.post('/password', helper.verifyToken, (req, res) => {
 
 // => localhost:3080/api/users/login
 router.post('/login', (req, res) => {
-  console.log(req.body);
   User.findOne({
     email: req.body.email
-  }).populate('cart').then(user => {
+  }).populate({
+    path: 'cart',
+    populate: {
+      path: 'positions'
+    }
+  }).then(user => {
     if (user) {
       if (user.isValid(req.body.password)) {
         // generate token
@@ -110,32 +118,31 @@ router.post('/login', (req, res) => {
         }, helper.TOKEN_KEY, {
           expiresIn: '3h'
         })
+        console.log('user')
+        console.log(user)
         user.token = token
-        Cart.findOne({userId: user._id}).then(cart => {
-          console.log('cart')
-          console.log(cart)
-          Position.find({cartId: cart._id}).then(positions => {
-            console.log('positions')
-            console.log(positions)
-            cart.positions = positions
-            user.cart = cart
-            console.log('user')
-            console.log(user)
-            return res.status(200).json(user);
-          }).catch(err => {
-            res.json({
-              msg: 'Failed to find the positions',
-              err: err
-            });
-            console.log('Failed to find the positions: ' + JSON.stringify(err, undefined, 2))
-          })
-        }).catch(err => {
-          res.json({
-            msg: 'Failed to find the cart',
-            err: err
-          });
-          console.log('Failed to find the cart: ' + JSON.stringify(err, undefined, 2))
-        })
+        // user.cart.populate('position').execPopulate()
+
+        // user.cart.populate('position').execPopulate((err, positions) => {
+        //   if (err) return res.status(501).json(err);
+
+        // console.log('user after')
+        // console.log(user)
+        // user.cart.positions = positions
+        return res.status(200).json(user);
+        // })
+        // Position.find({cartId: user.cart._id}).then(positions => {
+        //   console.log('positions')
+        //   console.log(positions)
+        //   user.cart.positions = positions
+        //   return res.status(200).json(user);
+        // }).catch(err => {
+        //   res.json({
+        //     msg: 'Failed to find the positions',
+        //     err: err
+        //   });
+        //   console.log('Failed to find the positions: ' + JSON.stringify(err, undefined, 2))
+        // })
 
       } else {
         return res.status(501).json({
