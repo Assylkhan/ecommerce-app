@@ -90,7 +90,7 @@ export class ItemComponent implements OnInit, OnDestroy {
         this.item = item
         if (item.imageUrls.length > 1)
           this.additionalImageUrls = item.imageUrls.slice(1, item.imageUrls.length)
-        console.log(this.item.imageUrls)
+        // console.log(this.item.imageUrls)
       })
     );
   }

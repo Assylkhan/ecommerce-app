@@ -6,9 +6,9 @@ var helper = require('../helpers/helper');
 // => localhost:3080/api/orders
 router.get('/', helper.verifyToken, (req, res) => {
   Order.find().then(orders => {
-    res.json(orders);
+    res.status(201).json(orders);
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to find orders',
       err: err
     });
@@ -36,14 +36,14 @@ router.get('users/:id', helper.verifyToken, (req, res) => {
     userId: req.params.id
   }).then(orders => {
     if (orders) {
-      res.json(orders);
+      res.status(201).json(orders);
     } else {
       return res.status(501).json({
         message: 'Orders not found'
       })
     }
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to find the orders',
       err: err
     });

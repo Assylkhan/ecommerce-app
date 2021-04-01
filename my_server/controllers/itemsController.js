@@ -13,9 +13,9 @@ router.get('/', helper.verifyToken, (req, res) => {
   if (req.params.featured != null) {
     Item.find({featured: true}).then(items => {
       console.log(items)
-      res.json(items);
+      res.status(201).json(items);
     }).catch(err => {
-      res.json({
+      res.status(501).json({
         msg: 'Failed to find items',
         err: err
       });
@@ -24,9 +24,9 @@ router.get('/', helper.verifyToken, (req, res) => {
   } else {
     Item.find().then(items => {
       console.log(items)
-      res.json(items);
+      res.status(201).json(items);
     }).catch(err => {
-      res.json({
+      res.status(501).json({
         msg: 'Failed to find items',
         err: err
       });
@@ -69,7 +69,7 @@ router.post('/', helper.verifyToken, (req, res) => {
 router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
-  let item = getModelFromRequest(req.body);
+
   Item.updateOne({_id: req.params.id}, {
     $set: {
       name: req.body.name,
@@ -84,9 +84,9 @@ router.put('/:id', helper.verifyToken, (req, res) => {
     useFindAndModify: false,
     new: false
   }).then(item => {
-    res.json(item);
+    res.status(201).json(item);
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to update the item',
       err: err
     });
@@ -104,7 +104,7 @@ router.delete('/:id', helper.verifyToken, (req, res) => {
     console.log(resp)
     resp.status(201)
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to delete the item',
       err: err
     });

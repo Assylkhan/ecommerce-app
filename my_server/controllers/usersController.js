@@ -10,9 +10,9 @@ var Position = require('../models/position');
 // => localhost:3080/api/users/
 router.get('/', helper.verifyToken, (req, res) => {
   User.find().then(users => {
-    res.json(users)
+    res.status(201).json(users)
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to find users',
       err: err
     });
@@ -25,9 +25,9 @@ router.get('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
   User.findById(req.params.id).then(user => {
-    res.json(user)
+    res.status(201).json(user)
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to find the user',
       err: err
     });
@@ -46,10 +46,10 @@ router.post('/', (req, res) => {
       User.populate(newUser, { path: 'cart' }).then(myUser => {
         console.log('myUser')
         console.log(myUser)
-        res.status(201).json(myUser)
+        return res.status(201).json(myUser)
       })
 
-      return res.status(201).json(user)
+      // return res.status(201).json(user)
 
     }).catch(err => {
       res.status(501).json({
@@ -92,7 +92,7 @@ router.post('/password', helper.verifyToken, (req, res) => {
       })
     }
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to find the user',
       err: err
     });
@@ -107,7 +107,7 @@ router.post('/login', (req, res) => {
   }).populate({
     path: 'cart',
     populate: {
-      path: 'positions'
+      path: 'position'
     }
   }).then(user => {
     if (user) {
@@ -129,7 +129,7 @@ router.post('/login', (req, res) => {
         // console.log('user after')
         // console.log(user)
         // user.cart.positions = positions
-        return res.status(200).json(user);
+        return res.status(201).json(user);
         // })
         // Position.find({cartId: user.cart._id}).then(positions => {
         //   console.log('positions')
@@ -183,9 +183,9 @@ router.put('/:id', helper.verifyToken, (req, res) => {
     useFindAndModify: false,
     new: false
   }).then(user => {
-    res.json(user);
+    res.status(201).json(user);
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to update the user',
       err: err
     });
@@ -200,9 +200,9 @@ router.delete('/:id', helper.verifyToken, (req, res, next) => {
   User.deleteOne({
     _id: req.params.id
   }).then(() => {
-    res.send('User deleted')
+    res.status(201).send('User deleted')
   }).catch((err) => {
-    res.json(err);
+    res.status(501).json(err);
     console.log('Failed to remove the user: ' + JSON.stringify(err, undefined, 2));
   });
 });

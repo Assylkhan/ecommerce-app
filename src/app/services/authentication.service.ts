@@ -33,6 +33,7 @@ export class AuthenticationService {
       .pipe(map(user => {
         // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
         // user.authData = window.btoa(username + ':' + password);
+        console.log(user.cart)
         this.cartService.cartId = user.cart?._id
         this.cartService.positions = user.cart?.positions
         localStorage.setItem('currentUser', JSON.stringify(user));

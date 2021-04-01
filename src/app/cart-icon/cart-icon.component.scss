@@ -1,0 +1,14 @@
+#cart-counter-badge {
+  background-color: #fa3e3e;
+  border-radius: 50%;
+  color: white;
+  padding: 10px 10px;
+  font-size: 12px;
+  position: absolute;
+  top: -5px;
+  right: -15px;
+  z-index: 10;
+}
+:host {
+  position: relative;
+}

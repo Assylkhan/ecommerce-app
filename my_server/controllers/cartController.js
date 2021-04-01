@@ -31,39 +31,47 @@ router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
     quantity: req.body.quantity,
     sum: req.body.sum
   };
-  Cart.findOne({
-    _id: req.params.id
-  }).populate('positions').then(cart => {
-    if (cart.positions.length < 1) {
-      cart.positions.push(newData)
-    } else {
-      let positionIndex = cart.positions.findIndex(pos => pos.itemId == req.body.itemId)
-      if (positionIndex > -1) {
-        let position = cart.positions[positionIndex]
-        position.quantity += 1
-        cart.positions[positionIndex] = position
-      } else {
-        cart.positions.push(newData)
-      }
-    }
-  }).catch(err => {
-    res.json({
-      msg: 'Failed to find the cart',
-      err: err
-    });
-    console.log('Failed to find the cart: ' + JSON.stringify(err, undefined, 2));
-  })
 
-  // Position.findOneAndUpdate({'cartId': req.params.id, 'itemId': req.body.itemId}, newData, {upsert: true, useFindAndModify: false}, function(err, position) {
-  //   if (err) {
-  //     res.status(501).json({
-  //       msg: 'Failed to add the position',
-  //       err: err.message
-  //     })
-  //   } else {
-  //     res.json(position)
-  //   }
-  // })
+  Position.findOneAndUpdate({'cartId': req.params.id, 'itemId': req.body.itemId}, newData, {upsert: true, useFindAndModify: false, 'new': true}, function(err, position) {
+    if (err) {
+      res.status(501).json({
+        msg: 'Failed to add the position',
+        err: err.message
+      })
+    } else {
+      Cart.findOne({
+        _id: req.params.id
+      }).populate('positions').then(cart => {
+        let positionIndex = cart.positions.findIndex(pos => pos.itemId == req.body.itemId)
+        if (cart.positions.length < 1 || positionIndex < 0) {
+          cart.positions.push(position)
+        } else {
+          if (positionIndex > -1) {
+            cart.positions[positionIndex] = position
+          }
+        }
+        console.log('unsaved cart')
+        console.log(cart)
+        cart.save().then(savedCart => {
+          console.log('savedCart')
+          console.log(savedCart)
+          res.status(201).json(savedCart)
+        }).catch(err => {
+          res.status(501).json({
+            msg: 'Failed to save the cart',
+            err: err
+          });
+          console.log('Failed to save the cart: ' + JSON.stringify(err, undefined, 2));
+        })
+      }).catch(err => {
+        res.status(501).json({
+          msg: 'Failed to find the cart',
+          err: err
+        });
+        console.log('Failed to find the cart: ' + JSON.stringify(err, undefined, 2));
+      })
+    }
+  })
 
 });
 
@@ -71,7 +79,6 @@ router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
 router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
-  let cart = getModelFromRequest(req.body);
   Cart.updateOne({
     _id: req.params.id
   }, {
@@ -83,9 +90,9 @@ router.put('/:id', helper.verifyToken, (req, res) => {
     useFindAndModify: false,
     new: false
   }).then(cart => {
-    res.json(cart);
+    res.status(200).json(cart);
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to update the cart',
       err: err
     });
@@ -99,14 +106,14 @@ router.get('cart/:id', helper.verifyToken, (req, res) => {
     userId: req.params.id
   }).then(cart => {
     if (cart) {
-      res.json(cart);
+      res.status(200).json(cart);
     } else {
       return res.status(501).json({
         message: 'Cart not found'
       })
     }
   }).catch(err => {
-    res.json({
+    res.status(501).json({
       msg: 'Failed to find the cart',
       err: err
     });
