@@ -13,10 +13,25 @@ export class CartService {
   positions: Position[] = [];
   cartId: string;
 
-  constructor(
-    private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) {
+      console.log('cartService')
+      this.populateCart()
+  }
 
-  fillCart(itemId: string): Observable<any> {
+  populateCart() {
+    // localStorage.setItem('cart', JSON.stringify(cart));
+    if (localStorage.getItem('cart') != null) {
+      var parsedCart = JSON.parse(localStorage.getItem('cart'));
+      if (this.authService.currentUserValue == null) {
+        this.cartId = parsedCart['id']
+        this.positions = parsedCart['positions']
+      } else {
+        this.positions = [...this.positions, ...parsedCart['positions']]
+      }
+    }
+  }
+
+  addItemToCart(itemId: string): Observable<any> {
     let newPosition = new Position()
     newPosition.itemId = itemId
     newPosition.quantity = 1

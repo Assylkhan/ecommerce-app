@@ -18,7 +18,8 @@ import { UsersDashboardComponent } from './admin/users-dashboard/users-dashboard
 import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent },
+  // { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   // { path: '', component: HomeComponent },
   { path: 'account', component: AccountComponent },
   { path: 'signup', component: SignupFormComponent },

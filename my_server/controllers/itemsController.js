@@ -8,11 +8,10 @@ var ObjectId = require('mongoose').Types.ObjectId;
 fs = require('fs')
 
 // => localhost:3080/api/items/
-router.get('/', helper.verifyToken, (req, res) => {
+router.get('/', (req, res) => {
   console.log('req.params.featured: ' + req.params.featured)
   if (req.params.featured != null) {
     Item.find({featured: true}).then(items => {
-      console.log(items)
       res.status(201).json(items);
     }).catch(err => {
       res.status(501).json({
@@ -23,7 +22,6 @@ router.get('/', helper.verifyToken, (req, res) => {
     })
   } else {
     Item.find().then(items => {
-      console.log(items)
       res.status(201).json(items);
     }).catch(err => {
       res.status(501).json({
