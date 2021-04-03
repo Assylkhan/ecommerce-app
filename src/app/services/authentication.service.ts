@@ -34,8 +34,15 @@ export class AuthenticationService {
         // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
         // user.authData = window.btoa(username + ':' + password);
         console.log(user.cart)
+        if (localStorage.getItem('cart') != null) {
+          var parsedCart = JSON.parse(localStorage.getItem('cart'));
+          this.cartService.positions = [...parsedCart['positions'], ...user.cart?.positions];
+        } else {
+          this.cartService.positions = user.cart?.positions
+        }
+        this.cartService.notifySubscribersOfUpdate()
         this.cartService.cartId = user.cart?._id
-        this.cartService.positions = user.cart?.positions
+
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;
