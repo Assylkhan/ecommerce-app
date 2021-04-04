@@ -36,7 +36,19 @@ export class AuthenticationService {
         console.log(user.cart)
         if (localStorage.getItem('cart') != null) {
           var parsedCart = JSON.parse(localStorage.getItem('cart'));
-          this.cartService.positions = [...parsedCart['positions'], ...user.cart?.positions];
+
+          if (this.cartService.positions.length > 0 && user.cart?.positions?.length > 0) {
+            user.cart.positions.forEach((part, i) => {
+              var index = this.cartService.positions.findIndex(el => el.itemId == part.itemId)
+              if (index < 0) {
+                this.cartService.positions.push(part)
+              } else {
+                this.cartService.positions[index].quantity += 1
+              }
+            })
+          } else {
+            this.cartService.positions = [...parsedCart['positions'], ...user.cart?.positions];
+          }
         } else {
           this.cartService.positions = user.cart?.positions
         }
