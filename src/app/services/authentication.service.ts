@@ -33,6 +33,9 @@ export class AuthenticationService {
       .pipe(map(user => {
         // store user details and basic auth credentials in local storage to keep user logged in between page refreshes, btoa: encode in base-64
         // user.authData = window.btoa(username + ':' + password);
+        console.log('this.cartService.positions')
+        console.log(this.cartService.positions)
+        console.log('user.cart')
         console.log(user.cart)
         if (localStorage.getItem('cart') != null) {
           var parsedCart = JSON.parse(localStorage.getItem('cart'));
@@ -43,7 +46,9 @@ export class AuthenticationService {
               if (index < 0) {
                 this.cartService.positions.push(part)
               } else {
-                this.cartService.positions[index].quantity += 1
+                var quantity = this.cartService.positions[index].quantity
+                quantity += 1
+                this.cartService.positions[index].quantity = quantity
               }
             })
           } else {

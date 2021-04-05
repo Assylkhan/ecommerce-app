@@ -10,8 +10,7 @@ const cartSchema = new mongoose.Schema({
   //   ref: 'User'
   // },
   positions: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Position'
+    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Position'}]
   }
 }, {
   timestamps: true

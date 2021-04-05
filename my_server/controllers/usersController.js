@@ -107,7 +107,7 @@ router.post('/login', (req, res) => {
   }).populate({
     path: 'cart',
     populate: {
-      path: 'position'
+      path: 'positions'
     }
   }).then(user => {
     if (user) {
@@ -123,25 +123,7 @@ router.post('/login', (req, res) => {
         user.token = token
         // user.cart.populate('position').execPopulate()
 
-        // user.cart.populate('position').execPopulate((err, positions) => {
-        //   if (err) return res.status(501).json(err);
-
-        // console.log('user after')
-        // console.log(user)
-        // user.cart.positions = positions
         return res.status(201).json(user);
-        // })
-        // Position.find({cartId: user.cart._id}).then(positions => {
-        //   console.log('positions')
-        //   console.log(positions)
-        //   user.cart.positions = positions
-        //   return res.status(200).json(user);
-        // }).catch(err => {
-        //   res.json({
-        //     msg: 'Failed to find the positions',
-        //     err: err
-        //   });
-        //   console.log('Failed to find the positions: ' + JSON.stringify(err, undefined, 2))
         // })
 
       } else {
