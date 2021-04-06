@@ -57,8 +57,11 @@ export class AuthenticationService {
         } else {
           this.cartService.positions = user.cart?.positions
         }
-        this.cartService.notifySubscribersOfUpdate()
         this.cartService.cartId = user.cart?._id
+
+        this.cartService.fillFromDB()
+
+        this.cartService.notifySubscribersOfUpdate()
 
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);

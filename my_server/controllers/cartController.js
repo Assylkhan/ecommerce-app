@@ -19,6 +19,16 @@ router.post('/', (req, res) => {
   })
 });
 
+router.put('/fillUserCartWithMultipleItems/:id', helper.verifyToken, (req, res) => {
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(400).send(`No record with given id: ${req.params.id}`);
+
+  console.log('body')
+  console.log(req.body)
+
+  res.status(201).json('success')
+})
+
 router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);

@@ -33,6 +33,15 @@ export class CartService {
     }
   }
 
+  fillFromDB() {
+    this.http.put(`${this.rootURL}/fillUserCartWithMultipleItems/${this.cartId}`, this.positions).subscribe(resp => {
+      console.log(resp)
+      console.log('resp')
+    }, err => {
+      console.log(err)
+    })
+  }
+
   addItemToCart(itemId: string): Observable<any> {
     let newPosition = new Position()
     newPosition.itemId = itemId
