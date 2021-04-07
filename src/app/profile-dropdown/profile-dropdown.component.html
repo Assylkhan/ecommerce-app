@@ -2,9 +2,13 @@
   <img class="avatar_icon" src="assets/img/Icon_Man.svg" alt="avatar" />
   <!-- <i class="ng-account-icon ng-icon-size"></i> -->
 </a>
-<div (mouseleave)="showDropdown=false" *ngIf="showDropdown" class="dropdown_list">
-  <ul>
-    <li><a routerLink="/account">Settings</a></li>
-    <li><a href="javascript:;" (click)="logout()">Log out</a></li>
-  </ul>
+<div *ngIf="showDropdown" (mouseleave)="showDropdown=false" class="dropdown_list_wrapper">
+
+  <div class="dropdown_list">
+    <ul>
+      <li><a routerLink="/account">Settings</a></li>
+      <li><a href="javascript:;" (click)="logout()">Log out</a></li>
+    </ul>
+  </div>
+
 </div>

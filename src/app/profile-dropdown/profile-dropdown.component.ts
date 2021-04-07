@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/services';
+import { CartService } from '@app/services/cart.service';
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -12,6 +13,7 @@ export class ProfileDropdownComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
+    private cartService: CartService,
     private router: Router
   ) { }
 
@@ -20,6 +22,7 @@ export class ProfileDropdownComponent implements OnInit {
 
   logout() {
     this.authService.logout()
+    this.cartService.clearCart()
     this.router.navigate(['/'])
   }
 

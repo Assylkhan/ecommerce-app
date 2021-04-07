@@ -19,16 +19,6 @@ router.post('/', (req, res) => {
   })
 });
 
-router.put('/fillUserCartWithMultipleItems/:id', helper.verifyToken, (req, res) => {
-  if (!ObjectId.isValid(req.params.id))
-    return res.status(400).send(`No record with given id: ${req.params.id}`);
-
-  console.log('body')
-  console.log(req.body)
-
-  res.status(201).json('success')
-})
-
 router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
@@ -60,11 +50,7 @@ router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
             cart.positions[positionIndex] = position
           }
         }
-        console.log('unsaved cart')
-        console.log(cart)
         cart.save().then(savedCart => {
-          console.log('savedCart')
-          console.log(savedCart)
           res.status(201).json(savedCart)
         }).catch(err => {
           res.status(501).json({

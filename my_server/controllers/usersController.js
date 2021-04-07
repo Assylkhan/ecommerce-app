@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 var User = require('../models/user');
@@ -102,6 +103,7 @@ router.post('/password', helper.verifyToken, (req, res) => {
 
 // => localhost:3080/api/users/login
 router.post('/login', (req, res) => {
+
   User.findOne({
     email: req.body.email
   }).populate({
@@ -122,9 +124,54 @@ router.post('/login', (req, res) => {
         console.log(user)
         user.token = token
         // user.cart.populate('position').execPopulate()
+        if (req.body.positions && req.body.positions.length > 0) {
+          console.log('req.body.positions.length > 0')
+          console.log(req.body.positions)
+          console.log('user.cart.positions')
+          console.log(user.cart.positions)
 
-        return res.status(201).json(user);
-        // })
+          req.body.positions.forEach((part, i) => {
+            part.cartId = user.cart._id
+            var index = user.cart.positions.findIndex(el => {
+              return el['itemId'] == part.itemId
+            })
+            if (index < 0) {
+              user.cart.positions.push(part)
+            } else {
+              user.cart.positions[index].quantity += 1
+            }
+
+          })
+
+          console.log('before bulkWrite')
+          console.log(user.cart.positions)
+
+          Position.bulkWrite(
+            user.cart.positions.map(position => ({
+              updateOne: {
+                filter: {'_id': mongoose.Types.ObjectId(position.id)},
+                update: { $set: {
+                  'cartId': position.cartId,
+                  'itemId': position.itemId,
+                  'quantity': position.quantity
+                }},
+                upsert: true
+              }
+            }))
+          )
+          user.cart.save().then(savedCart => {
+            res.status(201).json(user)
+          }).catch(err => {
+            res.status(501).json({
+              msg: 'Failed to save the cart',
+              err: err
+            });
+            console.log('Failed to save the cart: ' + JSON.stringify(err, undefined, 2));
+          })
+
+        } else {
+          return res.status(201).json(user);
+        }
 
       } else {
         return res.status(501).json({

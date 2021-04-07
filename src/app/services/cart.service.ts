@@ -11,19 +11,32 @@ import { tap } from 'rxjs/operators';
 export class CartService {
   rootURL = '/api/cart'
 
-  positionsSubject: Subject<Position[]>;
+  // positionsSubject: Subject<Position[]>;
   positions: Position[] = [];
   cartId: string;
 
   constructor(private http: HttpClient) {
     console.log('cartService')
-    this.positionsSubject = new Subject();
+    // this.positionsSubject = new Subject();
     this.populateCart()
   }
 
-  notifySubscribersOfUpdate() {
-    this.positionsSubject.next(this.positions);
+  setCart(cart: Cart) {
+    this.positions = cart.positions
+    this.cartId = cart._id
+    var myCart = {'positions': cart.positions}
+    localStorage.setItem('cart', JSON.stringify(myCart));
   }
+
+  clearCart() {
+    this.positions = []
+    this.cartId = null
+    localStorage.removeItem('cart')
+  }
+
+  // notifySubscribersOfUpdate() {
+    // this.positionsSubject.next(this.positions);
+  // }
 
   populateCart() {
     // localStorage.setItem('cart', JSON.stringify(cart));
@@ -31,15 +44,6 @@ export class CartService {
       var parsedCart = JSON.parse(localStorage.getItem('cart'));
       if (parsedCart != null) this.positions = parsedCart['positions'];
     }
-  }
-
-  fillFromDB() {
-    this.http.put(`${this.rootURL}/fillUserCartWithMultipleItems/${this.cartId}`, this.positions).subscribe(resp => {
-      console.log(resp)
-      console.log('resp')
-    }, err => {
-      console.log(err)
-    })
   }
 
   addItemToCart(itemId: string): Observable<any> {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '@app/models';
+import { Position } from '@app/models/position.model';
 import { ItemService } from '@app/services';
 import { CartService } from '@app/services/cart.service';
 import { Subscription } from 'rxjs';
@@ -11,7 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class CartComponent implements OnInit {
   private subscriptions = new Subscription();
-  items: Item[];
+  // items: Item[];
+  positions: Position[];
   constructor(
     private cartService: CartService,
     private itemService: ItemService) { }
@@ -24,18 +26,18 @@ export class CartComponent implements OnInit {
   }
 
   getItem(): void {
+    this.positions = this.cartService.positions
+    // this.cartService.positions.forEach(position => {
 
-    this.cartService.positions.forEach(position => {
-
-    });
-    this.subscriptions.add(
+    // });
+    // this.subscriptions.add(
       // this.itemService.getItem(id).subscribe(item => {
       //   this.item = item
       //   if (item.imageUrls.length > 1)
       //     this.additionalImageUrls = item.imageUrls.slice(1, item.imageUrls.length)
       //   console.log(this.item.imageUrls)
       // })
-    );
+    // );
   }
 
 }
