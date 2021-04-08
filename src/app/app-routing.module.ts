@@ -4,7 +4,6 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { HomeComponent } from './home/home.component';
 import { AccountComponent } from './account-settings/account/account.component';
-import { AuthGuard } from '@app/helpers';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { ItemComponent } from './item/item.component';
 import { ItemsDashboardComponent } from './admin/items-dashboard/items-dashboard.component';

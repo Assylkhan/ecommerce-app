@@ -15,7 +15,7 @@ export class CartIconComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.cartService.positions)
+    // console.log(this.cartService.positions)
     // this.cartService.positionsSubject.subscribe(positions => {
     //   this.positions = positions
     // })

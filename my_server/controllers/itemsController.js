@@ -11,7 +11,9 @@ fs = require('fs')
 router.get('/', (req, res) => {
   console.log('req.params.featured: ' + req.params.featured)
   if (req.params.featured != null) {
-    Item.find({featured: true}).then(items => {
+    Item.find({
+      featured: true
+    }).then(items => {
       res.status(201).json(items);
     }).catch(err => {
       res.status(501).json({
@@ -48,6 +50,40 @@ router.get('/:id', (req, res) => {
   })
 });
 
+// => localhost:3080/api/items/multiple/:id
+router.get('/multiple/:ids', (req, res) => {
+  console.log('req.params.ids')
+
+  var arr = req.params.ids.split(',')
+  console.log(arr)
+
+  Item.find().where('_id').in(arr).exec((err, items) => {
+    if (err) {
+      console.log('Failed to find the items: ' + JSON.stringify(err, undefined, 2))
+      res.status(501).json({
+        msg: 'Failed to find the items',
+        err: err
+      });
+    } else {
+      res.status(201).json(items)
+    }
+  })
+
+  // Item.findById({
+  //   '_id': { $in: [
+
+  //   ]}
+  // }).then(item => {
+  //   res.status(201).json(item)
+  // }).catch(err => {
+  //   console.log('Failed to find the item: ' + JSON.stringify(err, undefined, 2))
+  //   res.status(501).json({
+  //     msg: 'Failed to find the item',
+  //     err: err
+  //   });
+  // })
+});
+
 // => localhost:3080/api/items/
 router.post('/', helper.verifyToken, (req, res) => {
   let newItem = getModelFromRequest(req.body);
@@ -68,7 +104,9 @@ router.put('/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
 
-  Item.updateOne({_id: req.params.id}, {
+  Item.updateOne({
+    _id: req.params.id
+  }, {
     $set: {
       name: req.body.name,
       realPrice: req.body.realPrice,

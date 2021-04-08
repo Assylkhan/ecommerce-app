@@ -1,0 +1,31 @@
+.item {
+  display: flex;
+  background: white;
+  margin: 20px 0;
+
+  .flex_container {
+    padding: 10px;
+    border: 1px dotted;
+  }
+
+  .delete_icon {
+    width: 15px;
+  }
+
+  &>.image_container {
+    flex: 4;
+    .item_img {
+      width: 150px;
+    }
+  }
+
+  &>.short_info_container {
+    flex: 4;
+  }
+
+  &>.actions_container {
+    flex: 1;
+    text-align: right;
+  }
+
+}

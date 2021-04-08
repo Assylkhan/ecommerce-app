@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ViewOptions } from '@app/helpers/view-options';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Item } from '../models/item.model';
 
@@ -12,6 +12,7 @@ export class ItemService {
 
   rootURL = '/api'
   items: Observable<Item[]>
+  storedItems: BehaviorSubject<Item[]>
 
   constructor(private http: HttpClient) { }
 
@@ -66,6 +67,7 @@ export class ItemService {
           const start = options.page * options.pageSize;
           const end = start + options.pageSize;
           items = items.slice(start, end)
+          this.storedItems = new BehaviorSubject(items)
         }))
       return this.items
     }
@@ -86,5 +88,9 @@ export class ItemService {
 
   getItem(id: any): Observable<Item> {
     return this.http.get<Item>(`${this.rootURL}/items/${id}`)
+  }
+
+  getItems(ids: any[]): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.rootURL}/items/multiple/${ids}`)
   }
 }
