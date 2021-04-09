@@ -1,25 +1,56 @@
-<div class="item" *ngFor="let position of positions">
-  <div class="image_container flex_container">
-    <img
-      class="item_img"
-      [src]="position.item.imageUrls.length > 0 ? position.item.imageUrls[0] : ''"
-      alt="{{ position.item.imageUrls.length > 0 ? position.item.imageUrls[0] : '' }}"
-    />
-  </div>
-  <div class="short_info_container flex_container">
-    <p>
-      {{ position.item.description }}
-    </p>
-    <p>
-      <mat-error *ngIf="error">{{ error }}</mat-error>
-    </p>
-    <h5>$ {{ position.item.price }}</h5>
-  </div>
-  <div class="actions_container flex_container">
-    <button (click)="removeFromCart(position)" type="button" id="delete_btn">
-      <img class="delete_icon" src="assets/img/delete.svg" alt="delete">
-    </button>
+<div class="items_container">
+  <div class="item" *ngFor="let position of positions">
+    <div class="image_container flex_container">
+      <img
+        class="item_img"
+        [src]="
+          position.item.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
+        "
+        alt="{{
+          position.item.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
+        }}"
+      />
+    </div>
+    <div class="short_info_container flex_container">
+      <p>
+        <strong>{{ position.item.name }}</strong>
+      </p>
+      <p>
+        <small style="white-space: nowrap; text-overflow: ellipsis; font-size: 13px;">{{ position.item.description }}</small>
+      </p>
+      <p>
+        <mat-error *ngIf="error">{{ error }}</mat-error>
+      </p>
+      <h5>$ {{ position.item.price }}</h5>
+    </div>
+    <div class="actions_container flex_container">
+      <button (click)="removeFromCart(position)" mat-mini-fab color="warn" type="button" id="delete_btn">
+        <img class="delete_icon" src="assets/img/delete.svg" alt="delete" />
+      </button>
+    </div>
   </div>
 </div>
 
-<button (click)="checkout()" mat-raised-button>Check Out</button>
+<div class="summary_container">
+  <h2>Cart Summary</h2>
+  <div class="subtotals">
+    <div class="flex_div">
+      <span>Subtotal</span>
+      <span>40</span>
+    </div>
+    <div class="flex_div">
+      <span>Shipping</span>
+      <span>50</span>
+    </div>
+  </div>
+  <hr>
+  <div class="totals">
+    <div class="flex_div">
+      <span><strong>Total</strong></span>
+      <span><h2 style="margin: 0">50</h2></span>
+    </div>
+  </div>
+  <div class="checkout_container">
+    <button (click)="checkout()" color="warn" mat-raised-button>Check Out</button>
+  </div>
+</div>

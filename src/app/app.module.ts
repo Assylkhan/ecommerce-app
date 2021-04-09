@@ -60,6 +60,7 @@ import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { OrderComponent } from './order/order.component';
 import { ProfileDropdownComponent } from './profile-dropdown/profile-dropdown.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 var firebaseConfig = {
   apiKey: ClientConfig.config.apiKey,
@@ -98,7 +99,8 @@ var firebaseConfig = {
     CartIconComponent,
     OrderComponent,
     ProfileDropdownComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

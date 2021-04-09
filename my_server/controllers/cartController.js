@@ -19,6 +19,27 @@ router.post('/', (req, res) => {
   })
 });
 
+router.delete('/removePositionFromCart/:id', helper.verifyToken, (req, res) => {
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(400).send(`No record with given id: ${req.params.id}`);
+
+  console.log('req.params.id')
+  console.log(req.params.id)
+
+  Position.findOneAndRemove({
+    '_id': req.params.id
+  }, (err, res) => {
+    if (err) {
+      res.status(501).json({
+        msg: 'Failed to add the position',
+        err: err.message
+      })
+    } else {
+      res.status(201).json('deleted')
+    }
+  })
+})
+
 router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
@@ -32,7 +53,14 @@ router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
     sum: req.body.sum
   };
 
-  Position.findOneAndUpdate({'cartId': req.params.id, 'itemId': req.body.itemId}, newData, {upsert: true, useFindAndModify: false, 'new': true}, function(err, position) {
+  Position.findOneAndUpdate({
+    'cartId': req.params.id,
+    'itemId': req.body.itemId
+  }, newData, {
+    upsert: true,
+    useFindAndModify: false,
+    'new': true
+  }, function (err, position) {
     if (err) {
       res.status(501).json({
         msg: 'Failed to add the position',

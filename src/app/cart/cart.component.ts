@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Item } from '@app/models';
 import { Position } from '@app/models/position.model';
 import { ItemService } from '@app/services';
 import { CartService } from '@app/services/cart.service';
+import { PositionService } from '@app/services/position.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,7 +18,9 @@ export class CartComponent implements OnInit {
   positions: Position[];
   constructor(
     private cartService: CartService,
-    private itemService: ItemService) { }
+    private itemService: ItemService,
+    private positionService: PositionService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getItems()
@@ -27,10 +31,12 @@ export class CartComponent implements OnInit {
   }
 
   checkout() {
+    this.positionService.positions = this.positions
+    this.router.navigate(['/checkout'])
   }
 
   removeFromCart(position: Position) {
-
+    this.cartService.removePositionFromCart(position._id)
   }
 
   getItems(): void {

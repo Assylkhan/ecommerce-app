@@ -15,6 +15,7 @@ import { ItemsListTestComponent } from './admin/items-list-test/items-list-test.
 import { AdminUserComponent } from './admin/admin-user/admin-user.component';
 import { UsersDashboardComponent } from './admin/users-dashboard/users-dashboard.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   },
   { path: 'items/:id', component: ItemComponent},
   { path: 'cart', component: CartComponent},
+  { path: 'checkout', component: CheckoutComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ]

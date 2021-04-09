@@ -46,6 +46,10 @@ export class CartService {
     }
   }
 
+  removePositionFromCart(id: string): Observable<any> {
+    return this.http.delete(`${this.rootURL}/removePositionFromCart/${id}`)
+  }
+
   addItemToCart(itemId: string): Observable<any> {
     let newPosition = new Position()
     newPosition.itemId = itemId

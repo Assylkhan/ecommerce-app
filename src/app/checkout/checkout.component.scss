@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  .form_container {
+    flex: 3;
+  }
+  .summary_container {
+    flex: 1;
+  }
+}

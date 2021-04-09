@@ -1,0 +1,51 @@
+<div class="form_container">
+  <form [formGroup]="billingInfoForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Country</mat-label>
+      <input matInput placeholder="Country" formControlName="country" />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="First Name" formControlName="firstName" />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Last Name" formControlName="lastName" />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Company Name</mat-label>
+      <input
+        matInput
+        placeholder="Company Name"
+        formControlName="companyName"
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Address</mat-label>
+      <input matInput placeholder="Address" formControlName="address" />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>State</mat-label>
+      <input matInput placeholder="State" formControlName="state" />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>City</mat-label>
+      <input matInput placeholder="City" formControlName="city" />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Zip Code</mat-label>
+      <input matInput placeholder="Zip Code" formControlName="zip" />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Phone</mat-label>
+      <input matInput placeholder="Phone" formControlName="phone" />
+    </mat-form-field>
+    <!-- [disabled]="!billingInfoForm.valid" -->
+    <button mat-raised-button type="submit" color="primary">Update</button>
+  </form>
+</div>
+<div class="summary_container">
+  <h2>Your Cart</h2>
+  <hr>
+
+</div>

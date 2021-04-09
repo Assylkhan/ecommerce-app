@@ -1,7 +1,44 @@
+:host {
+  width: 100%;
+
+  display: flex;
+
+  .items_container {
+    flex: 3;
+  }
+
+  .summary_container {
+    background: white;
+    flex: 1;
+    margin-left: 20px;
+    border: 1px dotted;
+    padding-left: 15px;
+    padding-right: 15px;
+    .subtotals {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .totals {
+      margin-top: 20px;
+    }
+    .flex_div {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .checkout_container {
+      margin: 30px 0;
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
 .item {
   display: flex;
   background: white;
-  margin: 20px 0;
+  margin: 0 0 20px;
 
   .flex_container {
     padding: 10px;
@@ -13,14 +50,16 @@
   }
 
   &>.image_container {
-    flex: 4;
+    flex: 1;
     .item_img {
       width: 150px;
     }
   }
 
   &>.short_info_container {
-    flex: 4;
+    padding-left: 30px;
+    padding-right: 30px;
+    flex: 6;
   }
 
   &>.actions_container {

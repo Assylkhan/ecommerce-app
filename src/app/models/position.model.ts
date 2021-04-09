@@ -1,6 +1,7 @@
 import { Item } from "./item.model";
 
 export class Position {
+  _id: string;
   cartId: string;
   orderId: string;
   itemId: string;
