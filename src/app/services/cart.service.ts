@@ -50,14 +50,15 @@ export class CartService {
     return this.http.delete(`${this.rootURL}/removePositionFromCart/${id}`)
   }
 
-  addItemToCart(itemId: string): Observable<any> {
-    let newPosition = new Position()
-    newPosition.itemId = itemId
-    newPosition.quantity = 1
+  updatePosition(position: Position): Observable<any> {
+    return this.http.put(`${this.rootURL}/updatePosition/${position.cartId}`, position);
+  }
+
+  addItemToCart(newPosition: Position): Observable<any> {
     if (this.cartId == null) {
       return new Observable(observer => {
         if (this.positions.length > 0) {
-          var index = this.positions.findIndex(el => el.itemId == itemId)
+          var index = this.positions.findIndex(el => el.itemId == newPosition.itemId)
           if (index < 0) {
             this.positions.push(newPosition)
           } else {
@@ -77,7 +78,7 @@ export class CartService {
         tap(position => {
           var index = this.positions.findIndex(el => el.itemId == position.itemId)
           if (this.positions.length == 0 || index == null || index < 0) this.positions.push(position)
-          else this.positions[index].quantity += 1;
+          else this.positions[index] = position;
           console.log(this.positions)
           console.log('this.positions')
         })

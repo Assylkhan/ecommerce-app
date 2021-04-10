@@ -28,7 +28,9 @@ router.delete('/removePositionFromCart/:id', helper.verifyToken, (req, res) => {
 
   Position.findOneAndRemove({
     '_id': req.params.id
-  }, (err, res) => {
+  }, {
+    useFindAndModify: false
+  }, (err, resp) => {
     if (err) {
       res.status(501).json({
         msg: 'Failed to add the position',
@@ -40,11 +42,21 @@ router.delete('/removePositionFromCart/:id', helper.verifyToken, (req, res) => {
   })
 })
 
+router.put('/updatePosition/:id', helper.verifyToken, (req, res) => {
+  if (!ObjectId.isValid(req.params.id))
+    return res.status(400).send(`No record with given id: ${req.params.id}`);
+
+  console.log('req.body')
+  console.log(req.body)
+
+  res.status(201).json('Send')
+})
+
 router.put('/fillUserCart/:id', helper.verifyToken, (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id: ${req.params.id}`);
 
-  // todo: if there's a position with the same item, update the position instead of creating a new position
+  // todo: if there's a position with the same item, update the position quantity
 
   var newData = {
     cartId: req.params.id,

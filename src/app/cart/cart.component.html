@@ -4,24 +4,30 @@
       <img
         class="item_img"
         [src]="
-          position.item.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
+          position.item?.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
         "
         alt="{{
-          position.item.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
+          position.item?.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
         }}"
       />
     </div>
     <div class="short_info_container flex_container">
       <p>
-        <strong>{{ position.item.name }}</strong>
+        <strong>{{ position.item?.name }}</strong>
       </p>
       <p>
-        <small style="white-space: nowrap; text-overflow: ellipsis; font-size: 13px;">{{ position.item.description }}</small>
+        <small style="white-space: nowrap; text-overflow: ellipsis; font-size: 13px;">{{ position.item?.description }}</small>
+      </p>
+      <p>
+        <strong><small>Quantity:
+          <map-form-field><input type="number" min="1" class="quantity-input" matInput name="quantity" value="{{position?.quantity}}"
+            #quantity (change)="quantityChange(position, quantity.value)"></map-form-field>
+        </small></strong>
       </p>
       <p>
         <mat-error *ngIf="error">{{ error }}</mat-error>
       </p>
-      <h5>$ {{ position.item.price }}</h5>
+      <h5>$ {{ position.item?.price }}</h5>
     </div>
     <div class="actions_container flex_container">
       <button (click)="removeFromCart(position)" mat-mini-fab color="warn" type="button" id="delete_btn">

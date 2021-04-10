@@ -9,6 +9,7 @@ import { FormBuilder } from '@angular/forms';
 import { CartService } from '@app/services/cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@app/confirmation-dialog/confirmation-dialog.component';
+import { Position } from '@app/models/position.model';
 
 export interface Tile {
   color: string;
@@ -96,8 +97,11 @@ export class ItemComponent implements OnInit, OnDestroy {
   }
 
   addToCart() {
+    let position = new Position()
+    position.itemId = this.item._id
+    position.quantity = 1
     this.subscriptions.add(
-      this.cartService.addItemToCart(this.item._id).subscribe(
+      this.cartService.addItemToCart(position).subscribe(
         (cart) => {
           // this.router.navigate([this.returnUrl])
           this.openDialog()

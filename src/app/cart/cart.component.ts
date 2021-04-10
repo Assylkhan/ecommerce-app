@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Item } from '@app/models';
 import { Position } from '@app/models/position.model';
 import { ItemService } from '@app/services';
 import { CartService } from '@app/services/cart.service';
@@ -14,7 +13,6 @@ import { Subscription } from 'rxjs';
 })
 export class CartComponent implements OnInit {
   private subscriptions = new Subscription();
-  // items: Item[];
   positions: Position[];
   constructor(
     private cartService: CartService,
@@ -36,7 +34,22 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(position: Position) {
-    this.cartService.removePositionFromCart(position._id)
+    this.cartService.removePositionFromCart(position._id).subscribe(resp => {
+      console.log(resp)
+    }, err => {
+      console.log(err)
+    })
+  }
+
+  quantityChange(position: Position, quantity) {
+    position.quantity = quantity
+    this.positionService.positions = this.positions
+
+    this.cartService.addItemToCart(position).subscribe(res => {
+      console.log(res)
+    }, err => {
+      console.log(err)
+    })
   }
 
   getItems(): void {
