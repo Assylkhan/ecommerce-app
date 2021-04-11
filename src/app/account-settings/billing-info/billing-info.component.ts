@@ -34,7 +34,7 @@ export class BillingInfoComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    if (this.authService.currentUserValue) {
+    if (this.authService.currentUserValue?.billingInfo) {
       this.billingInfoForm.setValue({
         country: this.authService.currentUserValue.billingInfo.country,
         firstName: this.authService.currentUserValue.billingInfo.firstName,

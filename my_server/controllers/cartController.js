@@ -37,6 +37,8 @@ router.delete('/removePositionFromCart/:id', helper.verifyToken, (req, res) => {
         err: err.message
       })
     } else {
+      console.log('resp')
+      console.log(resp)
       res.status(201).json('deleted')
     }
   })

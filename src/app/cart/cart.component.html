@@ -1,4 +1,6 @@
-<div class="items_container">
+<div class="items_container" [style.background-color]="!positions.length ? 'white' : ''"
+[style.border]="!positions.length ? '1px dotted' : ''" [style.display]="!positions.length ? 'flex' : ''" [style.align-items]="!positions.length ? 'center' : ''" [style.text-align]="!positions.length ? 'center' : ''">
+  <h3 style="text-align: center; margin: 0 auto">No Items</h3>
   <div class="item" *ngFor="let position of positions">
     <div class="image_container flex_container">
       <img
@@ -20,8 +22,8 @@
       </p>
       <p>
         <strong><small>Quantity:
-          <map-form-field><input type="number" min="1" class="quantity-input" matInput name="quantity" value="{{position?.quantity}}"
-            #quantity (change)="quantityChange(position, quantity.value)"></map-form-field>
+          <input type="number" min="1" class="quantity-input" name="quantity" value="{{position?.quantity}}"
+            #quantity (change)="quantityChange(position, quantity.value)">
         </small></strong>
       </p>
       <p>

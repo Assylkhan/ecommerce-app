@@ -5,6 +5,12 @@
 
   .items_container {
     flex: 3;
+
+    h3 {
+      vertical-align: middle;
+      margin: 10px;
+    }
+
   }
 
   .quantity-input {
@@ -18,20 +24,25 @@
     border: 1px dotted;
     padding-left: 15px;
     padding-right: 15px;
+
     .subtotals {
       margin-top: 20px;
       margin-bottom: 20px;
     }
+
     .totals {
       margin-top: 20px;
     }
+
     .flex_div {
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
     }
+
     .checkout_container {
       margin: 30px 0;
+
       button {
         width: 100%;
       }
@@ -55,6 +66,7 @@
 
   &>.image_container {
     flex: 1;
+
     .item_img {
       width: 150px;
     }

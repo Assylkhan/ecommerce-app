@@ -35,6 +35,8 @@ export class CartComponent implements OnInit {
 
   removeFromCart(position: Position) {
     this.cartService.removePositionFromCart(position._id).subscribe(resp => {
+      var index = this.positions.findIndex(el => el._id == position._id)
+      this.positions.splice(index, 1)
       console.log(resp)
     }, err => {
       console.log(err)
@@ -42,10 +44,12 @@ export class CartComponent implements OnInit {
   }
 
   quantityChange(position: Position, quantity) {
+    if (quantity < 1) return;
+    var inc = false;
     position.quantity = quantity
     this.positionService.positions = this.positions
 
-    this.cartService.addItemToCart(position).subscribe(res => {
+    this.cartService.addItemToCart(position, inc).subscribe(res => {
       console.log(res)
     }, err => {
       console.log(err)
@@ -58,23 +62,25 @@ export class CartComponent implements OnInit {
     this.positions.forEach(position => {
       itemIds.push(position.itemId)
     })
-    this.subscriptions.add(
-      this.itemService.getItems(itemIds).subscribe(items => {
+    if (itemIds.length) {
+      this.subscriptions.add(
+        this.itemService.getItems(itemIds).subscribe(items => {
 
-        items.forEach(item => {
-          let index = this.positions.findIndex(el => el.itemId == item._id)
-          if (index > -1) {
-            this.positions[index].item = item
-          }
-        });
+          items.forEach(item => {
+            let index = this.positions.findIndex(el => el.itemId == item._id)
+            if (index > -1) {
+              this.positions[index].item = item
+            }
+          });
 
-        console.log('items')
-        console.log(items)
-        console.log('positions')
-        console.log(this.positions)
+          console.log('items')
+          console.log(items)
+          console.log('positions')
+          console.log(this.positions)
 
-      })
-    );
+        })
+      );
+    }
   }
 
 }

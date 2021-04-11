@@ -101,7 +101,7 @@ export class ItemComponent implements OnInit, OnDestroy {
     position.itemId = this.item._id
     position.quantity = 1
     this.subscriptions.add(
-      this.cartService.addItemToCart(position).subscribe(
+      this.cartService.addItemToCart(position, true).subscribe(
         (cart) => {
           // this.router.navigate([this.returnUrl])
           this.openDialog()

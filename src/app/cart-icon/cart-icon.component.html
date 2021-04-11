@@ -1,5 +1,7 @@
-<a routerLink="/cart"><img src="assets/img/Cart.png" alt=""></a>
+<a style="display: inline-block" routerLink="/cart">
+  <img src="assets/img/Cart.png" alt="">
 
-<span id="cart-counter-badge" style="visibility: visible;">
-  <span style="position: absolute; top: 2px; left: -2.4px; width: 25px; height: 25px; text-align: center">{{cartService.positions.length}}</span>
-</span>
+  <span id="cart-counter-badge" style="visibility: visible;">
+    <span style="position: absolute; top: 2px; left: -2.4px; width: 25px; height: 25px; text-align: center">{{cartService.positions.length}}</span>
+  </span>
+</a>
