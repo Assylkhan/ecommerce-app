@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { User } from '@app/models';
 import { CartService } from './cart.service';
+import { Cart } from '@app/models/cart.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -44,7 +45,7 @@ export class AuthenticationService {
         console.log('user.cart')
         console.log(user.cart)
         if (this.cartService.cartId == null) {
-          this.cartService.setCart(user.cart)
+          this.cartService.setCart(user.cart as Cart)
         }
 
         // this.cartService.notifySubscribersOfUpdate()

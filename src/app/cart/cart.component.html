@@ -1,6 +1,6 @@
 <div class="items_container" [style.background-color]="!positions.length ? 'white' : ''"
 [style.border]="!positions.length ? '1px dotted' : ''" [style.display]="!positions.length ? 'flex' : ''" [style.align-items]="!positions.length ? 'center' : ''" [style.text-align]="!positions.length ? 'center' : ''">
-  <h3 style="text-align: center; margin: 0 auto">No Items</h3>
+  <h3 [style.display]="!positions.length ? 'block' : 'none'" style="text-align: center; margin: 0 auto">No Items</h3>
   <div class="item" *ngFor="let position of positions">
     <div class="image_container flex_container">
       <img

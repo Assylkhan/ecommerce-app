@@ -11,20 +11,32 @@ import { tap } from 'rxjs/operators';
 export class CartService {
   rootURL = '/api/cart'
 
-  // positionsSubject: Subject<Position[]>;
   positions: Position[] = [];
   cartId: string;
 
   constructor(private http: HttpClient) {
     console.log('cartService')
-    // this.positionsSubject = new Subject();
     this.populateCart()
+  }
+
+  getCartId() {
+    if (this.cartId == null) {
+      if (localStorage.getItem('cart') != null) {
+        var myCart = JSON.parse(localStorage.getItem('cart'))
+        this.cartId = myCart['id']
+        return this.cartId;
+      }
+      return null;
+    }
+    return this.cartId;
   }
 
   setCart(cart: Cart) {
     this.positions = cart.positions
     this.cartId = cart._id
-    var myCart = { 'positions': cart.positions }
+    console.log('this.cartId after login')
+    console.log(this.cartId)
+    var myCart = { 'positions': cart.positions, 'id': cart._id }
     localStorage.setItem('cart', JSON.stringify(myCart));
   }
 
@@ -32,16 +44,17 @@ export class CartService {
     this.positions = []
     this.cartId = null
     localStorage.removeItem('cart')
+    console.log('this.cartId')
+    console.log(this.cartId)
   }
 
   updateCart() {
     if (localStorage.getItem('cart') != null) {
       var myCart = JSON.parse(localStorage.getItem('cart'))
       myCart['positions'] = this.positions
-      this.setCart(myCart)
+      localStorage.setItem('cart', JSON.stringify(myCart));
     }
   }
-
 
   populateCart() {
     if (localStorage.getItem('cart') != null) {
@@ -83,8 +96,11 @@ export class CartService {
     } else {
       this.positions.push(newPosition)
     }
+    this.updateCart()
+    console.log('cartId')
+    console.log(this.getCartId())
 
-    if (this.cartId == null) {
+    if (this.getCartId() == null) {
       return new Observable(observer => {
 
         var myCart = { 'positions': this.positions }
