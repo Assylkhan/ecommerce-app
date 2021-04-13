@@ -3,20 +3,23 @@
   <h3 [style.display]="!positions.length ? 'block' : 'none'" style="text-align: center; margin: 0 auto">No Items</h3>
   <div class="item" *ngFor="let position of positions">
     <div class="image_container flex_container">
-      <img
-        class="item_img"
-        [src]="
-          position.item?.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
-        "
-        alt="{{
-          position.item?.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
-        }}"
-      />
+      <a routerLink="/items/{{position.item?._id}}">
+        <img
+          class="item_img"
+          [src]="
+            position.item?.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
+          "
+          alt="{{
+            position.item?.imageUrls.length > 0 ? position.item.imageUrls[0] : ''
+          }}"
+        />
+      </a>
     </div>
     <div class="short_info_container flex_container">
       <p>
-        <strong>{{ position.item?.name }}</strong>
+        <a routerLink="/items/{{position.item?._id}}"><strong>{{ position.item?.name }}</strong></a>
       </p>
+      <p>position._id: {{position._id}}</p>
       <p>
         <small style="white-space: nowrap; text-overflow: ellipsis; font-size: 13px;">{{ position.item?.description }}</small>
       </p>

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CartService } from '@app/services/cart.service';
 
 @Component({
@@ -12,10 +12,10 @@ export class ConfirmationDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private cartService: CartService) {}
+    private cartService: CartService) { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  onViewClick(): void {
+    this.dialogRef.close('redirect');
   }
 
   ngOnInit(): void {

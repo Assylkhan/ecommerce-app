@@ -3,6 +3,6 @@
   <p>{{data.description}}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial>View Shopping Cart</button>
-  <button mat-button (click)="onNoClick()">Continue Shopping</button>
+  <button mat-button (click)="onViewClick()">View Shopping Cart</button>
+  <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial>Continue Shopping</button>
 </div>

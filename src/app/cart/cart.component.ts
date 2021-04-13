@@ -34,9 +34,11 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(position: Position) {
-    this.cartService.removePositionFromCart(position._id).subscribe(resp => {
-      var index = this.positions.findIndex(el => el._id == position._id)
-      this.positions.splice(index, 1)
+    console.log('position')
+    console.log(position)
+    this.cartService.removePositionFromCart(position.itemId).subscribe(resp => {
+      var index = this.positions.findIndex(el => el.itemId == position.itemId)
+      this.positions.splice(index)
       console.log(resp)
     }, err => {
       console.log(err)
@@ -57,7 +59,7 @@ export class CartComponent implements OnInit {
   }
 
   getItems(): void {
-    this.positions = this.cartService.positions
+    this.positions = this.cartService.getPositions()
     var itemIds = []
     this.positions.forEach(position => {
       itemIds.push(position.itemId)

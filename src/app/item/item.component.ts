@@ -71,7 +71,7 @@ export class ItemComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.router.navigate(['/cart'])
+      if (result == 'redirect') this.router.navigate(['/cart'])
     });
   }
 

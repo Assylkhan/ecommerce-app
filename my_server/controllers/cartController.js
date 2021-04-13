@@ -19,27 +19,47 @@ router.post('/', (req, res) => {
   })
 });
 
-router.delete('/removePositionFromCart/:id', helper.verifyToken, (req, res) => {
-  if (!ObjectId.isValid(req.params.id))
-    return res.status(400).send(`No record with given id: ${req.params.id}`);
+router.delete('/removePositionFromCart/:ids', helper.verifyToken, (req, res) => {
+  var ids = req.params.ids.split(',')
+  var itemId = ids[0];
+  var cartId = ids[1];
+  if ((itemId) && (!ObjectId.isValid(itemId)))
+    return res.status(400).send(`No record with given id: ${itemId}`);
 
-  console.log('req.params.id')
-  console.log(req.params.id)
+  console.log('req.params.ids')
+  console.log(req.params.ids)
 
   Position.findOneAndRemove({
-    '_id': req.params.id
+    'itemId': itemId
   }, {
     useFindAndModify: false
   }, (err, resp) => {
     if (err) {
       res.status(501).json({
-        msg: 'Failed to add the position',
+        msg: 'Failed to remove the position',
         err: err.message
       })
     } else {
-      console.log('resp')
-      console.log(resp)
-      res.status(201).json('deleted')
+
+      Cart.updateOne({
+        '_id': cartId,
+      }, {$pull: {
+          _id: itemId
+          }}, {
+        useFindAndModify: false,
+        'new': true
+      }, function (err, position) {
+        if (err) {
+          res.status(501).json({
+            msg: 'Failed to remove the position',
+            err: err.message
+          })
+        } else {
+          console.log('resp')
+          console.log(resp)
+          res.status(201).json('deleted')
+        }
+      })
     }
   })
 })
