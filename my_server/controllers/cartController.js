@@ -40,14 +40,16 @@ router.delete('/removePositionFromCart/:ids', helper.verifyToken, (req, res) => 
         err: err.message
       })
     } else {
+    // todo: remove a position from cart once a position was removed
+      console.log('position resp')
+      console.log(resp)
 
       Cart.updateOne({
         '_id': cartId,
-      }, {$pull: {
-          _id: itemId
+      }, {$pullAll: {
+          positions: [resp]
           }}, {
-        useFindAndModify: false,
-        'new': true
+        // useFindAndModify: false
       }, function (err, position) {
         if (err) {
           res.status(501).json({
