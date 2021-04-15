@@ -1,7 +1,7 @@
 <div class="items_container" [style.background-color]="!positions.length ? 'white' : ''"
 [style.border]="!positions.length ? '1px dotted' : ''" [style.display]="!positions.length ? 'flex' : ''" [style.align-items]="!positions.length ? 'center' : ''" [style.text-align]="!positions.length ? 'center' : ''">
   <h3 [style.display]="!positions.length ? 'block' : 'none'" style="text-align: center; margin: 0 auto">No Items</h3>
-  <div [@positionState]='active' class="item" *ngFor="let position of positions">
+  <div @anim class="item" *ngFor="let position of positions">
     <div class="image_container flex_container">
       <a routerLink="/items/{{position.item?._id}}">
         <img
@@ -19,7 +19,6 @@
       <p>
         <a routerLink="/items/{{position.item?._id}}"><strong>{{ position.item?.name }}</strong></a>
       </p>
-      <p>position._id: {{position._id}}</p>
       <p>
         <small style="white-space: nowrap; text-overflow: ellipsis; font-size: 13px;">{{ position.item?.description }}</small>
       </p>

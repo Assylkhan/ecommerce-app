@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Position } from '@app/models/position.model';
@@ -12,14 +12,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
   animations: [
-    trigger('positionState', [
-      state('active',   style({opacity: 1, transform: 'translateX(0) scale(1)'})),
-      state('void',   style({opacity: 0, display: 'none', transform: 'translateX(0) scale(1)'})),
+    trigger('anim', [
+      // state('active',   style({opacity: 1, transform: 'translateX(0) scale(1)'})),
       transition('* => void', [
-        animate('1s 8 ease-out', style({
-          opacity: 0,
-          transform: 'translateX(0) scale(0.5)'
-        }))
+        style({ height: '*', opacity: '1', transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)'}),
+        sequence([
+          animate(".25s ease", style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none'  })),
+          animate(".1s ease", style({ height: '0', opacity: 0, transform: 'translateX(20px)', 'box-shadow': 'none'  }))
+        ])
       ])
     ])
   ]
@@ -50,8 +50,9 @@ export class CartComponent implements OnInit {
     console.log('position')
     console.log(position)
     this.cartService.removePositionFromCart(position.itemId).subscribe(resp => {
-      var index = this.positions.findIndex(el => el.itemId == position.itemId)
-      this.positions.splice(index)
+      // todo: try to understand why a change on service positions changes positions in here
+      // var index = this.positions.findIndex(el => el.itemId == position.itemId)
+      // this.positions.splice(index)
       console.log(resp)
     }, err => {
       console.log(err)

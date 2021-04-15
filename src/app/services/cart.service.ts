@@ -70,9 +70,10 @@ export class CartService {
 
   removePositionFromCart(id: string): Observable<any> {
     return this.http.delete(`${this.rootURL}/removePositionFromCart/${id},${this.getCartId()}`).pipe(tap(resp => {
+      console.log('tap: '+id)
       var index = this.positions.findIndex(el => el.itemId == id)
       if (index > -1) {
-        // this.positions.splice(index, 1);
+        this.positions.splice(index, 1);
         this.updateCart()
       }
     }))
