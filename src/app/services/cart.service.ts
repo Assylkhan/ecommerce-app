@@ -39,8 +39,6 @@ export class CartService {
   setCart(cart: Cart) {
     this.positions = cart.positions
     this.cartId = cart._id
-    console.log('this.cartId after login')
-    console.log(this.cartId)
     var myCart = { 'positions': cart.positions, 'id': cart._id }
     localStorage.setItem('cart', JSON.stringify(myCart));
   }
@@ -49,8 +47,6 @@ export class CartService {
     this.positions = []
     this.cartId = null
     localStorage.removeItem('cart')
-    console.log('this.cartId')
-    console.log(this.cartId)
   }
 
   updateCart() {
@@ -68,15 +64,26 @@ export class CartService {
     }
   }
 
+  removePositionFromLocalStorage(id: string) {
+    var index = this.positions.findIndex(el => el.itemId == id)
+    if (index > -1) {
+      this.positions.splice(index, 1)
+      this.updateCart()
+    }
+  }
+
   removePositionFromCart(id: string): Observable<any> {
-    return this.http.delete(`${this.rootURL}/removePositionFromCart/${id},${this.getCartId()}`).pipe(tap(resp => {
-      console.log('tap: '+id)
-      var index = this.positions.findIndex(el => el.itemId == id)
-      if (index > -1) {
-        this.positions.splice(index, 1);
-        this.updateCart()
-      }
-    }))
+    if (this.getCartId() == null) {
+      return new Observable(observer => {
+        this.removePositionFromLocalStorage(id)
+        observer.next('deleted');
+      })
+    } else {
+      return this.http.delete(`${this.rootURL}/removePositionFromCart/${id},${this.getCartId()}`).pipe(tap(resp => {
+        this.removePositionFromLocalStorage(id)
+      }))
+
+    }
   }
 
   updatePosition(position: Position): Observable<any> {
@@ -89,22 +96,16 @@ export class CartService {
       if (index < 0) {
         this.positions.push(newPosition)
       } else {
-        console.log('newPosition')
-        console.log(newPosition)
         if (inc) {
           var newQuantity = this.positions[index].quantity + 1
           newPosition.quantity = newQuantity
         }
         this.positions[index] = newPosition
-        console.log('newPosition quantity+1')
-        console.log(newPosition)
       }
     } else {
       this.positions.push(newPosition)
     }
     this.updateCart()
-    console.log('cartId')
-    console.log(this.getCartId())
 
     if (this.getCartId() == null) {
       return new Observable(observer => {

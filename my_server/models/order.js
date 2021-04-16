@@ -5,6 +5,13 @@ const orderSchema = new mongoose.Schema({
     type: string,
     trim: true
   },
+  positions: {
+    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Position'}]
+  },
+  shipping: {
+    type: string,
+    trim: true
+  },
   sum: {
     type: Number,
     trim: true

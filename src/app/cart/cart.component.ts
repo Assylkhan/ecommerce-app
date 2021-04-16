@@ -27,6 +27,9 @@ import { Subscription } from 'rxjs';
 export class CartComponent implements OnInit {
   private subscriptions = new Subscription();
   positions: Position[];
+  subtotal: number;
+  total: number;
+
   constructor(
     private cartService: CartService,
     private itemService: ItemService,
@@ -41,6 +44,10 @@ export class CartComponent implements OnInit {
     this.subscriptions.unsubscribe()
   }
 
+  updateTotals() {
+    // this.subtotal
+  }
+
   checkout() {
     this.positionService.positions = this.positions
     this.router.navigate(['/checkout'])
@@ -50,7 +57,7 @@ export class CartComponent implements OnInit {
     console.log('position')
     console.log(position)
     this.cartService.removePositionFromCart(position.itemId).subscribe(resp => {
-      // todo: try to understand why a change on service positions changes positions in here
+      // todo: understand why a change on service positions changes positions in here
       // var index = this.positions.findIndex(el => el.itemId == position.itemId)
       // this.positions.splice(index)
       console.log(resp)
