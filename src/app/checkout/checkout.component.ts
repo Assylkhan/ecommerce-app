@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { AuthenticationService } from '@app/services';
 
 @Component({
   selector: 'app-checkout',
@@ -20,9 +21,12 @@ export class CheckoutComponent implements OnInit {
     phone: ['']
   })
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.billingInfoForm.patchValue(this.authService.currentUserValue)
   }
 
   onSubmit() {

@@ -9,8 +9,8 @@ const orderSchema = new mongoose.Schema({
     type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Position'}]
   },
   shipping: {
-    type: string,
-    trim: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shipping'
   },
   sum: {
     type: Number,

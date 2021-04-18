@@ -1,9 +1,10 @@
 import { Position } from "./position.model";
+import { Shipping } from "./shipping.model";
 
 export class Order {
   orderId: number;
   positions?: Position[];
-  shipping: string;
+  shipping: Shipping;
   sum: number;
 
   public constructor(init?: Partial<Order>) {
