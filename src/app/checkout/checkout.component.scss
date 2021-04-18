@@ -2,8 +2,38 @@
   display: flex;
   .form_container {
     flex: 3;
+    margin-right: 20px;
+    border: 1px dotted;
+    background: white;
   }
   .summary_container {
     flex: 1;
+    border: 1px dotted;
+    background: white;
   }
+}
+
+label, input, button {
+  display: block;
+}
+.full-width {
+  width: 100%;
+}
+.two-fields-container {
+  display: flex;
+  margin: 0 auto;
+  &>* {
+    flex: 1;
+  }
+  &>*:first-child {
+    margin-right: 15px;
+  }
+  &>*:last-child {
+    margin-left: 15px;
+  }
+}
+form {
+  margin: 0 auto;
+  width: 60%;
+  text-align: center;
 }
