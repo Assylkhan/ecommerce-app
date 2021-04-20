@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  flex: 1;
   .form_container {
     flex: 3;
     margin-right: 20px;
@@ -20,17 +21,17 @@ label, input, button {
   width: 100%;
 }
 .two-fields-container {
-  // display: flex;
-  // margin: 0 auto;
-  // &>* {
-  //   flex: 1;
-  // }
-  // &>*:first-child {
-  //   margin-right: 15px;
-  // }
-  // &>*:last-child {
-  //   margin-left: 15px;
-  // }
+  display: flex;
+  margin: 0 auto;
+  &>* {
+    flex: 1;
+  }
+  &>*:first-child {
+    margin-right: 15px;
+  }
+  &>*:last-child {
+    margin-left: 15px;
+  }
 }
 form {
   margin: 0 auto;

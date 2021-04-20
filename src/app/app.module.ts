@@ -18,6 +18,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 // MatDrawerContainer
 
 import { AppComponent } from './app.component';
@@ -127,6 +128,7 @@ var firebaseConfig = {
     MatPaginatorModule,
     MatTableModule,
     MatDialogModule,
+    MatSelectModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,

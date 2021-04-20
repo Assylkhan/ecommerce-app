@@ -3,8 +3,7 @@
     <h2 style="text-align: left">Billing Information</h2>
     <hr />
     <br /><br />
-    <!-- <div class="full-width two-fields-container"> -->
-    <div>
+    <div class="full-width two-fields-container">
       <mat-form-field class="">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" formControlName="firstName" />
@@ -14,44 +13,49 @@
         <input matInput placeholder="Last Name" formControlName="lastName" />
       </mat-form-field>
     </div>
-    <!-- </div> -->
-<div>
+    <div>
+      <mat-form-field class="full-width">
+        <mat-label>Company Name</mat-label>
+        <input
+          matInput
+          placeholder="Company Name"
+          formControlName="companyName"
+        />
+      </mat-form-field>
+    </div>
 
-  <mat-form-field class="full-width">
-    <mat-label>Company Name</mat-label>
-    <input
-        matInput
-        placeholder="Company Name"
-        formControlName="companyName"
-      />
-    </mat-form-field>
-  </div>
-
-    <!-- todo: find out why this narrows the form width -->
-    <!-- <div class="full-width two-fields-container"> -->
-      <div>
-
-        <mat-form-field class="">
+    <div class="full-width two-fields-container">
+      <mat-form-field class="">
+        <!-- <mat-label>Country</mat-label> -->
+        <!-- <input matInput placeholder="Country" formControlName="country" /> -->
+        <!-- <mat-form-field appearance="fill"> -->
           <mat-label>Country</mat-label>
-          <input matInput placeholder="Country" formControlName="country" />
-        </mat-form-field>
+          <mat-select>
+            <mat-option *ngFor="let country of locationService.getCountries()" [value]="country">
+              {{country}}
+            </mat-option>
+          </mat-select>
+        <!-- </mat-form-field> -->
+      </mat-form-field>
 
-        <mat-form-field class="">
-          <mat-label>State</mat-label>
-          <input matInput placeholder="State" formControlName="state" />
-        </mat-form-field>
-      </div>
+      <mat-form-field class="">
+        <mat-label>State</mat-label>
+        <input matInput placeholder="State" formControlName="state" />
+      </mat-form-field>
+    </div>
     <!-- </div> -->
 
-    <mat-form-field class="full-width">
-      <mat-label>City</mat-label>
-      <input matInput placeholder="City" formControlName="city" />
-    </mat-form-field>
+    <div class="full-width two-fields-container">
+      <mat-form-field class="full-width">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="City" formControlName="city" />
+      </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Address</mat-label>
-      <input matInput placeholder="Address" formControlName="address" />
-    </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Address" formControlName="address" />
+      </mat-form-field>
+    </div>
 
     <mat-form-field class="full-width">
       <mat-label>Zip Code</mat-label>
