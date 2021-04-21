@@ -26,24 +26,23 @@
 
     <div class="full-width two-fields-container">
       <mat-form-field class="">
-        <!-- <mat-label>Country</mat-label> -->
-        <!-- <input matInput placeholder="Country" formControlName="country" /> -->
-        <!-- <mat-form-field appearance="fill"> -->
-          <mat-label>Country</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let country of locationService.getCountries()" [value]="country">
-              {{country}}
-            </mat-option>
-          </mat-select>
-        <!-- </mat-form-field> -->
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="country" (selectionChange)="countryChange($event)">
+          <mat-option *ngFor="let country of locationService.getCountries()" [value]="country">
+            {{country}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field class="">
         <mat-label>State</mat-label>
-        <input matInput placeholder="State" formControlName="state" />
+        <mat-select formControlName="state" [disabled]="currentStates == null">
+          <mat-option *ngFor="let state of currentStates" [value]="state">
+            {{state}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
-    <!-- </div> -->
 
     <div class="full-width two-fields-container">
       <mat-form-field class="full-width">
@@ -67,8 +66,7 @@
       <input matInput placeholder="Phone" formControlName="phone" />
     </mat-form-field>
 
-    <!-- [disabled]="!billingInfoForm.valid" -->
-    <button mat-raised-button type="submit" color="primary">Update</button
+    <button mat-raised-button type="submit" color="primary">Check Out</button
     ><br />
   </form>
 </div>

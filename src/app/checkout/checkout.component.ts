@@ -10,6 +10,7 @@ import { LocationService } from '@app/services/location.service';
 })
 export class CheckoutComponent implements OnInit {
   selectedCountry: string;
+  currentStates: string[];
 
   billingInfoForm = this.fb.group({
     country: [''],
@@ -30,6 +31,19 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.billingInfoForm.patchValue(this.authService.currentUserValue)
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.billingInfoForm.controls; }
+
+  countryChange(e) {
+    if (this.f.country.value == 'United States of America') {
+      this.currentStates = this.locationService.getUsStates()
+    } else if (this.f.country.value == 'Canada') {
+      this.currentStates = this.locationService.getCanadaStates()
+    } else {
+      this.currentStates = null;
+    }
   }
 
   onSubmit() {
