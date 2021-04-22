@@ -99,6 +99,7 @@ export class ItemComponent implements OnInit, OnDestroy {
   addToCart() {
     let position = new Position()
     position.itemId = this.item._id
+    position.item = this.item
     position.quantity = 1
     this.subscriptions.add(
       this.cartService.addItemToCart(position, true).subscribe(

@@ -31,7 +31,7 @@ export class CartComponent implements OnInit {
   total: number;
 
   constructor(
-    private cartService: CartService,
+    public cartService: CartService,
     private itemService: ItemService,
     private positionService: PositionService,
     private router: Router) { }
@@ -45,7 +45,9 @@ export class CartComponent implements OnInit {
   }
 
   updateTotals() {
-    // this.subtotal
+    this.cartService.calculateTotals()
+    this.subtotal = this.cartService.subtotal
+    this.total = this.cartService.total
   }
 
   checkout() {
@@ -60,6 +62,7 @@ export class CartComponent implements OnInit {
       // todo: understand why a change on service positions changes positions in here
       // var index = this.positions.findIndex(el => el.itemId == position.itemId)
       // this.positions.splice(index)
+      this.updateTotals()
       console.log(resp)
     }, err => {
       console.log(err)
@@ -70,9 +73,11 @@ export class CartComponent implements OnInit {
     if (quantity < 1) return;
     var inc = false;
     position.quantity = quantity
+    position.sum = position.item.price * quantity
     this.positionService.positions = this.positions
 
     this.cartService.addItemToCart(position, inc).subscribe(res => {
+      this.updateTotals()
       console.log(res)
     }, err => {
       console.log(err)
@@ -93,9 +98,11 @@ export class CartComponent implements OnInit {
             let index = this.positions.findIndex(el => el.itemId == item._id)
             if (index > -1) {
               this.positions[index].item = item
+              this.positions[index].sum = item.price * this.positions[index].quantity
             }
           });
 
+          this.updateTotals()
           console.log('items')
           console.log(items)
           console.log('positions')

@@ -10,7 +10,9 @@ import { tap } from 'rxjs/operators';
 })
 export class CartService {
   rootURL = '/api/cart'
-
+  shipping: number = 15;
+  subtotal: number;
+  total: number;
   positions: Position[] = [];
   cartId: string;
 
@@ -64,6 +66,15 @@ export class CartService {
     }
   }
 
+  calculateTotals() {
+    var subtotal = 0;
+    this.positions.forEach(el => {
+      subtotal += (el.quantity * el.item.price)
+    })
+    this.subtotal = subtotal
+    this.total = this.subtotal + this.shipping
+  }
+
   removePositionFromLocalStorage(id: string) {
     var index = this.positions.findIndex(el => el.itemId == id)
     if (index > -1) {
@@ -84,10 +95,6 @@ export class CartService {
       }))
 
     }
-  }
-
-  updatePosition(position: Position): Observable<any> {
-    return this.http.put(`${this.rootURL}/updatePosition/${position.cartId}`, position);
   }
 
   addItemToCart(newPosition: Position, inc: boolean): Observable<any> {
@@ -117,15 +124,7 @@ export class CartService {
         observer.next(cart);
       })
     } else {
-      return this.http.put(`${this.rootURL}/fillUserCart/${this.cartId}`, newPosition).pipe(
-        tap(position => {
-          // var index = this.positions.findIndex(el => el.itemId == position.itemId)
-          // if (this.positions.length == 0 || index == null || index < 0) this.positions.push(position)
-          // else this.positions[index] = position;
-          console.log(this.positions)
-          console.log('this.positions')
-        })
-      );
+      return this.http.put(`${this.rootURL}/fillUserCart/${this.cartId}`, newPosition)
     }
   }
 }

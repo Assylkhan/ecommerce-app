@@ -31,7 +31,7 @@
       <p>
         <mat-error *ngIf="error">{{ error }}</mat-error>
       </p>
-      <h5>$ {{ position.item?.price }}</h5>
+      <h5>$ {{ position.sum }}</h5>
     </div>
     <div class="actions_container flex_container">
       <button (click)="removeFromCart(position)" mat-mini-fab color="warn" type="button" id="delete_btn">
@@ -46,18 +46,18 @@
   <div class="subtotals">
     <div class="flex_div">
       <span>Subtotal</span>
-      <span>40</span>
+      <span>{{subtotal}}</span>
     </div>
     <div class="flex_div">
       <span>Shipping</span>
-      <span>50</span>
+      <span>{{cartService.shipping}}</span>
     </div>
   </div>
   <hr>
   <div class="totals">
     <div class="flex_div">
       <span><strong>Total</strong></span>
-      <span><h2 style="margin: 0">50</h2></span>
+      <span><h2 style="margin: 0">{{total}}</h2></span>
     </div>
   </div>
   <div class="checkout_container">

@@ -7,8 +7,10 @@ export class Position {
   itemId: string;
   item: Item;
   quantity: number;
+  sum: number;
 
   public constructor(init?: Partial<Position>) {
-      Object.assign(this, init);
+    Object.assign(this, init);
   }
+
 }
