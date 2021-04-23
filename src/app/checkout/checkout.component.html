@@ -71,6 +71,26 @@
   </form>
 </div>
 <div class="summary_container">
-  <h2>Your Cart</h2>
-  <hr />
+  <h2>Cart Summary</h2>
+  <div class="subtotals">
+    <div class="flex_div">
+      <span>Subtotal</span>
+      <span>${{cartService.subtotal}}</span>
+    </div>
+    <div class="flex_div">
+      <span>Shipping</span>
+      <span>${{cartService.shipping}}</span>
+    </div>
+  </div>
+  <hr>
+  <div class="totals">
+    <div class="flex_div">
+      <span><strong>Total</strong></span>
+      <span><h2 style="margin: 0">${{cartService.total}}</h2></span>
+    </div>
+  </div>
+  <div class="checkout_container">
+    <button (click)="finalCheckout()" color="warn" mat-raised-button>Check Out</button>
+  </div>
 </div>
+

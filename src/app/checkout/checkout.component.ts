@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '@app/services';
+import { CartService } from '@app/services/cart.service';
 import { LocationService } from '@app/services/location.service';
 
 @Component({
@@ -27,7 +28,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    public locationService: LocationService) { }
+    public locationService: LocationService,
+    public cartService: CartService) { }
 
   ngOnInit(): void {
     this.billingInfoForm.patchValue(this.authService.currentUserValue)
@@ -35,6 +37,10 @@ export class CheckoutComponent implements OnInit {
 
   // convenience getter for easy access to form fields
   get f() { return this.billingInfoForm.controls; }
+
+  finalCheckout() {
+
+  }
 
   countryChange(e) {
     if (this.f.country.value == 'United States of America') {
