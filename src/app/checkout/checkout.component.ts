@@ -17,7 +17,7 @@ export class CheckoutComponent implements OnInit {
     country: [''],
     firstName: [''],
     lastName: [''],
-    companyName: [''],
+    email: [''],
     address: [''],
     city: [''],
     state: [''],

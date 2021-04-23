@@ -15,11 +15,11 @@
     </div>
     <div>
       <mat-form-field class="full-width">
-        <mat-label>Company Name</mat-label>
+        <mat-label>Email</mat-label>
         <input
           matInput
-          placeholder="Company Name"
-          formControlName="companyName"
+          placeholder="Email"
+          formControlName="email"
         />
       </mat-form-field>
     </div>
@@ -66,7 +66,7 @@
       <input matInput placeholder="Phone" formControlName="phone" />
     </mat-form-field>
 
-    <button mat-raised-button type="submit" color="primary">Check Out</button
+    <button mat-raised-button type="submit" color="primary">Proceed to Payment</button
     ><br />
   </form>
 </div>
@@ -88,9 +88,6 @@
       <span><strong>Total</strong></span>
       <span><h2 style="margin: 0">${{cartService.total}}</h2></span>
     </div>
-  </div>
-  <div class="checkout_container">
-    <button (click)="finalCheckout()" color="warn" mat-raised-button>Check Out</button>
   </div>
 </div>
 
