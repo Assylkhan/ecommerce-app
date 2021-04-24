@@ -1,14 +1,6 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-  name: {
-    type: string,
-    trim: true
-  },
-  sum: {
-    type: Number,
-    trim: true
-  },
   country: {
     type: String
   },
@@ -33,4 +25,4 @@ const orderSchema = new mongoose.Schema({
   timestamps: true
 }, );
 
-module.exports = mongoose.model('Shipping', orderSchema);
+module.exports = mongoose.model('Billing', orderSchema);

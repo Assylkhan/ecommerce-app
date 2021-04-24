@@ -12,6 +12,10 @@ const orderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shipping'
   },
+  billing: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Billing'
+  },
   sum: {
     type: Number,
     trim: true
