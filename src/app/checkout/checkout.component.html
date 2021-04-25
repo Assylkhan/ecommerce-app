@@ -1,5 +1,5 @@
 <div class="form_container">
-  <form [formGroup]="billingInfoForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
     <h2 style="text-align: left">Billing Information</h2>
     <hr />
     <br /><br />
@@ -65,7 +65,8 @@
       <mat-label>Phone</mat-label>
       <input matInput placeholder="Phone" formControlName="phone" />
     </mat-form-field>
-    <mat-checkbox class="example-margin" formControlName="same_shipping_and_billing_address">Shipping Address is the same as the Billing Address</mat-checkbox>
+
+    <mat-checkbox class="example-margin" ([same_shipping_and_billing_address])="false">Shipping Address is the same as the Billing Address</mat-checkbox>
     <button mat-raised-button type="submit" color="primary">Proceed to Payment</button
     ><br />
   </form>

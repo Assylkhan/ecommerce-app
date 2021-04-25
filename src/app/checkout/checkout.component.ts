@@ -12,8 +12,9 @@ import { LocationService } from '@app/services/location.service';
 export class CheckoutComponent implements OnInit {
   selectedCountry: string;
   currentStates: string[];
+  same_shipping_and_billing_address: true;
 
-  billingInfoForm = this.fb.group({
+  checkoutForm = this.fb.group({
     country: [''],
     firstName: [''],
     lastName: [''],
@@ -32,11 +33,15 @@ export class CheckoutComponent implements OnInit {
     public cartService: CartService) { }
 
   ngOnInit(): void {
-    this.billingInfoForm.patchValue(this.authService.currentUserValue)
+    this.checkoutForm.patchValue(this.authService.currentUserValue)
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.billingInfoForm.controls; }
+  get f() { return this.checkoutForm.controls; }
+
+  shppingEqualsBilling() {
+
+  }
 
   finalCheckout() {
 
