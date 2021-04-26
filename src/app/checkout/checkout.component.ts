@@ -12,7 +12,7 @@ import { LocationService } from '@app/services/location.service';
 export class CheckoutComponent implements OnInit {
   selectedCountry: string;
   currentStates: string[];
-  same_shipping_and_billing_address: true;
+  sameShippingAndBillingAddress = true
 
   checkoutForm = this.fb.group({
     country: [''],
@@ -39,8 +39,8 @@ export class CheckoutComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.checkoutForm.controls; }
 
-  shppingEqualsBilling() {
-
+  shppingEqualsBilling(e) {
+    console.log(e.checked)
   }
 
   finalCheckout() {
@@ -54,6 +54,7 @@ export class CheckoutComponent implements OnInit {
       this.currentStates = this.locationService.getCanadaStates()
     } else {
       this.currentStates = null;
+      // this.f.state.disabled = true
     }
   }
 
