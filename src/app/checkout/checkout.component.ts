@@ -17,6 +17,10 @@ export class CheckoutComponent implements OnInit {
   sameShippingAndBillingAddress = true
 
   checkoutForm = this.fb.group({
+    card_number: [''],
+    exp_month: [''],
+    exp_year: [''],
+    cvv: [''],
     firstName: [''],
     lastName: [''],
     email: [''],
@@ -61,10 +65,10 @@ export class CheckoutComponent implements OnInit {
     var currentStateField;
 
     if (field_name == 'shipping_country') {
-      country = this.f.country.value
+      country = this.f.shipping_country.value
       currentStateField = this.f.shipping_state
     } else if (field_name == 'country') {
-      country = this.f.shipping_country.value
+      country = this.f.country.value
       currentStateField = this.f.state
     }
 

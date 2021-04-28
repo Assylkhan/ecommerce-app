@@ -1,6 +1,41 @@
 <div class="form_container">
   <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-    <h2 style="text-align: left">Billing Information</h2>
+    <h2 style="text-align: left">Payment Details</h2>
+    <hr />
+    <br /><br />
+    <div class="accepted_cards_wrapper">
+      <img class="accepted_cards_img" src="assets/img/credit-cards-accepted-logo.jpeg" alt="">
+    </div>
+
+    <div>
+      <mat-form-field class="full-width">
+        <mat-label>Card Number</mat-label>
+        <input
+          matInput
+          placeholder="Card Number"
+          formControlName="card_number"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- todo: make into two underlined fields instead of one -->
+    <div class="full-width two-fields-container">
+      <mat-form-field>
+        <mat-label>Expiration</mat-label>
+        <div class="flex_inputs_wrapper">
+          <input matInput placeholder="MM" formControlName="exp_month" />
+          <input matInput placeholder="YYYY" formControlName="exp_year" />
+        </div>
+      </mat-form-field>
+
+
+      <mat-form-field class="">
+        <mat-label>CVV</mat-label>
+        <input matInput placeholder="" formControlName="cvv" />
+      </mat-form-field>
+    </div>
+
+    <h2 style="text-align: left">Billing Details</h2>
     <hr />
     <br /><br />
     <div class="full-width two-fields-container">
