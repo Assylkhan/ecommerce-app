@@ -12,17 +12,24 @@ import { LocationService } from '@app/services/location.service';
 export class CheckoutComponent implements OnInit {
   selectedCountry: string;
   currentStates: string[];
+  selectedShippingCountry: string;
+  currentShippingStates: string[];
   sameShippingAndBillingAddress = true
 
   checkoutForm = this.fb.group({
-    country: [''],
     firstName: [''],
     lastName: [''],
     email: [''],
-    address: [''],
+    country: [''],
+    state: {value: '', disabled: true},
     city: [''],
-    state: [''],
+    address: [''],
     zip: [''],
+    shipping_country: [''],
+    shipping_state: {value: '', disabled: true},
+    shipping_city: [''],
+    shipping_address: [''],
+    shipping_zip: [''],
     phone: ['']
   })
 
@@ -47,14 +54,35 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  countryChange(e) {
-    if (this.f.country.value == 'United States of America') {
-      this.currentStates = this.locationService.getUsStates()
-    } else if (this.f.country.value == 'Canada') {
-      this.currentStates = this.locationService.getCanadaStates()
+  countryChange(field_name) {
+// todo: finish checkout
+    var states:string[] = []
+    var country = ''
+    var currentStateField;
+
+    if (field_name == 'shipping_country') {
+      country = this.f.country.value
+      currentStateField = this.f.shipping_state
+    } else if (field_name == 'country') {
+      country = this.f.shipping_country.value
+      currentStateField = this.f.state
+    }
+
+    if (country == 'United States of America') {
+      states = this.locationService.getUsStates()
+      currentStateField.enable()
+    } else if (country == 'Canada') {
+      states = this.locationService.getCanadaStates()
+      currentStateField.enable()
     } else {
-      this.currentStates = null;
-      // this.f.state.disabled = true
+      states = null;
+      currentStateField.disable()
+    }
+
+    if (field_name == 'shipping_country') {
+      this.currentShippingStates = states
+    } else if (field_name == 'country') {
+      this.currentStates = states
     }
   }
 
