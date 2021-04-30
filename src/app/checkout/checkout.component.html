@@ -20,19 +20,37 @@
 
     <!-- todo: make into two underlined fields instead of one -->
     <div class="full-width two-fields-container">
-      <mat-form-field>
-        <mat-label>Expiration</mat-label>
-        <div class="flex_inputs_wrapper">
-          <input matInput placeholder="MM" formControlName="exp_month" />
-          <input matInput placeholder="YYYY" formControlName="exp_year" />
+      <div>
+        <div class="standalone_label_container">
+          <mat-label class="standalone_label">
+            <small>
+              Expiration
+            </small>
+          </mat-label>
         </div>
-      </mat-form-field>
+        <div class="flex_inputs_wrapper">
+          <mat-form-field class="input_container">
+            <input matInput placeholder="MM" formControlName="exp_month" />
+          </mat-form-field>
+          <mat-form-field class="input_container">
+            <input matInput placeholder="YYYY" formControlName="exp_year" />
+          </mat-form-field>
+        </div>
+      </div>
 
-
+      <div>
+        <div class="standalone_label_container">
+          <mat-label class="standalone_label">
+            <small>
+              3-Digit Code
+            </small>
+          </mat-label>
+        </div>
       <mat-form-field class="">
         <mat-label>CVV</mat-label>
         <input matInput placeholder="" formControlName="cvv" />
       </mat-form-field>
+      </div>
     </div>
 
     <h2 style="text-align: left">Billing Details</h2>

@@ -71,15 +71,23 @@ form {
       width: 10rem;
     }
   }
+  .standalone_label_container {
+    text-align: left;
+    .standalone_label {
+      margin: 0;
+      color: rgba(0,0,0,.54);
+      font-size: 14px;
+    }
+  }
   .flex_inputs_wrapper {
     display: flex;
-    input {
+    .input_container {
       flex: 1;
     }
-    input:first-of-type {
+    .input_container:first-of-type {
       margin-right: 10px;
     }
-    input:last-of-type {
+    .input_container:last-of-type {
       margin-left: 10px;
     }
   }
