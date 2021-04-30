@@ -10,10 +10,13 @@
     <div>
       <mat-form-field class="full-width">
         <mat-label>Card Number</mat-label>
+        <mat-label *ngIf="cardType" style="margin-left: 30px">{{cardType}}</mat-label>
         <input
           matInput
           placeholder="Card Number"
           formControlName="card_number"
+          #cardInput
+          (input)="fillCardNumber(cardInput.value)"
         />
       </mat-form-field>
     </div>
