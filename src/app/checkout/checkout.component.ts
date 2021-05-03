@@ -54,10 +54,6 @@ export class CheckoutComponent implements OnInit {
     console.log(e.checked)
   }
 
-  finalCheckout() {
-
-  }
-
   countryChange(field_name) {
     // todo: finish checkout
     var states: string[] = []
@@ -96,7 +92,6 @@ export class CheckoutComponent implements OnInit {
 
   fillCardNumber(e) {
     this.cardType = this.getCardType(e)
-    console.log(this.getCardType(e))
   }
 
   getCardType(number) {

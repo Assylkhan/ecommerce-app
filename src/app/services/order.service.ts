@@ -23,4 +23,8 @@ export class OrderService {
   findAllByUserId(id: any): Observable<any> {
     return this.http.get<Order>(`${this.rootURL}/orders/users/${id}`);
   }
+
+  submitCheckout(data: any): Observable<any> {
+
+  }
 }

@@ -16,6 +16,20 @@ router.get('/', helper.verifyToken, (req, res) => {
   })
 })
 
+// => localhost:3080/api/checkout
+router.post('/checkout', (req, res) => {
+  let newUser = getModelFromRequest(req.body);
+  newUser.save().then((user) => {
+    res.status(201).json(user)
+  }).catch((err) => {
+    res.status(501).json({
+      msg: 'Failed to add the user',
+      err: err.message
+    })
+    console.log('Failed to add the user: ' + JSON.stringify(err, undefined, 2))
+  })
+});
+
 // => localhost:3080/api/orders
 router.post('/', (req, res) => {
   let newUser = getModelFromRequest(req.body);
