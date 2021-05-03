@@ -24,7 +24,4 @@ export class OrderService {
     return this.http.get<Order>(`${this.rootURL}/orders/users/${id}`);
   }
 
-  submitCheckout(data: any): Observable<any> {
-
-  }
 }

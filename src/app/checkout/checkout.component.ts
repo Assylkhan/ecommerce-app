@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { AuthenticationService } from '@app/services';
+import { Order } from '@app/models';
+import { Shipping } from '@app/models/shipping.model';
+import { AuthenticationService, OrderService } from '@app/services';
 import { CartService } from '@app/services/cart.service';
 import { LocationService } from '@app/services/location.service';
+import { PositionService } from '@app/services/position.service';
 
 @Component({
   selector: 'app-checkout',
@@ -41,7 +44,9 @@ export class CheckoutComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     public locationService: LocationService,
-    public cartService: CartService) { }
+    public cartService: CartService,
+    private orderService: OrderService,
+    private positionService: PositionService) { }
 
   ngOnInit(): void {
     this.checkoutForm.patchValue(this.authService.currentUserValue)
@@ -86,8 +91,21 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  buildShippingFromForm() {
+    var shipping = new Shipping()
+    shipping.country = this.f.shipping_country.value
+    shipping.city = this.f.shipping_city.value
+    shipping.address = this.f.shipping_address.value
+    shipping.zip = this.f.shipping_zip.value
+    return shipping
+  }
 
+  onSubmit() {
+    var order = new Order()
+    order.positions = this.positionService.positions
+    order.shipping = this.buildShippingFromForm()
+    // order.positions =
+    // this.orderService.create()
   }
 
   fillCardNumber(e) {

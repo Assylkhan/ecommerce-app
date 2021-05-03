@@ -24,10 +24,6 @@ const orderSchema = new mongoose.Schema({
   zip: {
     type: String,
     trim: true
-  },
-  phone: {
-    type: String,
-    trim: true
   }
 }, {
   timestamps: true
