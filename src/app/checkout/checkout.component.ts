@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Order } from '@app/models';
+import { Billing } from '@app/models/billing.model';
 import { Shipping } from '@app/models/shipping.model';
 import { AuthenticationService, OrderService } from '@app/services';
 import { CartService } from '@app/services/cart.service';
@@ -91,7 +92,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  buildShippingFromForm() {
+  getShippingFromForm() {
     var shipping = new Shipping()
     shipping.country = this.f.shipping_country.value
     shipping.city = this.f.shipping_city.value
@@ -100,12 +101,28 @@ export class CheckoutComponent implements OnInit {
     return shipping
   }
 
+  getBillingFromForm() {
+    var billing = new Billing()
+    billing.country = this.f.country.value
+    billing.city = this.f.city.value
+    billing.address = this.f.address.value
+    billing.zip = this.f.zip.value
+    return billing
+  }
+
   onSubmit() {
     var order = new Order()
     order.positions = this.positionService.positions
-    order.shipping = this.buildShippingFromForm()
-    // order.positions =
-    // this.orderService.create()
+    order.shipping = this.getShippingFromForm()
+    order.billing = this.getBillingFromForm()
+    order.firstName = this.f.firstName.value
+    order.lastName = this.f.lastName.value
+    order.email = this.f.email.value
+    this.orderService.create(order).subscribe(resp => {
+
+    }, err => {
+      console.log(err)
+    })
   }
 
   fillCardNumber(e) {

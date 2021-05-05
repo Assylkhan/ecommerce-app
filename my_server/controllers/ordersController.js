@@ -1,6 +1,8 @@
 const express = require('express');
 var router = express.Router();
 var Order = require('../models/item');
+var Billing = require('../models/billing');
+var Shipping = require('../models/shipping');
 var helper = require('../helpers/helper');
 
 // => localhost:3080/api/orders
@@ -32,15 +34,15 @@ router.post('/checkout', (req, res) => {
 
 // => localhost:3080/api/orders
 router.post('/', (req, res) => {
-  let newUser = getModelFromRequest(req.body);
-  newUser.save().then((user) => {
-    res.status(201).json(user)
+  let newOrder = getModelFromRequest(req.body);
+  newOrder.save().then((order) => {
+    res.status(201).json(order)
   }).catch((err) => {
     res.status(501).json({
-      msg: 'Failed to add the user',
+      msg: 'Failed to add the order',
       err: err.message
     })
-    console.log('Failed to add the user: ' + JSON.stringify(err, undefined, 2))
+    console.log('Failed to add the order: ' + JSON.stringify(err, undefined, 2))
   })
 });
 
@@ -66,6 +68,13 @@ router.get('users/:id', helper.verifyToken, (req, res) => {
 })
 
 function getModelFromRequest(reqBody) {
+  let billing = new Billing({
+
+  })
+  let shipping = new Shipping({
+
+  })
+  // todo: mongoose save model including nested models (order, billing, shipping)
   let order = new Order({
     firstName: reqBody.firstName,
     lastName: reqBody.lastName,

@@ -5,6 +5,18 @@ const orderSchema = new mongoose.Schema({
     type: string,
     trim: true
   },
+  firstName: {
+    type: string,
+    trim: true
+  },
+  lastName: {
+    type: string,
+    trim: true
+  },
+  email: {
+    type: string,
+    trim: true
+  },
   positions: {
     type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Position'}]
   },
