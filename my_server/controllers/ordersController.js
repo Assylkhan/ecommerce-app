@@ -69,7 +69,12 @@ router.get('users/:id', helper.verifyToken, (req, res) => {
 
 function getModelFromRequest(reqBody) {
   let billing = new Billing({
-
+    country: reqBody.country,
+    state: reqBody.state,
+    city: reqBody.city,
+    address: reqBody.address,
+    zip: reqBody.zip,
+    phone: reqBody.phone
   })
   let shipping = new Shipping({
 
