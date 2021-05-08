@@ -27,6 +27,21 @@
   <mat-checkbox class="example-margin" formControlName="featured">Featured</mat-checkbox>
 
   <!-- todo: add shipping option fields -->
+  <div class="shipping_container">
+    <h3>Shipping</h3>
+
+  </div>
+  <!-- interface ItemShipping {
+    shipsFrom: ShippingPlace[];
+    canShipTo: ShippingPlace[];
+    estimatedDeliveryDays: number;
+    shippingCost: number;
+  }
+
+  interface ShippingPlace {
+    country: string;
+    city: string;
+  } -->
 
   <div>
     <div class="image_wrapper" *ngFor="let imageUrl of imageUrls">

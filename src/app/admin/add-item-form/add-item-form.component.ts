@@ -28,7 +28,25 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
     price: [''],
     description: [''],
     count: [''],
-    featured: [false]
+    featured: [false],
+    shippingOptions: this.fb.array([
+      this.fb.group({
+        shipsFrom: this.fb.array([
+          this.fb.group({
+            country: [''],
+            city: ['']
+          })
+        ]),
+        canShipTo: this.fb.array([
+          this.fb.group({
+            country: [''],
+            city: ['']
+          })
+        ]),
+        estimatedDeliveryDays: [''],
+        shippingCost: ['']
+      })
+    ])
   })
 
   constructor(

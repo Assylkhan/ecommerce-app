@@ -7,6 +7,10 @@ label, input {
 form {
   width: 80%;
   margin: 2rem auto;
+  .shipping_container {
+    margin: 20px 0;
+    border: 1px dashed;
+  }
 }
 .delete_btn {
   float: right;

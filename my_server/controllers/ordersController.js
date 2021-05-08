@@ -77,7 +77,27 @@ function getModelFromRequest(reqBody) {
     phone: reqBody.phone
   })
   let shipping = new Shipping({
-
+    name: reqBody.shipping,
+    sum: {
+      type: Number,
+      trim: true
+    },
+    country: {
+      type: String
+    },
+    state: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    address: {
+      type: String
+    },
+    zip: {
+      type: String,
+      trim: true
+    }
   })
   // todo: mongoose save model including nested models (order, billing, shipping)
   let order = new Order({
