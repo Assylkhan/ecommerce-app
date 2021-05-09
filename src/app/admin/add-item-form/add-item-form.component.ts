@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormArray } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '@app/models';
@@ -22,6 +22,7 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
   imageUrls: String[] = [];
   currentItemSubject: BehaviorSubject<Item>;
   currentItem: Observable<Item>;
+
   itemForm = this.fb.group({
     name: ['', [Validators.required]],
     realPrice: [''],
@@ -30,22 +31,7 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
     count: [''],
     featured: [false],
     shippingOptions: this.fb.array([
-      this.fb.group({
-        shipsFrom: this.fb.array([
-          this.fb.group({
-            country: [''],
-            city: ['']
-          })
-        ]),
-        canShipTo: this.fb.array([
-          this.fb.group({
-            country: [''],
-            city: ['']
-          })
-        ]),
-        estimatedDeliveryDays: [''],
-        shippingCost: ['']
-      })
+      this.buildShippingOption()
     ])
   })
 
@@ -83,6 +69,33 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe()
+  }
+
+  buildShippingOption(): FormGroup {
+    return this.fb.group({
+      shipsFrom: this.fb.array([
+        this.fb.group({
+          country: [''],
+          city: ['']
+        })
+      ]),
+      canShipTo: this.fb.array([
+        this.fb.group({
+          country: [''],
+          city: ['']
+        })
+      ]),
+      estimatedDeliveryDays: [''],
+      shippingCost: ['']
+    })
+  }
+
+  get shippingOptions(): FormArray {
+    return this.itemForm.get('shippingOptions') as FormArray
+  }
+
+  addShippingOption() {
+    this.shippingOptions.push(this.buildShippingOption())
   }
 
   showSnackBar(msg, status) {
