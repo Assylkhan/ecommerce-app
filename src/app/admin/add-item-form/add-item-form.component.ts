@@ -74,19 +74,35 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
   buildShippingOption(): FormGroup {
     return this.fb.group({
       shipsFrom: this.fb.array([
-        this.fb.group({
-          country: [''],
-          city: ['']
-        })
+        this.buildShipsFrom()
       ]),
       canShipTo: this.fb.array([
-        this.fb.group({
-          country: [''],
-          city: ['']
-        })
+        this.buildCanShipTo()
       ]),
       estimatedDeliveryDays: [''],
       shippingCost: ['']
+    })
+  }
+
+  shipsFrom(groupName: string, i: number) {
+    return (this.itemForm.get(groupName) as FormArray).controls[i].get('shipsFrom') as FormArray;
+  }
+
+  canShipTo(groupName: string, i: number) {
+    return (this.itemForm.get(groupName) as FormArray).controls[i].get('canShipTo') as FormArray;
+  }
+
+  buildShipsFrom(): FormGroup {
+    return this.fb.group({
+      country: [''],
+      city: ['']
+    })
+  }
+
+  buildCanShipTo(): FormGroup {
+    return this.fb.group({
+      country: [''],
+      city: ['']
     })
   }
 
