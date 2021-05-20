@@ -29,22 +29,25 @@
   <!-- todo: adjust properly shipping option fields -->
   <div formArrayName="shippingOptions">
     <div *ngFor="let shippingOption of shippingOptions.controls; let i = index"
-    class="shipping_container">
+    class="shipping_container" [formGroupName]="i">
       <h3>Shipping</h3>
       <div formArrayName="shipsFrom">
         <div *ngFor="let shipsFromRow of shipsFrom('shippingOptions', i); let j=index">
           <mat-form-field class="full-width">
             <mat-label>Ships From</mat-label>
-            <input matInput placeholder="Ships From" formControlName="j" required>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Can Ship To</mat-label>
-            <input matInput placeholder="Can Ship To" formControlName="j" required>
+            <input matInput placeholder="Country" formControlName="country" required>
+            <input matInput placeholder="City" formControlName="city" required>
           </mat-form-field>
         </div>
       </div>
       <div formArrayName="canShipTo">
-
+        <div *ngFor="let canShipToRow of canShipTo('shippingOptions', i); let k=index">
+          <mat-form-field class="full-width">
+            <mat-label>Can Ship To</mat-label>
+            <input matInput placeholder="Country" formControlName="country" required>
+            <input matInput placeholder="City" formControlName="city" required>
+          </mat-form-field>
+        </div>
       </div>
       <mat-form-field class="full-width">
         <mat-label>Estimated Delivery Days</mat-label>
