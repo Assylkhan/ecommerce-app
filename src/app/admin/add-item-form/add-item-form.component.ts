@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormArray, AbstractControl } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '@app/models';
@@ -84,12 +84,12 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
     })
   }
 
-  shipsFrom(groupName: string, i: number) {
-    return (this.itemForm.get(groupName) as FormArray).controls[i].get('shipsFrom') as FormArray;
+  shipsFrom(shippingOption: FormGroup, i: number) {
+    return shippingOption.get('shipsFrom') as FormArray;
   }
 
-  canShipTo(groupName: string, i: number) {
-    return (this.itemForm.get(groupName) as FormArray).controls[i].get('canShipTo') as FormArray;
+  canShipTo(shippingOption: FormGroup, i: number) {
+    return shippingOption.get('canShipTo') as FormArray;
   }
 
   buildShipsFrom(): FormGroup {

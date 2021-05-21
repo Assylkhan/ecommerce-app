@@ -28,11 +28,11 @@
 
   <!-- todo: adjust properly shipping option fields -->
   <div formArrayName="shippingOptions">
-    <div *ngFor="let shippingOption of shippingOptions.controls; let i = index"
+    <div *ngFor="let shippingOption of shippingOptions; let i = index"
     class="shipping_container" [formGroupName]="i">
       <h3>Shipping</h3>
       <div formArrayName="shipsFrom">
-        <div *ngFor="let shipsFromRow of shipsFrom('shippingOptions', i); let j=index">
+        <div *ngFor="let shipsFromRow of shipsFrom(shippingOption, i); let j=index">
           <mat-form-field class="full-width">
             <mat-label>Ships From</mat-label>
             <input matInput placeholder="Country" formControlName="country" required>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div formArrayName="canShipTo">
-        <div *ngFor="let canShipToRow of canShipTo('shippingOptions', i); let k=index">
+        <div *ngFor="let canShipToRow of canShipTo(shippingOption, i); let j=index">
           <mat-form-field class="full-width">
             <mat-label>Can Ship To</mat-label>
             <input matInput placeholder="Country" formControlName="country" required>
