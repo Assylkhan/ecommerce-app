@@ -32,7 +32,8 @@
     class="shipping_container" [formGroupName]="i">
       <h3>Shipping</h3>
       <div formArrayName="shipsFrom">
-        <div *ngFor="let shipsFromRow of shipsFrom(shippingOption, i); let j=index">
+        <div *ngFor="let shipsFromRow of shippingOption.get('shipsFrom')['controls']; let j=index"
+        [formGroupName]="j">
           <mat-form-field class="full-width">
             <mat-label>Ships From</mat-label>
             <input matInput placeholder="Country" formControlName="country" required>
@@ -41,7 +42,8 @@
         </div>
       </div>
       <div formArrayName="canShipTo">
-        <div *ngFor="let canShipToRow of canShipTo(shippingOption, i); let j=index">
+        <div *ngFor="let canShipToRow of shippingOption.get('canShipTo')['controls']; let j=index"
+        [formGroupName]="j">
           <mat-form-field class="full-width">
             <mat-label>Can Ship To</mat-label>
             <input matInput placeholder="Country" formControlName="country" required>
@@ -57,19 +59,9 @@
         <mat-label>Shipping Cost</mat-label>
         <input matInput placeholder="Shipping Cost" formControlName="shippingCost" required>
       </mat-form-field>
+      <button type="button" (click)="addShippingOption()">Add Shipping Option</button>
     </div>
   </div>
-  <!-- interface ItemShipping {
-    shipsFrom: ShippingPlace[];
-    canShipTo: ShippingPlace[];
-    estimatedDeliveryDays: number;
-    shippingCost: number;
-  }
-
-  interface ShippingPlace {
-    country: string;
-    city: string;
-  } -->
 
   <div>
     <div class="image_wrapper" *ngFor="let imageUrl of imageUrls">

@@ -85,11 +85,13 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
   }
 
   shipsFrom(shippingOption: FormGroup, i: number) {
-    return shippingOption.get('shipsFrom') as FormArray;
+    return (<FormArray>(<FormGroup>this.itemForm.get('shippingOptions')).get('shipsFrom')).controls;
+    // return shippingOption.get('shipsFrom') as FormArray;
   }
 
   canShipTo(shippingOption: FormGroup, i: number) {
-    return shippingOption.get('canShipTo') as FormArray;
+    return (<FormArray>(<FormGroup>this.itemForm.get('shippingOptions')).get('canShipTo')).controls;
+    // return shippingOption.get('canShipTo') as FormArray;
   }
 
   buildShipsFrom(): FormGroup {
@@ -107,7 +109,7 @@ export class AddItemFormComponent implements OnInit, OnDestroy {
   }
 
   get shippingOptions(): FormArray {
-    return this.itemForm.get('shippingOptions') as FormArray
+    return this.itemForm.get('shippingOptions')['controls']
   }
 
   addShippingOption() {
